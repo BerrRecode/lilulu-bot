@@ -54,23 +54,34 @@ const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const afk = JSON.parse(fs.readFileSync('./lib/off.json'))
 const { sleep, isAfk, cekafk, addafk } = require('./lib/offline')
 const voting = JSON.parse(fs.readFileSync('./lib/voting.json'))
+//const { donasi } = require('./lib/donasi')
 const { addVote, delVote } = require('./lib/vote')
 const { y2mateA, y2mateV } = require('./lib/y2mate')
 const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 const petik = ('```')
+const pdua = ('"')
 
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
 
 //============APIKEY DISNI===========//
 LolKey = 'BismillahBarokah' //BELI DI https://lolhuman.xys
 ZeksKey = 'YOUR APIKEY' //DAFTAR DI http://zeks.me/
+DapKey = 'PaujanDapKey' //DAFTAR DI https://dapuhy-api.herokuapp.com/
+
+//=================CMD================//
+cmddhit =[]
 
 //======setting disini ngab=======//
+baterai = {
+battery: "" || "Tidak Terdeteksi",
+isCharge: "" || false
+}
 banChats = true
 offline = false
 namabot = `${petik}LILULU-BOT${petik}`
 ownerNumber = ["@6285156724122"]
 targetpc = '6283852242764'
+namaowner = 'FznAdmn'
 owner = '6285156724122'
 fake = '𝙷𝚎𝚕𝚕𝚘\n𝙸𝚖 𝚕𝚒𝚕𝚞𝚕𝚞𝚋𝚘𝚝'
 numbernye = '0'
@@ -85,23 +96,26 @@ const vcard = 'BEGIN:VCARD\n'
 //=================================================//
 
 const time2 = moment().tz('Asia/Jakarta').format('HH:mm:ss')
-if(time2 < "23:59:00"){
+if(time2 < "00:00:00"){
+var ucapanWaktu = 'Selamat malam🌕'
+                                        }
+if(time2 < "22:00:00"){
 var ucapanWaktu = 'Selamat malam 🌘'
                                         }
-if(time2 < "19:00:00"){
+if(time2 < "20:00:00"){
 var ucapanWaktu = 'Selamat senja 🌆'
-                                         }
-if(time2 < "18:00:00"){
+                                        }
+if(time2 < "16:00:00"){
 var ucapanWaktu = 'Selamat sore ✨'
-                                         }
-if(time2 < "15:00:00"){
+                                        }
+if(time2 < "14:00:00"){
 var ucapanWaktu = 'Selamat siang 🌞'
-                                         }
+                                        }
 if(time2 < "11:00:00"){
 var ucapanWaktu = 'Selamat pagi 🌈'
-                                         }
-if(time2 < "06:00:00"){
-var ucapanWaktu = 'Selamat pagi 🌈'                                       }
+                                        }
+if(time2 < "03:00:00"){
+var ucapanWaktu = 'Dini hari 🌌'                                       }
 //=================================================//
 // Sticker Cmd
 // Funcation Stick Cmd , Sorry Bang saya Encrip hehe:)
@@ -121,14 +135,21 @@ module.exports = hexa = async (hexa, mek) => {
 	    const timeWib = moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')
 		const timeWit= moment().tz('Asia/Makassar').format('DD/MM HH:mm:ss')
         const timeWita = moment().tz('Asia/Jayapura').format('DD/MM HH:mm:ss')
-                const type = Object.keys(mek.message)[0]  
-                const cmd = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : ''.slice(1).trim().split(/ +/).shift().toLowerCase()
-                const prefix = /^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*@,;]/.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*,;]/gi) : '-'          	
-                 body = (type === 'conversation' && mek.message.conversation.startsWith(prefix)) ? mek.message.conversation : (type == 'imageMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'videoMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'extendedTextMessage') && mek.message[type].text.startsWith(prefix) ? mek.message[type].text : (type == 'listResponseMessage') && mek.message[type].singleSelectReply.selectedRowId ? mek.message[type].singleSelectReply.selectedRowId : (type == 'buttonsResponseMessage') && mek.message[type].selectedButtonId ? mek.message[type].selectedButtonId : (type == 'stickerMessage') && (getCmd(mek.message[type].fileSha256.toString('base64')) !== null && getCmd(mek.message[type].fileSha256.toString('base64')) !== undefined) ? getCmd(mek.message[type].fileSha256.toString('base64')) : ""
+  const type = Object.keys(mek.message)[0]  
+  const cmd = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : ''.slice(1).trim().split(/ +/).shift().toLowerCase()
+  hexa.on("CB:action,,battery", json => {
+	    const battery = json[2][0][1].value
+	    const persenbat = parseInt(battery)
+	    baterai.battery = `${persenbat}%`
+	    baterai.isCharge = json[2][0][1].live
+	    })
+  const prefix = /^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*@,;]/.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*,;]/gi) : '-'          	
+  body = (type === 'conversation' && mek.message.conversation.startsWith(prefix)) ? mek.message.conversation : (type == 'imageMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'videoMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'extendedTextMessage') && mek.message[type].text.startsWith(prefix) ? mek.message[type].text : (type == 'listResponseMessage') && mek.message[type].singleSelectReply.selectedRowId ? mek.message[type].singleSelectReply.selectedRowId : (type == 'buttonsResponseMessage') && mek.message[type].selectedButtonId ? mek.message[type].selectedButtonId : (type == 'stickerMessage') && (getCmd(mek.message[type].fileSha256.toString('base64')) !== null && getCmd(mek.message[type].fileSha256.toString('base64')) !== undefined) ? getCmd(mek.message[type].fileSha256.toString('base64')) : ""
 		budy = (type === 'conversation') ? mek.message.conversation : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : ''
 		const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()		
 		const args = body.trim().split(/ +/).slice(1)
 		const isCmd = body.startsWith(prefix)
+  	const arg = budy.slice(command.length + 2, budy.length)
 		const q = args.join(' ')
 		const botNumber = hexa.user.jid
 		const botNumberss = hexa.user.jid + '@c.us'
@@ -152,11 +173,11 @@ module.exports = hexa = async (hexa, mek) => {
         const conts = mek.key.fromMe ? hexa.user.jid : hexa.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         if (isCmd) cmdadd()
         const pushname = mek.key.fromMe ? hexa.user.name : conts.notify || conts.vname || conts.name || '-'
-
+        		cmddhit.push(command)
 
         //MESS
 		mess = {
-			wait: '[❗] Bentar Yak',
+			wait: 'Tunggu sebentar...',
 			success: 'Berhasil!',
 			wrongFormat: 'Format salah, coba liat lagi di menu',
 			error: {
@@ -165,7 +186,7 @@ module.exports = hexa = async (hexa, mek) => {
 				api: 'REST API ERROR'
 			},
 			only: {
-				group: 'Khusus grup ngab',
+				group: 'Khususs grup ngab',
 				ownerb: 'Fitur ini khusu OwnerKu'
 			}
 		}
@@ -198,7 +219,7 @@ const textImg = (teks) => {
         }
    //FAKEREPLY PRODUCT
             const ftoko = {
-                  key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6283852242764@s.whatsapp.net" } : {})},message: {"productMessage": {"product": {"productImage":{"mimetype": "image/jpeg","jpegThumbnail": fs.readFileSync(`./stik/thumb.jpeg`)},"title": `SAYA GANTENG YA? \n${pushname}`,"description": "𝙵𝚣𝚗𝙰𝚍𝚖𝚗", "currencyCode": "IDR","priceAmount1000": "9999999999","retailerId": "𝐢𝐦 𝐥𝐢𝐥𝐮𝐥𝐮𝐛𝐨𝐭","productImageCount": 1},"businessOwnerJid": `0@s.whatsapp.net`}}}
+                  key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6283852242764@s.whatsapp.net" } : {})},message: {"productMessage": {"product": {"productImage":{"mimetype": "image/jpeg","jpegThumbnail": fs.readFileSync(`./stik/thumb.jpeg`)},"title":`LiluluBot`,"description": "𝙵𝚣𝚗𝙰𝚍𝚖𝚗", "currencyCode": "IDR","priceAmount1000": "9999999999","retailerId": "𝐢𝐦 𝐥𝐢𝐥𝐮𝐥𝐮𝐛𝐨𝐭","productImageCount": 1},"businessOwnerJid": `0@s.whatsapp.net`}}}
             //FAKE KONTAK
             const fkontak = { 
                   key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: `0@s.whatsapp.net` } : {}) }, message: { 'contactMessage': { 'displayName': `${pushname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;${pushname},;;;\nFN:${pushname},\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}
@@ -216,7 +237,7 @@ const textImg = (teks) => {
                   key: {"fromMe": false,"participant": `0@s.whatsapp.net`, "remoteJid": "6283852242764-6283852242764@g.us" },message: { "liveLocationMessage": { "title":`${fake}`,}}}
    //FAKEREPLY PRODUCT
             const toko = {
-                  key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6283852242764@s.whatsapp.net" } : {})},message: {"productMessage": {"product": {"productImage":{"mimetype": "image/jpeg","jpegThumbnail": fs.readFileSync(`./stik/thumb.jpeg`)},"title": `SAYA GANTENG YA? \n${pushname}`,"description": "𝙵𝚣𝚗𝙰𝚍𝚖𝚗", "currencyCode": "IDR","priceAmount1000": "9999999999","retailerId": "𝐢𝐦 𝐥𝐢𝐥𝐮𝐥𝐮𝐛𝐨𝐭","productImageCount": 1},"businessOwnerJid": `0@s.whatsapp.net`}}}
+                  key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "6283852242764@s.whatsapp.net" } : {})},message: {"productMessage": {"product": {"productImage":{"mimetype": "image/jpeg","jpegThumbnail": fs.readFileSync(`./stik/thumb.jpeg`)},"title":`LiluluBot`,"description": "𝙵𝚣𝚗𝙰𝚍𝚖𝚗", "currencyCode": "IDR","priceAmount1000": "9999999999","retailerId": "𝐢𝐦 𝐥𝐢𝐥𝐮𝐥𝐮𝐛𝐨𝐭","productImageCount": 1},"businessOwnerJid": `0@s.whatsapp.net`}}}
 const fakevn = {
 	 key: { 
           fromMe: false,
@@ -374,6 +395,57 @@ const fvid = {
                     fs.unlinkSync(filename)
                 });
             }   
+
+///Button Text
+const sendButMessage = (id, text1, desc1, but = [], options = {}) => {
+const buttonMessage = {
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 1
+}
+hexa.sendMessage(id, buttonMessage, MessageType.buttonsMessage, options)
+}
+///Button Image
+const sendButImage = async(id, text1, desc1, gam1, but = [], options = {}) => {
+kma = gam1
+mhan = await hexa.prepareMessage(from, kma, image)
+const buttonMessages = {
+imageMessage: mhan.message.imageMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 4
+}
+hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+///Button Video
+const sendButVideo = async(id, text1, desc1, vid1, but = [], options = {}) => {
+kma = vid1
+mhan = await hexa.prepareMessage(from, kma, video)
+const buttonMessages = {
+videoMessage: mhan.message.videoMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 5
+}
+hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+///Button Location
+const sendButLocation = async (id, text1, desc1, gam1, but = [], options = {}) => {
+kma = gam1
+mhan = await hexa.prepareMessage(from, kma, location)
+const buttonMessages = {
+locationMessage: mhan.message.locationMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 6
+}
+hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+            
 //FUNCTION
             cekafk(afk)
             if (!mek.key.remoteJid.endsWith('@g.us') && offline){
@@ -492,42 +564,47 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
     }
     reply(tekss)
     break
-	case 'start':
-        
-        txtt =`Hai Kak ${pushname}\nPilih Opsi Dibawah Ini Ya.. `
+    
+	case 'menu':
+        txtt =`Hai Kak ${pushname}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
-               buttons = [{buttonId:`${prefix}menu`, 
-               buttonText:{displayText: 'Show Menu'},type:1},
-               {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1},
-               {buttonId:`${prefix}igowner`,buttonText:{displayText:'⎙ SOSMED'},type:1},
-               {buttonId: `${prefix}shutdown`,buttonText:{displayText: '☰ SHUTDOWN BOT'},type:1}]
+               buttons = [{buttonId:`${prefix}pe`, 
+               buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1},
+               {buttonId:`${prefix}donasi`,buttonText:{displayText:'☕DONASI'},type:1}]
 
                imageMsg = (await hexa.prepareMessageMedia(fs.readFileSync(`./lib/lilulu.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./lib/lilulu.jpeg`)})).imageMessage
 
                buttonsMessage = {
                contentText: `${txtt}`,
-               footerText: '© Creator FznAdmn',
+               footerText: '© Creator FznAdmn', imageMessage: imageMsg,
                buttons: buttons,
                headerType: 4
       }
 
-               prep = await hexa.prepareMessageFromContent(from,{imageMessage: imageMsg},{buttonsMessage},{quoted: fakevn})
+               prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
                hexa.relayWAMessage(prep)
                break
                
-case 'menu':
-    case 'p':
+    case 'pe':
+    case 'lmenu':
+    statm = await hexa.getStatus(`${sender.split('@')[0]}@c.us`)
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
-    	var menu = `${ucapanWaktu} ${pushname}
-*╭─❒ 「 BOT INFO 」 ──────*
-*│*➪ *NAMA : ${pushname}*
-*│*➪ *WIB    : ${timeWib}*
-*│*➪ *WIT    : ${timeWit}*
-*│*➪ *WITA  : ${timeWita}*
-*│*➪ *CREATOR : FznAdmn*
+    	var pe = `*╭─❒ 「 BOT INFO 」 ──────*
 *│*➪ *BOT NAME : 𝙻𝚒𝚕𝚞𝚕𝚞𝙱𝚘𝚝*
+*│*➪ *OWNER : @${owner.split('@')[0]}*
+*│*➪ *BATTERY : ${baterai.battery}*
 *│*➪ *PREFIX :「 MULTI PREFIX 」*
+*│*➪ *TOTAL HIT : ${cmddhit.length} Today*
 *│*➪ *BOT MODE : ${banChats ? "SELF-MODE" : "PUBLIC-MODE"}*
+*└──────────────────❒*
+
+*╭─❒ 「 USER & TIME 」 ──────*
+*│*➪ ${ucapanWaktu} ${pushname}
+*│*➪ *TAG   : @${pushname}*
+*│*➪ *NOMOR : @${sender.split('@')[0]}*
+*│*➪ *WIB   : ${timeWib}*
+*│*➪ *WIT   : ${timeWit}*
+*│*➪ *WITA  : ${timeWita}*
 *└──────────────────❒*
 ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 *╭─❒ OWNER*
@@ -551,6 +628,15 @@ case 'menu':
 *│*➪ _${prefix}settarget_
 *└──────────────────❒*
 
+*╭─❒ GROUP MENU*
+*│*➪ _${prefix}add_
+*│*➪ _${prefix}kick_
+*│*➪ _${prefix}creategrup_
+*│*➪ _${prefix}voting_
+*│*➪ _${prefix}delvote_
+*│*➪ _${prefix}listadmin_
+*└──────────────────❒*
+
 *╭─❒ DOWNLOAD*
 *│*➪ _${prefix}ytsearch_ <query>
 *│*➪ _${prefix}igstalk_ <query>
@@ -570,7 +656,6 @@ case 'menu':
 *│*➪ _${prefix}anime_ <random>
 *│*➪ _${prefix}pinterest_ <query>
 *│*➪ _${prefix}komiku_ <query>
-*│*➪ _${prefix}lirik_ <query>
 *│*➪ _${prefix}chara_ <query>
 *│*➪ _${prefix}playstore_ <query>
 *│*➪ _${prefix}otaku_ <query>
@@ -605,6 +690,18 @@ case 'menu':
 *│*➪ _${prefix}fitnahpc_
 *│*➪ _${prefix}teruskan_
 *│*➪ _${prefix}kontak_
+*│*➪ _${prefix}quotes_
+*│*➪ _${prefix}quotesdilan_
+*│*➪ _${prefix}quotesislami_
+*│*➪ _${prefix}katabijak
+*└──────────────────❒*
+
+*╭─❒ RANDOM TEXT*
+*│*➪ _${prefix}quotes_
+*│*➪ _${prefix}quotesdilan_
+*│*➪ _${prefix}quotesislami_
+*│*➪ _${prefix}katabijak_
+*│*➪ _${prefix}quotesanime_
 *└──────────────────❒*
 
 *╭─❒ TAG*
@@ -616,6 +713,8 @@ case 'menu':
 *└──────────────────❒*
 
 *╭─❒ INFOMENU*
+*│*➪ _${prefix}infoowner_
+*│*➪ _${prefix}infosc_
 *│*➪ _${prefix}cektokenlistrik_
 *│*➪ _${prefix}wikipedia_
 *│*➪ _${prefix}covidindo_
@@ -632,35 +731,29 @@ case 'menu':
 *│*➪ _${prefix}inspect_
 *│*➪ _${prefix}caripesan_
 *│*➪ _${prefix}linkwa query_
+*│*➪ _${prefix}ssweb_
+*│*➪ _${prefix}spamsms_ <62xxxx>
+*│*➪ _${prefix}spamchat_ <628xxxx>
 *│*➪ _${prefix}get_
 *│*➪ _${prefix}jadibot_
 *│*➪ _${prefix}listjadibot_
-*│*➪ _${prefix}voting_
 *│*➪ _${prefix}get_
 *│*➪ _${prefix}term_ <code>
 *│*➪ _x_ <code>
-*│*➪ _${prefix}delvote_
 *│*➪ _vote_
 *│*➪ _devote_
 *└──────────────────❒*
 
-*╭─❒ 「 PATNER BOT 」*  
-*│*
-*├  ⎔  : 𝙵𝚣𝚗𝙰𝚍𝚖𝚗*
-*├  ⎔  : K I Z A K I X D*
-*├  ⎔  : YakkoXCode*
-*├  ⎔  : Akira*
-*├  ⎔  : Origami-Bot*
-*├  ⎔  : Tegar*
-*│*
-*└──────────────────❍* 
-
-▢ _*𝘽𝙊𝙏 𝘽𝙔 𝙁𝙯𝙣𝘼𝙙𝙢𝙣*_ ▢`
-buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId:`${prefix}igowner`,buttonText:{displayText:'⎙ SOSMED'},type:1},{buttonId: `${prefix}shutdown`,buttonText:{displayText: '☰ SHUTDOWN BOT'},type:1}]
-
-               buttonsMessage = {
-               contentText: `${menu}`,
-               footerText: '_*© 𝙲𝚁𝙴𝙰𝚃𝙴𝙳 𝙱𝚈 𝙵𝚣𝚗𝙰𝚍𝚖𝚗*_',
+*╭─❒ 「 PESAN 」*  
+*│Thank you very much for using this bot.*
+*│And sorry if there are still many errors.*
+*│We will fix the error soon :)*
+*└──────────────────❍* `
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId:`${prefix}igowner`,buttonText:{displayText:'⎙ SOSMED'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕DONASI'},type:1}]
+      
+        buttonsMessage = {
+               contentText: `${pe}`,
+               footerText: '_*© 𝙲𝚁𝙴𝙰𝚃𝙴𝙳 𝙱𝚈 𝙵𝚣𝚗𝙰𝚍𝚖𝚗*_', imageMessage: wew,
                buttons: buttons,
                headerType: 1
 }
@@ -673,7 +766,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
             case 'developer':
             case 'author':
                 hexa.sendMessage(from, {displayname: "Owner Lilulu", vcard: vcard}, MessageType.contact, { quoted: ftoko})
-                    .then((res) => hexa.sendMessage(from, '*Tuh Kontaknya*', text, {quoted: res}))
+                    .then((res) => hexa.sendMessage(from, '*Tuh Kontak ownerku, jangan di spam ya!*', text, {quoted: res}))
                     
                 break
    case 'shutdown':
@@ -683,19 +776,41 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
              await sleep(3000)
              process.exit()
              break
-
-case 'add':
-					
-					if (args.length < 1) return reply('Yang mau di add jin ya?')
-					if (args[0].startsWith('08')) return reply('Gunakan kode negara kak')
-					try {
-						num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
-						hexa.groupAdd(from, [num])
-					} catch (e) {
-						console.log('Error :', e)
-						reply('Gagal menambahkan target, mungkin karena di private')
-					}
-					break
+  
+    case 'donasi':
+      reply('mau donasi apa cuman liat-liat nih?')
+      dnt =`◪𝗱𝗼𝗻𝗮𝘀𝗶
+│ Silahkan scan QRIS code diatas
+│ atau menggunakan metode di bawah ini
+├─ ❏ DANA
+├─ ❏ 085156724122
+├─ ❏ OVO
+├─ ❏ 089688543712
+├─ ❏ PULSA
+├─ ❏ 085156724122
+├─ ❏ linkAja
+├─ ❏ 085156724122
+├─ ❑ SAWERIA
+├─ ❑ https://saweria.co/EfZyN
+├─ ❏ Qris
+└─ ❏ https://cutt.ly/QrQris`
+  //idnt = fs.readFileSync('./src/donate.jpeg')
+  buttons = [{buttonId:`${prefix}menu`,buttonText:{displayText:'BACK TO MENU'},type:1}]
+  
+  imageMsg = (await hexa.prepareMessageMedia(fs.readFileSync(`./src/donate.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./lib/lilulu.jpeg`)})).imageMessage
+  
+  //imgnya = fakethumb(idnt, dnt)
+    buttonsMessage = {
+      contentText: `${dnt}`,
+      footerText: '©copyright FznAdmn', imageMessage: imageMsg,
+      buttons: buttons,
+      headerType: 4
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+               hexa.relayWAMessage(prep)
+               break
+               
  case 'igowner' :
                reply('https://instagram.com/efzyn_')
                break
@@ -762,6 +877,42 @@ mentionedJid: jids
 }
 await hexa.sendMessage(from, options, text)
 break
+//=====================GROUP MENU=====================//
+case 'add':
+				
+					if (args.length < 1) return reply('Yang mau di add jin ya?')
+					if (args[0].startsWith('08')) return reply('Gunakan kode negara kak')
+					try {
+						num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
+						hexa.groupAdd(from, [num])
+					} catch (e) {
+						console.log('Error :', e)
+						reply('Gagal menambahkan target, mungkin karena di private')
+					}
+					break
+	case 'kick':
+	  if (!isGroup) return reply(mess.only.group)
+	  if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
+			kick = mek.message.extendedTextMessage.contextInfo.participant
+		    hexa.groupRemove(from, [kick])
+						reply('Sukses mengeluarkan anggota')
+						break
+  	case 'creategrup':
+  	case 'creategroup':
+  	case 'creategc':
+			if (!isGroup) return reply(mess.only.group)
+				if (args.length < 1) return reply(`Ketik ${prefix}creategrup nama grup|@tag member`)
+				argz = arg.split('|')
+				if (mek.message.extendedTextMessage != undefined){
+                    mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+                    for (let i = 0; i < mentioned.length; i++){
+						anu = []
+						anu.push(mentioned[i])
+                    }
+					hexa.groupCreate(argz[0], anu)
+					reply(`Sukses membuat grup ${argz[0]}`)
+                }
+				break
     case 'delvote':
             if(!mek.key.remoteJid) return
             if(isVote) return reply('Tidak ada sesi Voting')
@@ -781,6 +932,17 @@ break
             addVote(from,split[1],split[0],split[2],reply)
             }
             break
+    case 'listadmin':
+					if (!isGroup) return reply(mess.only.group)
+					teks = `List admin of group *${groupMetadata.subject}*\n𝗧𝗼𝘁𝗮𝗹 : ${groupAdmins.length}\n\n`
+					no = 0
+					for (let admon of groupAdmins) {
+						no += 1
+						teks += `[${no.toString()}] @${admon.split('@')[0]}\n`
+					}
+					mentions(teks, groupAdmins, true)
+					break
+//==================BATAS BRO================//
     case 'linkwa':
             if(!q) return reply('cari group apa?')
             hx.linkwa(q)
@@ -823,11 +985,6 @@ break
             } catch(e){
             reply('Pesan tidak ditemukan!')
             }           
-            break
-    case 'lirik':
-            if(!q) return reply('lagu apa?')
-            let song = await hx.lirik(q)
-            sendMediaURL(from,song.thumb,song.lirik)
             break
     case 'otaku':
             if(!q) return reply('judul animenya?')
@@ -1023,6 +1180,12 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
           reply(`reply gambar/sticker/audio/video dengan caption ${prefix}totag`)
         }
         break
+        case 'settarget':
+            if(!q) return reply(`${prefix}settarget 628xxxxx`)
+            targetpc = args[0]
+            fakegroup(`Succes Mengganti target fitnahpc : ${targetpc}`)
+            break
+    //===================FUN MENU====================//
     case 'fitnah':
             if (args.length < 1) return reply(`Usage :\n${prefix}fitnah [@tag|pesan|balasanbot]]\n\nEx : \n${prefix}fitnah @tagmember|hai|hai juga`)
             var gh = args.join('')
@@ -1031,11 +1194,6 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             var target = gh.split("|")[1];
             var bot = gh.split("|")[2];
             hexa.sendMessage(from, `${bot}`, text, {quoted: { key: { fromMe: false, participant: `${mentioned}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target}` }}})
-            break
-    case 'settarget':
-            if(!q) return reply(`${prefix}settarget 628xxxxx`)
-            targetpc = args[0]
-            fakegroup(`Succes Mengganti target fitnahpc : ${targetpc}`)
             break
     case 'fitnahpc':
             if(!q) return reply(`${prefix}fitnahpc teks target|teks lu`)
@@ -1046,6 +1204,126 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             const responye = await hexa.sendMessage(jids, `${split[1]}`, MessageType.text, options)
             await hexa.deleteMessage(jids, { id: responye.messageID, remoteJid: jids, fromMe: true })
             break
+            
+//====================RANDOM TEXT==========================//
+    case 'quote':
+    case 'quotes':
+      quot = await fetchJson(`https://api.lolhuman.xyz/api/random/quotes?apikey=${LolKey}`)
+      isi = quot.result
+      teks = `"${isi.quote}"`
+      bt = `${isi.by}`
+     buttons = [{buttonId:`${prefix}quotes`, buttonText:{displayText:'⏩ NEXT'},type:1},
+     {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      
+      buttonsMessage = {
+      contentText: `${teks}`,
+      footerText: `${bt}`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      break
+    case 'quotesdilan':
+      qtdilan = await fetchJson(`https://api.lolhuman.xyz/api/quotes/dilan?apikey=${LolKey}`)
+      buttons = [{buttonId:`${prefix}quotesdilan`, buttonText:{displayText:'⏩ NEXT'},type:1},
+      {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      buttonsMessage = {
+      contentText: `"${qtdilan.result}"`,
+      footerText: `Quotes Dilan`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      
+      break
+  case 'quotesislami':
+    qi = await fetchJson(`https://api.lolhuman.xyz/api/quotes/islami?apikey=${LolKey}`)
+    buttons = [{buttonId:`${prefix}quotesislami`, buttonText:{displayText:'⏩ NEXT'},type:1},
+    {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      buttonsMessage = {
+      contentText: `"${qi.result}"`,
+      footerText: `©lilulu-bot 2k21`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      
+      break
+      
+  case 'katabijak':
+    ktbi = await fetchJson(`https://api.lolhuman.xyz/api/random/katabijak?apikey=${LolKey}`)
+    buttons = [{buttonId:`${prefix}katabijak`, buttonText:{displayText:'⏩ NEXT'},type:1},
+    {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      buttonsMessage = {
+      contentText: `"${ktbi.result}"`,
+      footerText: `©lilulu-bot 2k21`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      
+      break
+      
+  case 'katabucin':
+  case 'bucin':
+    buc = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${LolKey}`)
+    buttons = [{buttonId:`${prefix}katabucin`, buttonText:{displayText:'⏩ NEXT'},type:1},
+    {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      buttonsMessage = {
+      contentText: `"${buc.result}"`,
+      footerText: `©lilulu-bot 2k21`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      
+      break
+      
+    case 'quotesanime':
+      anim = await fetchJson(`https://api.lolhuman.xyz/api/random/quotesnime?apikey=${LolKey}`)
+      wibu = anim.result 
+      buttons = [{buttonId:`${prefix}quotesanime`, buttonText:{displayText:'⏩ NEXT'},type:1},
+    {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      buttonsMessage = {
+      contentText: `${petik}${wibu.character} Said:${petik}\n\n*"${wibu.quote}"*\n\n${petik}In Anime: ${wibu.anime}\n${wibu.episode}${petik}`,
+      footerText: `©lilulu-bot 2k21`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      
+      break
+      
+    case 'quotesimg':
+      restnya = await getBuffer(`https://api.lolhuman.xyz/api/random/quotesimage?apikey=${LolKey}`)
+      imgnya = restnya.result
+      buttons = [{buttonId:`${prefix}quotesimg`, buttonText:{displayText:'⏩NEXT'},type:1}]
+      
+      imageMsg = (await hexa.prepareMessageMedia(`${imgnya}`, 'imageMessage', {thumbnail: fs.readFileSync(`./lib/lilulu.jpeg`)})).imageMessage
+      
+      buttonsMessage = {
+      footerText: `©lilulu-bot 2k21`, imageMessage: imageMsg,
+      buttons: buttons,
+      headerType: 4
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+               break
+      
+//=====================BATAS===========================//
     case 'tomp3':
             if (!isQuotedVideo) return fakegroup('Reply videonya!')
             fakegroup(mess.wait)
@@ -1314,7 +1592,7 @@ case 'upswaudio':
 					mentions(teks, members_id, true)
 					break
 					
-//=================INFOMENU===================//
+//=================INFO MENU===================//
 case 'ctokenlistrik':
       case 'ctlistrik':
       case 'cektokenlistrik':
@@ -1396,6 +1674,62 @@ case 'ctokenlistrik':
               }
           reply(ini_txt)
         break
+  case 'infosc':
+  case 'sc':
+  case 'script':
+        //case ⌈❗」 by  Fauzan
+esceh = `❥ *info script bot*
+├⊳⊳ Base: Hexa
+├⊳⊳ Creator 1: FauzanAdiman
+├⊳⊳ Owner: ${namaowner}
+│
+└──┤Link Github├────❥
+  ├✜ Github Efzyn
+  ├✜ https://github.com/BerrRecode/
+  ├✜ Github SC bot(private)
+  ├✜ https://github.com/BerrRecode/lilulu-bot.git
+  └───────────────────⊳⊳⊳ `
+     buttons = [{buttonId:`${prefix}menu`,buttonText:{displayText:'BACK TO MENU'},type:1},
+     {buttonId:`${prefix}infoowner`,buttonText:{displayText:'💎INFO OWNER'},type:1}]
+  
+    buttonsMessage = {
+      contentText: `${esceh}`,
+      footerText: '©copyright FznAdmn',
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+      hexa.relayWAMessage(prep)
+                break
+    case 'infoowner':
+		        case 'infodeveloper':
+		        case 'infopengembang':
+		           //case ⌈❗」 by  Fauzan
+ infownr = `◪ Hallo my name is Fauzan
+├ From: Situbondo, East Java, Indonesia
+├ was born: Situbondo, 19 june 2003
+├ Age: 18 years old
+└─┤My Social Media├─⊳⊳
+  ├─ ❏ WhatsApp
+  ├─ ❏ 085156724122
+  ├─ ❏ Github
+  ├─ ❏ https://github.com/BerrRecode
+  ├─ ❏ Instagram
+  └─ ❏ https://www.instagram.com/efzyn_`
+				buttons = [{buttonId:`${prefix}menu`,buttonText:{displayText:'BACK TO MENU'},type:1},
+				{buttonId:`${prefix}infosc`,buttonText:{displayText:'🤖INFO SCRIPT'},type:1}]
+  
+    buttonsMessage = {
+      contentText: `${infownr}`,
+      footerText: '©copyright FznAdmn',
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+      hexa.relayWAMessage(prep)
+			break
 //===============BATAS NI=====================//
 	case 'play':
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
@@ -1656,23 +1990,22 @@ hexa.updatePresence(from, Presence.composing)
           	}
 			break	
 hexa.cmd.on('asupan', async (data) => {
-            if (isLimit(data.sender)) return data.reply(mess.limit) 
-            if(data.args[0].toLowerCase() == 'ukhty') {
-              hexa.sendFileFromUrl(data.from, 'https://dapuhy-api.herokuapp.com/api/asupan/asupanukhty?apikey=BryanRfly', 'ukhty.mp4', `Nih Asupannya @${data.sender.split('@')[0]}`, data.message)
+           if(data.args[0].toLowerCase() == 'ukhty') {
+              hexa.sendFileFromUrl(data.from, `https://dapuhy-api.herokuapp.com/api/asupan/asupanukhty?apikey=${DapKey}`, 'ukhty.mp4', `Nih Asupannya @${data.sender.split('@')[0]}`, data.message)
             } else if(data.args[0].toLowerCase() == 'santuy') {
-              hexa.sendFileFromUrl(data.from, 'https://dapuhy-api.herokuapp.com/api/asupan/asupan?apikey=BryanRfly', 'santuy.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
+              hexa.sendFileFromUrl(data.from, `https://dapuhy-api.herokuapp.com/api/asupan/asupan?apikey=${DapKey}`, 'santuy.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
             } else if(data.args[0].toLowerCase() == '+62') {
-              hexa.sendFileFromUrl(data.from, 'https://dapuhy-api.herokuapp.com/api/asupan/asupan?apikey=BryanRfly', '+62.mp4',`Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
+              hexa.sendFileFromUrl(data.from, `https://dapuhy-api.herokuapp.com/api/asupan/asupan?apikey=${DapKey}`, '+62.mp4',`Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
             } else if(data.args[0].toLowerCase() == 'bocil')  {
-              hexa.sendFileFromUrl(data.from, 'https://dapuhy-api.herokuapp.com/api/asupan/asupanbocil?apikey=BryanRfly', 'bocil.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
+              hexa.sendFileFromUrl(data.from, `https://dapuhy-api.herokuapp.com/api/asupan/asupanbocil?apikey=${DapKey}`, 'bocil.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
             } else if(data.args[0].toLowerCase() == 'rikagusriani') {
-              hexa.sendFileFromUrl(data.from, 'https://dapuhy-api.herokuapp.com/api/asupan/asupanrikagusriani?apikey=BryanRfly', 'rika.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
+              hexa.sendFileFromUrl(data.from, `https://dapuhy-api.herokuapp.com/api/asupan/asupanrikagusriani?apikey=${DapKey}`, 'rika.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message)
             } else if(data.args[0].toLowerCase() == 'ghea') {
-              hexa.sendFileFromUrl(data.from, 'https://dapuhy-api.herokuapp.com/api/asupan/asupanghea?apikey=BryanRfly', 'ghea.mp4', `Nih Kak Asupannya`, data.message)
+              hexa.sendFileFromUrl(data.from, `https://dapuhy-api.herokuapp.com/api/asupan/asupanghea?apikey=${DapKey}`, 'ghea.mp4', `Nih Kak Asupannya`, data.message)
             } else if(data.args[0].toLowerCase() == 'chika') {
-              hexa.sendFileFromUrl(data.from, 'https://pencarikode.xyz/api/chika?apikey=pais', 'chika.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message) 
+              hexa.sendFileFromUrl(data.from, 'https://pencarikode.xyz/api/chika?apikey=APIKEY', 'chika.mp4', `Nih Kak @${data.sender.split('@')[0]} Asupannya`, data.message) 
             } else if(data.args[0].toLowerCase() == 'random') {
-              hexa.sendFileFromUrl(data.from, 'https://pencarikode.xyz/api/asupan?apikey=pais', 'random.mp4', 'Nih', data.message)
+              hexa.sendFileFromUrl(data.from, 'https://pencarikode.xyz/api/asupan?apikey=APIKEY', 'random.mp4', 'Nih', data.message)
             } else {
               		let po = hexa.prepareMessageFromContent(data.from, {
 					"listMessage":{
@@ -1720,6 +2053,27 @@ hexa.cmd.on('asupan', async (data) => {
             hexa.relayWAMessage(po, {waitForAck: true})
             }
         })
+    case 'asupan2':
+    case 'asupanrandom':
+            asupn = await fetchJson(`http://api.lolhuman.xyz/api/asupan?apikey=${LolKey}`)
+            rstl = asupn.result
+            vid2 = hexa.sendMessage(from, rstl, MessageType.video)
+            
+            //sendButVideo(from, `${vid2}`, 
+            buttons = [{buttonId:`${prefix}asupanrandom`, buttonText:{displayText:'⏩NEXT'},type:1}] 
+
+  buttonsMessage = {
+      contentText: `${vid2}`,
+      footerText: '©copyright FznAdmn',
+      buttons: buttons,
+      headerType: 5
+    }
+    
+   prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+               break
+            
+                    break
 	case 'setthumb':
 	  if (!isOwner) return reply(mess.only.ownerb)
 	        if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedSticker) && args.length == 0) {
@@ -1913,18 +2267,23 @@ case 'youtubedl':
    
 //=====================STALKER MENU======================//
     case 'igstalk':
-            if (!q) return fakegroup('Usernamenya?')
-            ig.fetchUser(`${args.join(' ')}`).then(Y => {
-            console.log(`${args.join(' ')}`)
-            ten = `${Y.profile_pic_url_hd}`
-            teks = `*ID* : ${Y.profile_id}\n*Username* : ${args.join('')}\n*Full Name* : ${Y.full_name}\n*Bio* : ${Y.biography}\n*Followers* : ${Y.followers}\n*Following* : ${Y.following}\n*Private* : ${Y.is_private}\n*Verified* : ${Y.is_verified}\n\n*Link* : https://instagram.com/${args.join('')}`
-            sendMediaURL(from,ten,teks) 
-            })      
-            break    
+				reply('[❗] Sabar lagi stalking IG nya')
+				get_result = await fetchJson(`https://api.lolhuman.xyz/api/stalkig/${body.slice(9)}?apikey=${LolKey}`)
+				get_result = get_result.result
+				txt = `Link : https://www.instagram.com/${get_result.username}\n`
+				txt += `Username : ${get_result.username}\n`
+				txt += `Full : ${get_result.fullname}\n`
+				txt += `Post : ${get_result.posts}\n`
+				txt += `Followers : ${get_result.followers}\n`
+				txt += `Following : ${get_result.following}\n`
+				txt += `Bio : ${get_result.bio}\n`
+				buffer = await getBuffer(get_result.photo_profile)
+				hexa.sendMessage(from, buffer, image, {quoted: mek, caption: txt})
+				break
             case 'stalkgithub':
              if (args.length == 0) return reply(`Example: ${prefix + command} LoL-Human`)
               username = args[0]
-              ini_result = await fetchJson(`https://api.lolhuman.xyz/api/github/${username}?apikey=${apikey}`)
+              ini_result = await fetchJson(`https://api.lolhuman.xyz/api/github/${username}?apikey=${LolKey}`)
               ini_result = ini_result.result
               ini_buffer = await getBuffer(ini_result.avatar)
               ini_txt = `Name : ${ini_result.name}\n`
@@ -1934,7 +2293,7 @@ case 'youtubedl':
               ini_txt += `Followers : ${ini_result.followers}\n`
               ini_txt += `Following : ${ini_result.following}\n`
               ini_txt += `Bio : ${ini_result.bio}`
-          lolhuman.sendMessage(from, ini_buffer, image, { caption: ini_txt })
+          hexa.sendMessage(from, ini_buffer, image, { caption: ini_txt })
                   break
 //=====================BATAS STALKER======================//
     
@@ -2084,6 +2443,7 @@ case 'youtubedl':
             reply('kirim/reply gambar/video')
             }
             break	
+//=======================OTHER MENU=====================//
     case 'inspect':
             try {
             if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return reply(mess.Iv)
@@ -2114,6 +2474,75 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
              reply('Link error')
              }
              break
+              case 'ssweb':
+        if (args.length == 0) return reply(`Example: ${prefix + command} https://github.com/BerrRecode/`)
+          ini_link = args[0]
+        ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/ssweb?apikey=${LolKey}&url=${ini_link}`)
+          await hexa.sendMessage(from, ini_buffer, image, { quoted: mek })
+                    break
+      case 'spamsms':
+                    if (args.length == 0) return reply(`Example: ${prefix + command} 628481749928`)
+                    reply('Sabar lagi ngespam nomornya!')
+                    nomor = args[0]
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam1?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam2?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam3?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam4?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam5?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam6?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam7?apikey=${LolKey}&nomor=${nomor}`)
+                    await fetchJson(`https://api.lolhuman.xyz/api/sms/spam8?apikey=${LolKey}&nomor=${nomor}`)
+                    reply("Success")
+                    break       
+      case 'spamchat':
+                    if (args.length < 1) return reply(`Mau Spamchat ke siapa? Contoh: ${prefix}spamchat 628481749928 Oy bwang`)
+                    if (args[0].startsWith('08')) return reply('Gunakan kode bahasa kak')
+                    if (args[0].startsWith(`${owner}`)) return reply(`Mau Ngapain Spam Ke ownerku ${namaowner}?👿`)
+                    mansed = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
+                    const kontul = body.slice(8)
+                    if (kontul.length > 300) return hexa.sendMessage(from, 'Maaf Teks Terlalu Panjang, Maksimal 300 Teks', text, {quoted: fkontak})
+                    var nomor = mek.participant
+                    const busah = `*[  SPAM CHAT  ]*\nNomor : @${nomor.split('@s.whatsapp.net')[0]}\nPesan : ${kontul}`
+                    var options = {
+                    text: busah,
+                    contextInfo: {mentionedJid: [nomor]},
+                    }
+                    hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
+                    reply('awokwok SPAM CHAT BERHASIL:)')
+                    break
+             
 
 default:
 if (budy.startsWith('x')){
