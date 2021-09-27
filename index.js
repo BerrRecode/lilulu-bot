@@ -54,6 +54,7 @@ const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const afk = JSON.parse(fs.readFileSync('./lib/off.json'))
 const { sleep, isAfk, cekafk, addafk } = require('./lib/offline')
 const voting = JSON.parse(fs.readFileSync('./lib/voting.json'))
+const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
 //const { donasi } = require('./lib/donasi')
 const { addVote, delVote } = require('./lib/vote')
 const { y2mateA, y2mateV } = require('./lib/y2mate')
@@ -116,6 +117,37 @@ var ucapanWaktu = 'Selamat pagi 🌈'
                                         }
 if(time2 < "03:00:00"){
 var ucapanWaktu = 'Dini hari 🌌'                                       }
+
+
+var ase = new Date();
+                        var waktoo = ase.getHours();
+                        switch(waktoo){
+                case 0: waktoo = 'Waktu Tengah Malam🌚'; break;
+                case 1: waktoo = 'Waktu Tengah Malam🌚'; break;
+                case 2: waktoo = 'Waktu Dini Hari🌒'; break;
+                case 3: waktoo = 'Waktu Dini Hari🌓'; break;
+                case 4: waktoo = 'Subuh🌔'; break;
+                case 5: waktoo = 'Subuh🌔'; break;
+                case 6: waktoo = 'Selamat Pagi kak🌝'; break;
+                case 7: waktoo = 'Selamat Pagi kak🌝'; break;
+                case 8: waktoo = 'Selamat Pagi kak🌝'; break;
+                case 9: waktoo = 'Selamat Pagi kak🌝'; break;
+                case 10: waktoo = 'Selamat Pagi kak🌝'; break;
+                case 11: waktoo = 'Selamat Siang Kak🌞'; break;
+                case 12: waktoo = 'Selamat Siang Kak🌞'; break;
+                case 13: waktoo = 'Selamat Siang Kak🌞'; break;
+                case 14: waktoo = 'Selamat Siang Kak🌞'; break;
+                case 15: waktoo = 'Selamat Sore Kak🌄'; break;
+                case 16: waktoo = 'Selamat Sore Kak🌅'; break;
+                case 17: waktoo = 'Selamat Sore Kak🌆'; break;
+                case 18: waktoo = 'Waktu Magrib🌘'; break;
+                case 19: waktoo = 'Waktu Magrib🌚'; break;
+                case 20: waktoo = 'Selamat Malam🌚'; break;
+                case 21: waktoo = 'Selamat Malam🌚'; break;
+                case 22: waktoo = 'Selamat Malam🌚'; break;
+                case 23: waktoo = 'Tengah Malam🌚'; break;
+            }
+            var tampilUcapan = waktoo;
 //=================================================//
 // Sticker Cmd
 // Funcation Stick Cmd , Sorry Bang saya Encrip hehe:)
@@ -158,6 +190,7 @@ module.exports = hexa = async (hexa, mek) => {
 		// const isSelfNumber = config.NomorSELF
 		// const isOwner = sender.id === isSelfNumber
 		const isOwner = owner.includes(sender)
+		const isBanned = ban.includes(sender)
 		const totalchat = await hexa.chats.all()
 		const groupMetadata = isGroup ? await hexa.groupMetadata(from) : ''
 		const groupName = isGroup ? groupMetadata.subject : ''
@@ -180,6 +213,7 @@ module.exports = hexa = async (hexa, mek) => {
 			wait: 'Tunggu sebentar...',
 			success: 'Berhasil!',
 			wrongFormat: 'Format salah, coba liat lagi di menu',
+			banned : 'maaf anda TerBanned🚫',
 			error: {
 				stick: 'bukan sticker itu:v',
 				Iv: 'Linknya error:v',
@@ -566,7 +600,8 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
     break
     
 	case 'menu':
-        txtt =`Hai Kak ${pushname}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
+	  if (isBanned) return reply(mess.banned)
+        txtt =`Hai Kak ${pushname}, ${tampilUcapan}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
                buttons = [{buttonId:`${prefix}pe`, 
                buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1},
@@ -587,6 +622,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
                
     case 'pe':
     case 'lmenu':
+     if (isBanned) return reply(mess.banned)
     statm = await hexa.getStatus(`${sender.split('@')[0]}@c.us`)
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
     	var pe = `*╭─❒ 「 BOT INFO 」 ──────*
@@ -599,7 +635,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *└──────────────────❒*
 
 *╭─❒ 「 USER & TIME 」 ──────*
-*│*➪ ${ucapanWaktu} ${pushname}
+*│*➪ ${tampilUcapan} ${pushname}
 *│*➪ *TAG   : @${pushname}*
 *│*➪ *NOMOR : @${sender.split('@')[0]}*
 *│*➪ *WIB   : ${timeWib}*
@@ -608,11 +644,11 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *└──────────────────❒*
 ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 *╭─❒ OWNER*
-*│*➪ _${prefix}off_
-*│*➪ _${prefix}on_
 *│*➪ _${prefix}bc_
 *│*➪ _${prefix}bc2_
 *│*➪ _${prefix}bcgc_
+*│*➪ _${prefix}ban_
+*│*➪ _${prefix}unban_
 *│*➪ _${prefix}setcmd_
 *│*➪ _${prefix}delcmd_
 *│*➪ _${prefix}listcmd_
@@ -690,10 +726,6 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *│*➪ _${prefix}fitnahpc_
 *│*➪ _${prefix}teruskan_
 *│*➪ _${prefix}kontak_
-*│*➪ _${prefix}quotes_
-*│*➪ _${prefix}quotesdilan_
-*│*➪ _${prefix}quotesislami_
-*│*➪ _${prefix}katabijak
 *└──────────────────❒*
 
 *╭─❒ RANDOM TEXT*
@@ -702,6 +734,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *│*➪ _${prefix}quotesislami_
 *│*➪ _${prefix}katabijak_
 *│*➪ _${prefix}quotesanime_
+*│*➪ _${prefix}bucin_
 *└──────────────────❒*
 
 *╭─❒ TAG*
@@ -1482,6 +1515,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             reply(`Kirim gambar dengan caption ${prefix}swm teks|teks atau tag gambar yang sudah dikirim`)
             }
             break
+//========================OWNER MENU=========================//
     case 'upswteks':
             if (!q) return fakestatus('Isi teksnya!')
             hexa.sendMessage('status@broadcast', `${q}`, extendedText)
@@ -1592,10 +1626,41 @@ case 'upswaudio':
 					mentions(teks, members_id, true)
 					break
 					
+				case 'ban':
+				if (!isOwner) return reply(mess.only.ownerb)
+				bnnd = `${args[0].replace('@', '')}@s.whatsapp.net`
+				ban.push(bnnd)
+				fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+				reply(`Nomor ${bnnd} telah dibanned!`)
+				break
+				case 'unban':
+				if (!isOwner) return reply(mess.only.ownerb)
+				ya = `${args[0].replace('@', '')}@s.whatsapp.net`
+				unb = ban.indexOf(mek)
+				ban.splice(unb, 1)
+				fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+				reply(`Nomor ${ya} telah di unban!`)
+				break
+				
+				case 'block':
+				if (!isGroup) return reply(dpa.groupo)
+				if (!isOwner) return reply(dpa.ownerb)
+				hexa.updatePresence(from, Presence.composing) 
+				hexa.chatRead (from)
+				hexa.blockUser (`${body.slice(7)}@c.us`, 'add')
+				hexa.sendMessage(from, `Perintah Diterima, Memblokir ${body.slice(7)}@c.us`, text, {quoted: fkontak})
+				break
+		        case 'unblock':
+				if (!isGroup) return reply(dpa.groupo)
+				if (!isOwner) return reply(dpa.ownerb)
+				hexa.blockUser (`${body.slice(9)}@c.us`, 'remove')
+			    hexa.sendMessage(from, `Perintah Diterima, Membuka Blockir ${body.slice(9)}@c.us`, text, {quoted: fkontak})
+				break
 //=================INFO MENU===================//
 case 'ctokenlistrik':
       case 'ctlistrik':
       case 'cektokenlistrik':
+      if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`idnya mana broh?\ncontoh: ${prefix + command}287873876489`)
       reply(mess.wait)
       const tkn = args.join(' ')
@@ -1621,12 +1686,14 @@ case 'ctokenlistrik':
     case 'covidindo':
       case 'covidid':
         reply(mess.wait)
+        if (isBanned) return reply(mess.banned)
         copid = await fetchJson(`https://api.lolhuman.xyz/api/corona/indonesia?apikey=${LolKey}`)
         comrona = copid.result
         teksc = `*INFO COVID19 INDONESIA*\n\nPositif: ${comrona.positif}\nSembuh: ${comrona.sembuh}\nDirawat: ${comrona.dirawat}\nMeniggal: ${comrona.meninggal}\n\n${petik}KEEP SAFE YA KAWAN-KAWAN:)${petik}`
         hexa.sendMessage(from, teksc, text, {quoted: mek})
         break
     case 'covidglobal':
+      if (isBanned) return reply(mess.banned)
         copidg = await fetchJson(`https://api.lolhuman.xyz/api/corona/global?apikey=${LolKey}`)
         reply(mess.wait)
         comronag = copidg.result
@@ -1635,12 +1702,14 @@ case 'ctokenlistrik':
         break
    case 'chord':
       reply(mess.wait)
+      if (isBanned) return reply(mess.banned)
       cord = await fetchJson(`https://api.lolhuman.xyz/api/chord?apikey=${LolKey}&query=${body.slice(7)}`)
         infolag = cord.result
         laguc = `Judul lagu: ${infolag.title}\nCreated: ${infolag.created}\nChord:\n${infolag.chord}`
         hexa.sendMessage(from, laguc, text, {quoted: mek})
       break
     case 'lirik':
+    if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply('judul lagu yang ingin dicari liriknya mana bro?')
       reply(mess.wait)
       jdl = args.join(' ')
@@ -1649,12 +1718,14 @@ case 'ctokenlistrik':
       break
     case 'wikipedia':
       reply(mess.wait)
+      if (isBanned) return reply(mess.banned)
       wiki = await fetchJson(`https://api.lolhuman.xyz/api/wiki?apikey=${LolKey}&query=${body.slice(11)}`)
       wiped = wiki.result
       wikiped = `Menurut wikipedia: ${wiped}`
       hexa.sendMessage(from, wikiped, text, {quoted: mek})
       break
     case 'jadwaltv':
+      if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply('nama channel tvnya apa ngab?')
       fzxn = args[0]
       fzn = await fetchJson(`https://api.lolhuman.xyz/api/jadwaltv/${fzxn}?apikey=${LolKey}`)
@@ -1666,6 +1737,7 @@ case 'ctokenlistrik':
                 reply(teks)
       break
       case 'jadwaltvnow':
+        if (isBanned) return reply(mess.banned)
         get_result = await fetchJson(`https://api.lolhuman.xyz/api/jadwaltv/now?apikey=${LolKey}`)
         get_result = get_result.result
         ini_txt = `Jadwal TV Now :\n`
