@@ -187,7 +187,8 @@ module.exports = hexa = async (hexa, mek) => {
 			},
 			only: {
 				group: 'Khususs grup ngab',
-				ownerb: 'Fitur ini khusu OwnerKu'
+				ownerb: 'Fitur ini khusu OwnerKu',
+				adming: 'Fitur ini khusus admin grup'
 			}
 		}
 		 // here button function
@@ -879,7 +880,7 @@ await hexa.sendMessage(from, options, text)
 break
 //=====================GROUP MENU=====================//
 case 'add':
-		if (!isOwner) return reply(mess.only.ownerb)
+		if (!isGroupAdmins) return reply(mess.only.adming)
 		if (!isGroup) return reply(mess.only.group)
 		if (isBanned) return reply(mess.banned)
 					if (args.length < 1) return reply('Yang mau di add jin ya?')
@@ -1622,6 +1623,7 @@ case 'upswaudio':
 			hexa.sendMessage(from, optionshidetag, text)
 			break
 	case 'tagall':
+	  if (!isGroupAdmins) return reply(mess.only.adming)
 	  if (isBanned) return reply(mess.banned)
 	  if (!isGroup) return reply(mess.only.group)
 			if (!mek.key.fromMe && !isGroup) return reply(mess.only.group)
