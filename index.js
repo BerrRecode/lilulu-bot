@@ -51,17 +51,18 @@ const { yta, ytv, igdl, upload, formatDate } = require('./lib/ytdl')
 const { webp2mp4File} = require('./lib/webp2mp4')
 const { cmdadd } = require('./lib/totalcmd.js')
 const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
-const afk = JSON.parse(fs.readFileSync('./lib/off.json'))
-const { sleep, isAfk, cekafk, addafk } = require('./lib/offline')
-const voting = JSON.parse(fs.readFileSync('./lib/voting.json'))
-const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
+const { sleep, isAfk2, cekafk2, addafk2 } = require('./lib/offline')
 //const { donasi } = require('./lib/donasi')
 const { addVote, delVote } = require('./lib/vote')
 const { y2mateA, y2mateV } = require('./lib/y2mate')
 const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 const petik = ('```')
 const pdua = ('"')
-
+//===============JSON FILE===================//
+const afk2 = JSON.parse(fs.readFileSync('./lib/off.json'))
+const voting = JSON.parse(fs.readFileSync('./lib/voting.json'))
+const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
+const afk = JSON.parse(fs.readFileSync('./database/afk.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
 
 //============APIKEY DISNI===========//
@@ -157,6 +158,10 @@ module.exports = hexa = async (hexa, mek) => {
 		// const isOwner = sender.id === isSelfNumber
 		const isOwner = owner.includes(sender)
 		const isBanned = ban.includes(sender)
+		const mentionUser = type == "extendedTextMessage" ? mek.message.extendedTextMessage.contextInfo.mentionedJid || [] : []
+            mentionByReply = type == "extendedTextMessage" ? mek.message.extendedTextMessage.contextInfo.participant || "" : ""
+            mentionUser.push(mentionByReply)
+            //hitt.push(command)
 		const totalchat = await hexa.chats.all()
 		const groupMetadata = isGroup ? await hexa.groupMetadata(from) : ''
 		const groupName = isGroup ? groupMetadata.subject : ''
@@ -173,7 +178,6 @@ module.exports = hexa = async (hexa, mek) => {
         if (isCmd) cmdadd()
         const pushname = mek.key.fromMe ? hexa.user.name : conts.notify || conts.vname || conts.name || '-'
         		cmddhit.push(command)
-
         //MESS
 		mess = {
 			wait: 'Tunggu sebentar...',
@@ -188,9 +192,11 @@ module.exports = hexa = async (hexa, mek) => {
 			only: {
 				group: 'Khususs grup ngab',
 				ownerb: 'Fitur ini khusu OwnerKu',
-				adming: 'Fitur ini khusus admin grup'
+				adming: 'Fitur ini khusus admin grup',
+				Badmin: 'Bot harus jadi ADMIN terlebih dahulu'
 			}
 		}
+//const m = simple.smsg(hexa, mek);
 		 // here button function
         selectedButton = (type == 'buttonsResponseMessage') ? mek.message.buttonsResponseMessage.selectedButtonId : ''
 
@@ -448,11 +454,11 @@ hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 }
             
 //FUNCTION
-            cekafk(afk)
+           cekafk2(afk2)
             if (!mek.key.remoteJid.endsWith('@g.us') && offline){
             if (!mek.key.fromMe){
-            if (isAfk(mek.key.remoteJid)) return
-            addafk(mek.key.remoteJid)
+            if (isAfk2(mek.key.remoteJid)) return
+            addafk2(mek.key.remoteJid)
             heheh = ms(Date.now() - waktu) 
             hexa.sendMessage(mek.key.remoteJid,`@${owner} Sedang Offline!\n\n*Alasan :* ${alasan}\n*Sejak :* ${heheh.hours} Jam, ${heheh.minutes} Menit, ${heheh.seconds} Detik lalu\n\nSilahkan Hubungi Lagi Nanti`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
             }
@@ -464,8 +470,8 @@ hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
         if (mek.message.extendedTextMessage.contextInfo.mentionedJid != undefined){
         for (let ment of mek.message.extendedTextMessage.contextInfo.mentionedJid) {
         if (ment === `${owner}@s.whatsapp.net`){
-        if (isAfk(mek.key.remoteJid)) return
-        addafk(mek.key.remoteJid)
+        if (isAfk2(mek.key.remoteJid)) return
+        addafk2(mek.key.remoteJid)
         heheh = ms(Date.now() - waktu)
         hexa.sendMessage(mek.key.remoteJid,`@${owner} Sedang Offline!\n\n *Alasan :* ${alasan}\n *Sejak :* ${heheh.hours} Jam, ${heheh.minutes} Menit, ${heheh.seconds} Detik lalu\n\nSilahkan Hubungi Lagi Nanti`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
           }
@@ -475,6 +481,22 @@ hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
         }
       }
     }
+//============================================================================================================================//
+//==============FUNGSI AFK DI SINI=====================//
+			for (let x of mentionUser) {
+                if (afk.hasOwnProperty(x.split('@')[0])) {
+                    aefka = "Dia Lagi Afk bro!!!\n"
+                    if (afk[x.split('@')[0]] != "") {
+                        aefka += "Dengan alasan " + afk[x.split('@')[0]]
+                    }
+                    hexa.sendMessage(from, aefka, text, {quoted: mek})
+                }
+            }
+            if (afk.hasOwnProperty(sender.split('@')[0])) {
+                reply("Anda telah keluar dari mode afk.")
+                delete afk[sender.split('@')[0]]
+                fs.writeFileSync("./database/afk.json", JSON.stringify(afk))
+            }
 //========================================================================================================================//
 		colors = ['red', 'white', 'black', 'blue', 'yellow', 'green']
 		const isMedia = (type === 'imageMessage' || type === 'videoMessage')
@@ -533,6 +555,7 @@ hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
         }
     }
 }	
+//===============INI BATAS YA BRO=================//
         if (!mek.key.fromMe && banChats === true) return
 switch (command) {
     case 'jadibot':
@@ -543,15 +566,6 @@ switch (command) {
     if(!mek.key.fromMe)return reply('tidak bisa stopjadibot kecuali owner')
     stopjadibot(reply)
     break
-case 'leaveall':
-             if (!isOwner) return  
-             let totalgroup = hexa.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
-             for (let id of totalgroup) {
-             sendMess(id, 'Byee', null)
-             await sleep(3000)
-             hexa.groupLeave(id)
-}
-             break
 case 'teruskan':
 hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { forwardingScore: 210, isForwarded: true }})
             break
@@ -590,11 +604,10 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
     case 'pe':
     case 'lmenu':
      if (isBanned) return reply(mess.banned)
-    statm = await hexa.getStatus(`${sender.split('@')[0]}@c.us`)
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
     	var pe = `*╭─❒ 「 BOT INFO 」 ──────*
 *│*➪ *BOT NAME : 𝙻𝚒𝚕𝚞𝚕𝚞𝙱𝚘𝚝*
-*│*➪ *OWNER : @${owner.split('@')[0]}*
+*│*➪ *OWNER : ${owner.split('@')[0]}*
 *│*➪ *BATTERY : ${baterai.battery}*
 *│*➪ *PREFIX :「 MULTI PREFIX 」*
 *│*➪ *TOTAL HIT : ${cmddhit.length} Today*
@@ -603,14 +616,15 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 
 *╭─❒ 「 USER & TIME 」 ──────*
 *│*➪ ${ucapanWaktu} ${pushname}
-*│*➪ *TAG   : @${pushname}*
-*│*➪ *NOMOR : @${sender.split('@')[0]}*
+*│*➪ *NAME  : ${pushname}*
+*│*➪ *NOMOR : ${sender.split('@')[0]}*
 *│*➪ *WIB   : ${timeWib}*
 *│*➪ *WIT   : ${timeWit}*
 *│*➪ *WITA  : ${timeWita}*
 *└──────────────────❒*
 ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 *╭─❒ OWNER*
+*│*➪ _${prefix}mode_
 *│*➪ _${prefix}bc_
 *│*➪ _${prefix}bc2_
 *│*➪ _${prefix}bcgc_
@@ -621,10 +635,10 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *│*➪ _${prefix}listcmd_
 *│*➪ _${prefix}shutdown_
 *│*➪ _${prefix}status_
+*│*➪ _${prefix}leave_
+*│*➪ _${prefix}oleave_
 *│*➪ _${prefix}leaveall_
 *│*➪ _${prefix}join_
-*│*➪ _${prefix}self_
-*│*➪ _${prefix}public_
 *│*➪ _${prefix}setthumb_
 *│*➪ _${prefix}setfakeimg_
 *│*➪ _${prefix}setreply_
@@ -634,6 +648,14 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *╭─❒ GROUP MENU*
 *│*➪ _${prefix}add_
 *│*➪ _${prefix}kick_
+*│*➪ _${prefix}kickall_
+*│*➪ _${prefix}promote_
+*│*➪ _${prefix}demote_
+*│*➪ _${prefix}group_
+*│*➪ _${prefix}afk_
+*│*➪ _${prefix}linkgc_
+*│*➪ _${prefix}setnamegc_
+*│*➪ _${prefix}setdeskgc_
 *│*➪ _${prefix}creategrup_
 *│*➪ _${prefix}voting_
 *│*➪ _${prefix}delvote_
@@ -894,12 +916,131 @@ case 'add':
 					}
 					break
 	case 'kick':
+	  if (!isGroupAdmins) return reply(mess.only.adming)
 	  if (!isGroup) return reply(mess.only.group)
 	  if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
 			kick = mek.message.extendedTextMessage.contextInfo.participant
 		    hexa.groupRemove(from, [kick])
 						reply('Sukses mengeluarkan anggota')
 						break
+ case 'demote':
+                if (!isGroup) return reply(mess.only.group)
+                if (!isGroupAdmins) return reply(mess.only.adming)
+                if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di turunkan dari admin group!')
+                mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+                if (mentioned.length > 1) {
+                teks = ''
+                for (let _ of mentioned) {
+                teks += `Perintah diterima, menurunkan dari admin group :\n`
+                teks += `@_.split('@')[0]`
+                }
+                mentions(teks, mentioned, true)
+                hexa.groupDemoteAdmin(from, mentioned)
+                } else {
+                mentions(`Perintah diterima, menurunkan @${mentioned[0].split('@')[0]} dari admin group`, mentioned, true)
+                hexa.groupDemoteAdmin(from, mentioned)
+                }
+                break
+			    case 'promote':
+                if (!isGroup) return reply(mess.only.group)
+                if (!isGroupAdmins) return reply(mess.only.adming)
+                if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di jadikan admin group!')
+                mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+                if (mentioned.length > 1) {
+                teks = ''
+                for (let _ of mentioned) {
+                teks += `Selamat Anda naik menjadi admin group 🎉 :\n`
+                teks += `@_.split('@')[0]`
+                }
+                mentions(teks, mentioned, true)
+                hexa.groupMakeAdmin(from, mentioned)
+                } else {
+                mentions(`Selamat 🥳 @${mentioned[0].split('@')[0]} Anda naik menjadi admin group 🎉`, mentioned, true)
+                hexa.groupMakeAdmin(from, mentioned)
+                }
+                break
+                case 'kickall':
+                hexa.updatePresence(from, Presence.composing) 
+                if (!isOwner) return reply('maaf fitur beresiko bot ter-Banned oleh WhatsApp, jadi hanya Owner yang bisa menggunakan fitur ini!!!')
+                if (!isGroup) return reply(mess.only.group)
+                if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                if (!isGroupAdmins) return reply(mess.only.adming)
+                members_id = groupMembers.map(v => v.jid)
+                mentioned = members_id
+                using = mentioned.filter(u => !(u == isOwner || u.includes(hexa.user.jid)))
+                for (let member of using) {
+                if (member.endsWith('@s.whatsapp.net')) 
+                await delay(3000)
+                await hexa.groupRemove(from, members_id)
+                }
+                reply('sukses kick all member')
+			    break
+		case 'opengc':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.adming)
+                   if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+                   reply(`*GRUP ${groupName} TELAH DIBUKA KEMBALI❗*`)
+						hexa.groupSettingChange(from, GroupSettingChange.messageSend, false)
+						break
+	case 'closegc':
+						if (!isGroup) return reply(mess.only.group)
+						if (!isGroupAdmins) return reply(mess.only.adming)
+                   if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+						reply(`*GRUP ${groupName} TELAH DI TUTUP. SILAHKAN TUNGGU HINGGA DIBUKA KEMBALI❗*`)
+						hexa.groupSettingChange(from, GroupSettingChange.messageSend, true)
+					break
+		    case 'group2':
+        if (!isGroup) return reply(mess.only.group)
+       if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+        if (!isGroupAdmins) return reply(mess.only.adming)
+        if (args.length < 1) return reply(`*${prefix}group open : untuk membuka chat grup*\n*${prefix}group close : untuk menutup grup*`)
+       if (args[0] === 'open') {
+				 reply(`*GRUP TELAH DI BUKA KEMBALI「❗」*`)
+      hexa.groupSettingChange(from, GroupSettingChange.messageSend, false)
+            } else if (args[0] === 'close') {
+            reply(`*GRUP TELAH DI TUTUP, SILAHKAN TUNGGU HINGGA DIBUKA KEMBALI「❗」*`)
+				hexa.groupSettingChange(from, GroupSettingChange.messageSend, true)
+                }
+                break
+    case 'group':
+    case 'gcchatsetting':
+      if (!isGroup && mek.key.fromMe) return reply(mess.only.group)
+      sendButMessage(from, 'GROUP SETTING', 'silahkan pilih salah satu dibawah ini!', [
+        {
+          buttonId: `${prefix}opengc`,
+          buttonText: {
+            displayText: '🔓 BUKA GROUP',
+          },
+          type: 1,
+        },
+        {
+          buttonId: `${prefix}closegc`,
+          buttonText: {
+            displayText: '🔐 TUTUP GROUP',
+          },
+          type: 1,
+        },
+        ]);
+        break
+		case 'setnamegc':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.adming)
+          if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+					if (args.length < 1) return reply(`*mau di rubah apa nih nama grupnya?*\n*Contoh: ${prefix + command} grup lilulu-bot*`)
+					hexa.groupUpdateSubject(from, `${body.slice(11)}`)
+					reply(`Sukses mengganti nama grup ke ${body.slice(11)}`)
+					break		
+    case 'setdeskgc':
+				case 'setdescgc':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(mess.only.adming)
+         if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+          if (args.length < 1) return reply(`Teks Deskripsi untuk grupnya mana?`)
+					hexa.groupUpdateDescription(from, `${body.slice(10)}`)
+					reply(`Sukses mengganti deskripsi grup ke ${body.slice(10)}`)
+					break
   	case 'creategrup':
   	case 'creategroup':
   	case 'creategc':
@@ -947,6 +1088,35 @@ case 'add':
 					}
 					mentions(teks, groupAdmins, true)
 					break
+				
+				 case "groupinfo":
+        if (!isGroup) return reply(mess.only.group)
+        ppUrl = await hexa.getProfilePicture(from); // leave empty to get your own
+        buffergbl = await getBuffer(ppUrl);
+        hexa.sendMessage(from, buffergbl, image, {
+          quoted: mek,
+          caption: `*【GROUP INFO】*\n*✦ Name* : ${groupName}\n*✦ Member* : ${groupMembers.length}\n*✦ Admin* : ${groupAdmins.length}\n*✦ Deskripsi* : \n${groupDesc}`,
+        });
+        break;
+					case 'linkgc':
+				if (!isGroup) return reply(mess.only.group)
+			  if (isBanned) return reply(mess.banned)
+				linkgc = await hexa.groupInviteCode (from)
+				yeh = `https://chat.whatsapp.com/${linkgc}\n\nlink Group ${groupName}`
+				hexa.sendMessage(from, yeh, text, {quoted: mek})
+				break
+		case 'afk':
+		  if (isBanned) return reply(mess.banned)
+        alasan = args.join(" ")
+        afk[sender.split('@')[0]] = alasan.toLowerCase()
+        fs.writeFileSync("./database/afk.json", JSON.stringify(afk))
+        aefka = "Anda telah afk\n\n"
+        if (alasan != "") {
+        aefka += "Dengan alasan :"  + alasan
+                    }
+          reply(aefka)
+        break
+    
 //==================BATAS BRO================//
     case 'linkwa':
       if (isBanned) return reply(mess.banned)
@@ -1055,15 +1225,18 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             }
             reply(store)
             break
+    
     case 'on':
             if (!mek.key.fromMe) return 
             offline = false
             fakestatus(' ```ANDA TELAH ONLINE``` ')
-            break       
+            break
+             
     case 'status':
       if (isBanned) return reply(mess.banned)
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
             break
+    
     case 'off':
             if (!mek.key.fromMe) return 
             offline = true
@@ -1071,7 +1244,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             anuu = q ? q : '-'
             alasan = anuu
             fakestatus(' ```ANDA TELAH OFFLINE``` ')
-            break   
+            break
     case 'get':
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('linknya?')
@@ -1519,6 +1692,42 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             }
             break
 //========================OWNER MENU=========================//
+case 'leave':
+		if (!isGroup) return reply(mess.only.group)
+		if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
+		hexa.updatePresence(from, Presence.composing)
+		hexa.groupLeave(from)
+				break
+	case 'oleave':
+				if (!isGroup) return reply(mess.only.group)
+				if (!isOwner) return reply(mess.only.ownerb)
+				setTimeout( () => {
+				dp.groupLeave (from) 
+				}, 2000)
+				setTimeout( () => {
+				hexa.updatePresence(from, Presence.composing) 
+				hexa.sendMessage(from, 'Bye cuk disuruh keluar ama Ownerku🗣', text, {quoted: fkontak})
+				}, 0)
+				break
+	case 'leaveall':
+    if (!isOwner) return reply(mess.only.ownerb) 
+     let totalgroup = hexa.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
+     for (let id of totalgroup) {
+    sendMess(id, 'Byee', null)
+    await sleep(3000)
+    hexa.groupLeave(id)
+    }
+             break
+	case 'setprofile':
+	case 'setpp':
+	hexa.updatePresence(from, Presence.composing)
+	if (!isQuotedImage) return reply('Reply imagenya!')
+		if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
+		enmediau = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+		mediau = await hexa.downloadAndSaveMediaMessage(enmediau)
+		await hexa.updateProfilePicture(botNumber, mediau)
+		reply('Sukses')
+				break
     case 'upswteks':
       if (isBanned) return reply(mess.banned)
             if (!q) return fakestatus('Isi teksnya!')
@@ -1587,6 +1796,25 @@ case 'upswaudio':
    			mat.canonicalUrl = buu; 
     		hexa.sendMessage(from, mat, MessageType.extendedText, anu)
             break
+    case 'mode':
+      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
+        sendButMessage(from, `MODE SELF/PUBLIC`, `Silahkan pilih salah satu`, [
+          {
+            buttonId: `${prefix}self`,
+            buttonText: {
+              displayText: `☝ SELF MODE`,
+            },
+            type: 1,
+          },
+          {
+            buttonId: `${prefix}public`,
+            buttonText: {
+              displayText: `🖐 PUBLIC MODE`,
+            },
+            type: 1,
+          },
+        ]);
+      break
     case 'public':
       if (!isOwner) return reply(mess.only.ownerb)
           	if (!mek.key.fromMe) return fakestatus('SELF-BOT')
@@ -1654,7 +1882,7 @@ case 'upswaudio':
 				break
 				
 				case 'block':
-				if (!isGroup) return reply(dpa.groupo)
+				if (!isGroup) return reply(mess.only.group)
 				if (!isOwner) return reply(dpa.ownerb)
 				hexa.updatePresence(from, Presence.composing) 
 				hexa.chatRead (from)
@@ -1662,7 +1890,7 @@ case 'upswaudio':
 				hexa.sendMessage(from, `Perintah Diterima, Memblokir ${body.slice(7)}@c.us`, text, {quoted: fkontak})
 				break
 		        case 'unblock':
-				if (!isGroup) return reply(dpa.groupo)
+				if (!isGroup) return reply(mess.only.group)
 				if (!isOwner) return reply(dpa.ownerb)
 				hexa.blockUser (`${body.slice(9)}@c.us`, 'remove')
 			    hexa.sendMessage(from, `Perintah Diterima, Membuka Blockir ${body.slice(9)}@c.us`, text, {quoted: fkontak})
