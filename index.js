@@ -2896,6 +2896,7 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
 default:
 if (budy.startsWith('x')){
 try {
+	if (!isOwner) return reply(mess.only.ownerb)
 return hexa.sendMessage(from, JSON.stringify(eval(budy.slice(2)),null,'\t'),text, {quoted: mek})
 } catch(err) {
 e = String(err)
