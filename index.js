@@ -679,7 +679,6 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *│*➪ _${prefix}welcome_
 *│*➪ _${prefix}add_
 *│*➪ _${prefix}kick_
-*│*➪ _${prefix}kickall_
 *│*➪ _${prefix}promote_
 *│*➪ _${prefix}demote_
 *│*➪ _${prefix}group_
