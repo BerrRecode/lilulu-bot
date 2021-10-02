@@ -1061,6 +1061,7 @@ case 'add':
                 hexa.groupMakeAdmin(from, mentioned)
                 }
                 break
+                /*
                 case 'kickall':
                 hexa.updatePresence(from, Presence.composing) 
                 if (!isOwner) return reply('maaf fitur beresiko bot ter-Banned oleh WhatsApp, jadi hanya Owner yang bisa menggunakan fitur ini!!!')
@@ -1076,6 +1077,7 @@ case 'add':
                 }
                 reply('sukses kick all member')
 			    break
+			    */
 		case 'opengc':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
