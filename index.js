@@ -30,6 +30,7 @@ const { spawn, exec, execSync } = require("child_process")
 const fs = require("fs")
 const axios = require("axios")
 const crypto = require('crypto')
+const delay = require('delay')
 const ffmpeg = require('fluent-ffmpeg')
 const { EmojiAPI } = require("emoji-api");
 const ig = require('insta-fetcher')
