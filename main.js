@@ -10,6 +10,7 @@ const { banner, start, success } = require('./lib/functions')
 const moment = require("moment-timezone")
 const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const { color } = require('./lib/color')
+const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
 const sleep = async (ms) => {
 return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -28,10 +29,10 @@ const starts = async (hexa = new WAConnection()) => {
 
     fs.existsSync('./LiluluBot.json') && hexa.loadAuthInfo('./LiluluBot.json')
     hexa.on('connecting', () => {
-        start('2', 'Connecting...')
+        start('2', 'Memasukkan....')
     })
     hexa.on('open', () => {
-        success('2', 'Connected')
+        success('2', 'crot ahh dh masuk ngab:)')
     })
     await hexa.connect({timeoutMs: 30*1000})
         fs.writeFileSync('./LiluluBot.json', JSON.stringify(hexa.base64EncodedAuthInfo(), null, '\t'))
@@ -43,7 +44,7 @@ const starts = async (hexa = new WAConnection()) => {
      hexa.on('group-participants-update', async (anu) => {
            mem = anu.participants[0]
 			const mdata = await hexa.groupMetadata(anu.jid)
-		    try {
+			try {
 			console.log(anu)
 			if (anu.action == 'add') {
 			fkontakk = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(anu.jid ? { remoteJid: '62838505090131-1604595598@g.us' } : {})}, message: { "contactMessage":{"displayName": `${mdata.subject}`,"vcard":`BEGIN:VCARD\nVERSION:3.0\nN:2;FznAdm;;;\nFN:FznAdm\nitem1.TEL;waid=6285156724122:6285156724122\nitem1.X-ABLabel:Mobile\nEND:VCARD` }}}
