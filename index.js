@@ -2228,7 +2228,7 @@ esceh = `❥ *info script bot*
 			break
 //===============BATAS NI=====================//
 	case 'play':
-	  if (isUser) return reply(mess.noregis)
+	  if (!isUser) return reply(mess.noregis)
 	  if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
 			  fakegroup(mess.wait)
