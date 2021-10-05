@@ -2353,11 +2353,11 @@ case 'ctokenlistrik':
         //case ⌈❗」 by  Fauzan
 esceh = `❥ *info script bot*
 ├⊳⊳ Base: Hexa
-├⊳⊳ Creator 1: FauzanAdiman
+├⊳⊳ Creator: FznAdmn
 ├⊳⊳ Owner: ${namaowner}
 │
 └──┤Link Github├────❥
-  ├✜ Github Efzyn
+  ├✜ Github LiluluBOT
   ├✜ https://github.com/BerrRecode/
   ├✜ Github SC bot(private)
   ├✜ https://github.com/BerrRecode/lilulu-bot.git
