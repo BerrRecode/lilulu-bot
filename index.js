@@ -708,21 +708,21 @@ hexa.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
         if (!mek.key.fromMe && banChats === true) return
 switch (command) {
     case 'jadibot':
-      if (!isUser) return reply(mess.noregis)
+      
     if(!mek.key.fromMe) return reply('Tidak bisa jadibot di dalam bot')
     jadibot(reply,hexa,from)
     break
     case 'stopjadibot':
-      if (!isUser) return reply(mess.noregis)
+      
     if(!mek.key.fromMe)return reply('tidak bisa stopjadibot kecuali owner')
     stopjadibot(reply)
     break
 case 'teruskan':
-  if (!isUser) return reply(mess.noregis)
+  
 hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { forwardingScore: 210, isForwarded: true }})
             break
     case 'listbot':
-      if (!isUser) return reply(mess.noregis)
+      
     let tekss = '「 *LIST JADIBOT* 」\n'
     for(let i of listjadibot) {
     tekss += `*Nomor* : ${i.jid.split('@')[0]}
@@ -734,7 +734,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
     break
     
 	case 'menu':
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (isBanned) return reply(mess.banned)
         txtt =`Hai Kak ${pushname}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
@@ -757,7 +757,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
                
     case 'pe':
     case 'lmenu':
-      if (!isUser) return reply(mess.noregis)
+      
      if (isBanned) return reply(mess.banned)
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
     	var pe = `*╭─❒ 「 BOT INFO 」 ──────*
@@ -765,7 +765,6 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *│*➪ *OWNER : ${owner.split('@')[0]}*
 *│*➪ *BATTERY : ${baterai.battery}*
 *│*➪ *PREFIX :「 MULTI PREFIX 」*
-*│*➪ *TOTAL USER : ${user.length} Orang*
 *│*➪ *TOTAL HIT : ${cmddhit.length} Today*
 *│*➪ *BOT MODE : ${banChats ? "SELF-MODE" : "PUBLIC-MODE"}*
 *└──────────────────❒*
@@ -943,7 +942,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
  case 'owner':
             case 'developer':
             case 'author':
-              if (!isUser) return reply(mess.noregis)
+              
               if (isBanned) return reply(mess.banned)
                 hexa.sendMessage(from, {displayname: "Owner Lilulu", vcard: vcard}, MessageType.contact, { quoted: ftoko})
                     .then((res) => hexa.sendMessage(from, '*Tuh Kontak ownerku, jangan di spam ya!*', text, {quoted: res}))
@@ -958,7 +957,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
              break
   
     case 'donasi':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       reply('mau donasi apa cuman liat-liat nih?')
       dnt =`◪𝗱𝗼𝗻𝗮𝘀𝗶
@@ -1065,7 +1064,7 @@ case 'buttons1':
 //------------------< Sticker Cmd >-------------------
        case 'addcmd': 
        case 'setcmd':
-         if (!isUser) return reply(mess.noregis)
+         
          if (isBanned) return reply(mess.banned)
         if (!mek.key.fromMe) return 
               if (isQuotedSticker) {
@@ -1078,7 +1077,7 @@ case 'buttons1':
 }
               break
        case 'delcmd':
-         if (!isUser) return reply(mess.noregis)
+         
          if (isBanned) return reply(mess.banned)
          if (!mek.key.fromMe) return 
               if (!isQuotedSticker) return reply(`Penggunaan : ${command} tagsticker`)
@@ -1088,7 +1087,7 @@ case 'buttons1':
               textImg("Done!")
               break
        case 'listcmd':
-         if (!isUser) return reply(mess.noregis)
+         
          if (isBanned) return reply(mess.banned)
               let teksnyee = `\`\`\`「 LIST STICKER CMD 」\`\`\``
               let cemde = [];
@@ -1099,7 +1098,7 @@ case 'buttons1':
               mentions(teksnyee, cemde, true)
               break
 case 'notif':
-  if (!isUser) return reply(mess.noregis)
+  
 if (isBanned) return reply(mess.banned)				
 if (!isGroup) return reply(mess.only.group)
 teks = `Notif dari @${sender.split("@")[0]}\n*Pesan : ${body.slice(7)}*`
@@ -1122,7 +1121,7 @@ break
 case 'add':
 		if (!isGroupAdmins) return reply(mess.only.adming)
 		if (!isGroup) return reply(mess.only.group)
-		if (!isUser) return reply(mess.noregis)
+		
 		if (isBanned) return reply(mess.banned)
 					if (args.length < 1) return reply('Yang mau di add jin ya?')
 					if (args[0].startsWith('08')) return reply('Gunakan kode negara kak')
@@ -1137,7 +1136,7 @@ case 'add':
 	case 'kick':
 	  if (!isGroupAdmins) return reply(mess.only.adming)
 	  if (!isGroup) return reply(mess.only.group)
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (isBanned) return reply(mess.banned)
 	  if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
 			kick = mek.message.extendedTextMessage.contextInfo.participant
@@ -1148,7 +1147,7 @@ case 'add':
                 if (!isGroup) return reply(mess.only.group)
                 if (!isGroupAdmins) return reply(mess.only.adming)
                 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                if (!isUser) return reply(mess.noregis)
+                
                 if (isBanned) return reply(mess.banned)
                 if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di turunkan dari admin group!')
                 mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -1169,7 +1168,7 @@ case 'add':
                 if (!isGroup) return reply(mess.only.group)
                 if (!isGroupAdmins) return reply(mess.only.adming)
                 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                if (!isUser) return reply(mess.noregis)
+                
                 if (isBanned) return reply(mess.banned)
                 if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di jadikan admin group!')
                 mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -1207,7 +1206,7 @@ case 'add':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
                    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                   if (!isUser) return reply(mess.noregis)
+                   
                    if (isBanned) return reply(mess.banned)
                    reply(`*GRUP ${groupName} TELAH DIBUKA KEMBALI❗*`)
 						hexa.groupSettingChange(from, GroupSettingChange.messageSend, false)
@@ -1216,7 +1215,7 @@ case 'add':
 						if (!isGroup) return reply(mess.only.group)
 						if (!isGroupAdmins) return reply(mess.only.adming)
                    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                   if (!isUser) return reply(mess.noregis)
+                   
                    if (isBanned) return reply(mess.banned)
 						reply(`*GRUP ${groupName} TELAH DI TUTUP. SILAHKAN TUNGGU HINGGA DIBUKA KEMBALI❗*`)
 						hexa.groupSettingChange(from, GroupSettingChange.messageSend, true)
@@ -1225,7 +1224,7 @@ case 'add':
         if (!isGroup) return reply(mess.only.group)
        if (!isBotGroupAdmins) return reply(mess.only.Badmin)
         if (!isGroupAdmins) return reply(mess.only.adming)
-        if (!isUser) return reply(mess.noregis)
+        
         if (isBanned) return reply(mess.banned)
         if (args.length < 1) return reply(`*${prefix}group open : untuk membuka chat grup*\n*${prefix}group close : untuk menutup grup*`)
        if (args[0] === 'open') {
@@ -1239,7 +1238,7 @@ case 'add':
     case 'group':
     case 'gcchatsetting':
       if (!isGroup && mek.key.fromMe) return reply(mess.only.group)
-      if (!isUser) return reply(mess.noregis)
+      
         if (isBanned) return reply(mess.banned)
       sendButMessage(from, 'GROUP SETTING', 'silahkan pilih salah satu dibawah ini!', [
         {
@@ -1262,7 +1261,7 @@ case 'add':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
           if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-          if (!isUser) return reply(mess.noregis)
+          
         if (isBanned) return reply(mess.banned)
 					if (args.length < 1) return reply(`*mau di rubah apa nih nama grupnya?*\n*Contoh: ${prefix + command} grup lilulu-bot*`)
 					hexa.groupUpdateSubject(from, `${body.slice(11)}`)
@@ -1273,7 +1272,7 @@ case 'add':
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
          if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-         if (!isUser) return reply(mess.noregis)
+         
         if (isBanned) return reply(mess.banned)
           if (args.length < 1) return reply(`Teks Deskripsi untuk grupnya mana?`)
 					hexa.groupUpdateDescription(from, `${body.slice(10)}`)
@@ -1297,7 +1296,7 @@ case 'add':
                 }
 				break
     case 'delvote':
-      if (!isUser) return reply(mess.noregis)
+      
         if (isBanned) return reply(mess.banned)
             if(!mek.key.remoteJid) return
             if(isVote) return reply('Tidak ada sesi Voting')
@@ -1307,7 +1306,7 @@ case 'add':
     case 'voting':
             if(!isGroupAdmins && !mek.key.fromMe) return 
             if(!isGroup) return reply(mess.only.group)
-            if (!isUser) return reply(mess.noregis)
+            
         if (isBanned) return reply(mess.banned)
             if (isVote) return reply('Sesi Voting Sedang Berlangsung Di Grup Ini')
             if(!q) return reply('*Voting*\n\n'+ prefix+ 'voting @tag target | reason  | 1 (1 = 1 Menit)')
@@ -1320,7 +1319,7 @@ case 'add':
             }
             break
     case 'listadmin':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
 					if (!isGroup) return reply(mess.only.group)
 					teks = `List admin of group *${groupMetadata.subject}*\n𝗧𝗼𝘁𝗮𝗹 : ${groupAdmins.length}\n\n`
@@ -1333,7 +1332,7 @@ case 'add':
 					break
 				
 				 case "groupinfo":
-				   if (!isUser) return reply(mess.noregis)
+				   
 				   if (isBanned) return reply(mess.banned)
         if (!isGroup) return reply(mess.only.group)
         ppUrl = await hexa.getProfilePicture(from); // leave empty to get your own
@@ -1345,14 +1344,14 @@ case 'add':
         break;
 					case 'linkgc':
 				if (!isGroup) return reply(mess.only.group)
-				if (!isUser) return reply(mess.noregis)
+				
 			  if (isBanned) return reply(mess.banned)
 				linkgc = await hexa.groupInviteCode (from)
 				yeh = `https://chat.whatsapp.com/${linkgc}\n\nlink Group ${groupName}`
 				hexa.sendMessage(from, yeh, text, {quoted: mek})
 				break
 		case 'afk':
-		  if (!isUser) return reply(mess.noregis)
+		  
 		  if (isBanned) return reply(mess.banned)
         alasan = args.join(" ")
         afk[sender.split('@')[0]] = alasan.toLowerCase()
@@ -1419,7 +1418,7 @@ case 'add':
 				break
 //==================BATAS BRO================//
     case 'linkwa':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('cari group apa?')
             hx.linkwa(q)
@@ -1432,7 +1431,7 @@ case 'add':
             });
             break
     case 'igstory': 
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('Usernamenya?')
             hx.igstory(q)
@@ -1449,7 +1448,7 @@ case 'add':
             });
             break
     case 'caripesan':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q)return reply('pesannya apa bang?')
             let v = await hexa.searchMessages(q,from,10,1)
@@ -1468,7 +1467,7 @@ case 'add':
             }           
             break
     case 'otaku':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('judul animenya?')
             let anime = await hx.otakudesu(q)
@@ -1488,7 +1487,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             hexa.sendMessage(from,ram,image,{quoted:mek,caption:rem})
             break
     case 'komiku':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply(`judulnya?\n${prefix}komiku mao gakuin`)
             let komik = await hx.komiku(q)
@@ -1501,7 +1500,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             sendMediaURL(from, komik.image,result)
             break
     case 'chara':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply(`gambar apa?\n${prefix}chara nino`)
             let im = await hx.chara(q)
@@ -1510,7 +1509,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             await hexa.sendMessage(from,li,image,{quoted: mek})
             break
     case 'pinterest':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('gambar apa?')
             let pin = await hx.pinterest(q)
@@ -1519,7 +1518,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             await hexa.sendMessage(from,di,image,{quoted: mek})
             break
     case 'playstore':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('lu nyari apa?')
             let play = await hx.playstore(q)
@@ -1554,7 +1553,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             fakestatus(' ```ANDA TELAH OFFLINE``` ')
             break
     case 'get':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('linknya?')
             fetch(`${args[0]}`).then(res => res.text())  
@@ -1563,7 +1562,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             })   
             break
     case 'kontag':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if (!mek.key.fromMe) return reply('SELF-BOT')
             pe = args.join('')
@@ -1582,7 +1581,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             hexa.sendMessage(from, {displayName: `${nah}`, vcard: vcard}, contact, {contextInfo: {"mentionedJid": members_ids}})
             break
     case 'sticktag':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             encmedia = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -1606,7 +1605,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             }
             break
     case 'totag':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             encmedia = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -1684,7 +1683,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
         }
         break
         case 'settarget':
-          if (!isUser) return reply(mess.noregis)
+          
           if (isBanned) return reply(mess.banned)
             if(!q) return reply(`${prefix}settarget 628xxxxx`)
             targetpc = args[0]
@@ -1692,7 +1691,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             break
     //===================FUN MENU====================//
     case 'fitnah':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if (args.length < 1) return reply(`Usage :\n${prefix}fitnah [@tag|pesan|balasanbot]]\n\nEx : \n${prefix}fitnah @tagmember|hai|hai juga`)
             var gh = args.join('')
@@ -1703,7 +1702,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             hexa.sendMessage(from, `${bot}`, text, {quoted: { key: { fromMe: false, participant: `${mentioned}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target}` }}})
             break
     case 'fitnahpc':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if(!q) return reply(`${prefix}fitnahpc teks target|teks lu`)
             jids = `${targetpc}@s.whatsapp.net` // nomer target
@@ -1717,7 +1716,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
 //====================RANDOM TEXT==========================//
     case 'quote':
     case 'quotes':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       quot = await fetchJson(`https://api.lolhuman.xyz/api/random/quotes?apikey=${LolKey}`)
       isi = quot.result
@@ -1737,7 +1736,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
                hexa.relayWAMessage(prep)
       break
     case 'quotesdilan':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       qtdilan = await fetchJson(`https://api.lolhuman.xyz/api/quotes/dilan?apikey=${LolKey}`)
       buttons = [{buttonId:`${prefix}quotesdilan`, buttonText:{displayText:'⏩ NEXT'},type:1},
@@ -1754,7 +1753,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       
       break
   case 'quotesislami':
-    if (!isUser) return reply(mess.noregis)
+    
     if (isBanned) return reply(mess.banned)
     qi = await fetchJson(`https://api.lolhuman.xyz/api/quotes/islami?apikey=${LolKey}`)
     buttons = [{buttonId:`${prefix}quotesislami`, buttonText:{displayText:'⏩ NEXT'},type:1},
@@ -1772,7 +1771,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       break
       
   case 'katabijak':
-    if (!isUser) return reply(mess.noregis)
+    
     if (isBanned) return reply(mess.banned)
     ktbi = await fetchJson(`https://api.lolhuman.xyz/api/random/katabijak?apikey=${LolKey}`)
     buttons = [{buttonId:`${prefix}katabijak`, buttonText:{displayText:'⏩ NEXT'},type:1},
@@ -1791,7 +1790,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       
   case 'katabucin':
   case 'bucin':
-    if (!isUser) return reply(mess.noregis)
+    
     if (isBanned) return reply(mess.banned)
     buc = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${LolKey}`)
     buttons = [{buttonId:`${prefix}katabucin`, buttonText:{displayText:'⏩ NEXT'},type:1},
@@ -1809,7 +1808,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       break
       
     case 'quotesanime':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       anim = await fetchJson(`https://api.lolhuman.xyz/api/random/quotesnime?apikey=${LolKey}`)
       wibu = anim.result 
@@ -1828,7 +1827,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       break
       
     case 'quotesimg':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       restnya = await getBuffer(`https://api.lolhuman.xyz/api/random/quotesimage?apikey=${LolKey}`)
       imgnya = restnya.result
@@ -1848,7 +1847,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       
 //=====================BATAS===========================//
     case 'tomp3':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if (!isQuotedVideo) return fakegroup('Reply videonya!')
             fakegroup(mess.wait)
@@ -1864,7 +1863,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             })
             break
     case 'fast':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if (!isQuotedVideo) return fakegroup('Reply videonya!')
             fakegroup(mess.wait)
@@ -1880,7 +1879,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             })
             break
     case 'slow':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if (!isQuotedVideo) return fakegroup('Reply videonya!')
             fakegroup(mess.wait)
@@ -1896,7 +1895,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             })
             break
     case 'reverse':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if (!isQuotedVideo) return fakegroup('Reply videonya!')
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
@@ -1911,7 +1910,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             })
             break
     case 'anime':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             reply(mess.wait)
             fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-gambar-anime.txt')
@@ -1932,7 +1931,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             });
             break
     case 'kontak':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             pe = args.join(' ') 
             entah = pe.split('|')[0]
@@ -1947,7 +1946,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             break    
     case 'take':
     case 'colong':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
     		if (!isQuotedSticker) return reply('Stiker aja om')
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
@@ -1961,7 +1960,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
 	case 'stikerwm':
 	case 'stickerwm':
     case 'swm':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             pe = args.join('')
             var a = pe.split("|")[0];
@@ -2025,7 +2024,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
 case 'welcome':
 				if (!isGroup) return reply(mess.only.group)
 			if (!isGroupAdmins) return reply(mess.only.adming)
-			if (!isUser) return reply(mess.noregis)
+			
 				if (args.length < 1) return reply('[❗] Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan')
 				if (Number(args[0]) === 1) {
 				if (isWelkom) return reply(`[❗] Fitur ${command} sudah aktif`)
@@ -2041,7 +2040,7 @@ case 'welcome':
 				}
 				break
 case 'leave':
-  if (!isUser) return reply(mess.noregis)
+  
 		if (!isGroup) return reply(mess.only.group)
 		if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 		hexa.updatePresence(from, Presence.composing)
@@ -2120,7 +2119,7 @@ case 'upswaudio':
             }
             break
     case 'fdeface':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             ge = args.join('')           
             var pe = ge.split("|")[0];
@@ -2201,7 +2200,7 @@ case 'upswaudio':
 			hexa.sendMessage(from, optionshidetag, text)
 			break
 	case 'tagall':
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (!isGroupAdmins) return reply(mess.only.adming)
 	  if (isBanned) return reply(mess.banned)
 	  if (!isGroup) return reply(mess.only.group)
@@ -2250,7 +2249,7 @@ case 'upswaudio':
 case 'ctokenlistrik':
       case 'ctlistrik':
       case 'cektokenlistrik':
-        if (!isUser) return reply(mess.noregis)
+        
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`idnya mana broh?\ncontoh: ${prefix + command}287873876489`)
       reply(mess.wait)
@@ -2262,7 +2261,7 @@ case 'ctokenlistrik':
       hexa.sendMessage(from, teks, text, {quoted: mek})
       break
   case 'lolcek':
-    if (!isUser) return reply(mess.noregis)
+    
     if (!isGroup) return reply(mess.only.group)
     if (isBanned) return reply(mess.banned)
     try{
@@ -2277,7 +2276,7 @@ case 'ctokenlistrik':
     break
     case 'covidindo':
       case 'covidid':
-        if (!isUser) return reply(mess.noregis)
+        
         if (isBanned) return reply(mess.banned)
         copid = await fetchJson(`https://api.lolhuman.xyz/api/corona/indonesia?apikey=${LolKey}`)
         reply(mess.wait)
@@ -2286,7 +2285,7 @@ case 'ctokenlistrik':
         hexa.sendMessage(from, teksc, text, {quoted: mek})
         break
     case 'covidglobal':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
         copidg = await fetchJson(`https://api.lolhuman.xyz/api/corona/global?apikey=${LolKey}`)
         reply(mess.wait)
@@ -2295,7 +2294,7 @@ case 'ctokenlistrik':
         hexa.sendMessage(from, tekscg, text, {quoted: mek})
         break
    case 'chord':
-     if (!isUser) return reply(mess.noregis)
+     
       if (isBanned) return reply(mess.banned)
       cord = await fetchJson(`https://api.lolhuman.xyz/api/chord?apikey=${LolKey}&query=${body.slice(7)}`)
         reply(mess.wait)
@@ -2304,7 +2303,7 @@ case 'ctokenlistrik':
         hexa.sendMessage(from, laguc, text, {quoted: mek})
       break
     case 'lirik':
-      if (!isUser) return reply(mess.noregis)
+      
     if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply('judul lagu yang ingin dicari liriknya mana bro?')
       reply(mess.wait)
@@ -2313,7 +2312,7 @@ case 'ctokenlistrik':
       hexa.sendMessage(from, lir.result, text, {quoted: mek})
       break
     case 'wikipedia':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       wiki = await fetchJson(`https://api.lolhuman.xyz/api/wiki?apikey=${LolKey}&query=${body.slice(11)}`)
       reply(mess.wait)
@@ -2322,7 +2321,7 @@ case 'ctokenlistrik':
       hexa.sendMessage(from, wikiped, text, {quoted: mek})
       break
     case 'jadwaltv':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply('nama channel tvnya apa ngab?')
       fzxn = args[0]
@@ -2335,7 +2334,7 @@ case 'ctokenlistrik':
                 reply(teks)
       break
       case 'jadwaltvnow':
-        if (!isUser) return reply(mess.noregis)
+        
         if (isBanned) return reply(mess.banned)
         get_result = await fetchJson(`https://api.lolhuman.xyz/api/jadwaltv/now?apikey=${LolKey}`)
         get_result = get_result.result
@@ -2348,7 +2347,7 @@ case 'ctokenlistrik':
   case 'infosc':
   case 'sc':
   case 'script':
-    if (!isUser) return reply(mess.noregis)
+    
     if (isBanned) return reply(mess.banned)
         //case ⌈❗」 by  Fauzan
 esceh = `❥ *info script bot*
@@ -2378,7 +2377,7 @@ esceh = `❥ *info script bot*
     case 'infoowner':
 		        case 'infodeveloper':
 		        case 'infopengembang':
-		          if (!isUser) return reply(mess.noregis)
+		          
 		         if (isBanned) return reply(mess.banned)
 		           //case ⌈❗」 by  Fauzan
  infownr = `◪ Hallo my name is Fauzan
@@ -2407,7 +2406,7 @@ esceh = `❥ *info script bot*
 			break
 //===============BATAS NI=====================//
 	case 'play':
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
 			  fakegroup(mess.wait)
@@ -2432,7 +2431,7 @@ esceh = `❥ *info script bot*
                         }
                    break  
         case 'video':
-          if (!isUser) return reply(mess.noregis)
+          
           if (isBanned) return reply(mess.banned)
             if (args.length === 0) return reply(`Kirim perintah *${prefix}video* _Judul lagu yang akan dicari_`)
             var srch = args.join('')
@@ -2459,7 +2458,7 @@ esceh = `❥ *info script bot*
     case 'stiker':
     case 'sg':
     case 's':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
             const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -2514,7 +2513,7 @@ esceh = `❥ *info script bot*
             }
             break               
     case 'toimg':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
 			if (!isQuotedSticker) return reply('𝗥𝗲𝗽𝗹𝘆/𝘁𝗮𝗴 𝘀𝘁𝗶𝗰𝗸𝗲𝗿 !')
 			reply(mess.wait)
@@ -2530,7 +2529,7 @@ esceh = `❥ *info script bot*
 			})
 			break
 	case 'ytsearch':
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (isBanned) return reply(mess.banned)
 			if (args.length < 1) return reply('Tolong masukan query!')
 			var srch = args.join('');
@@ -2763,7 +2762,7 @@ hexa.cmd.on('asupan', async (data) => {
 			break	
 	
 	case 'emoji':
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (isBanned) return reply(mess.banned)
 			if (!q) return fakegroup('emojinya?')
 			qes = args.join(' ')
@@ -2775,7 +2774,7 @@ hexa.cmd.on('asupan', async (data) => {
     		break
 //=================DOWNLOADMENU=====================//
 case 'youtubedl':
-  if (!isUser) return reply(mess.noregis)
+  
         if (isBanned) return reply(mess.banned)
              if (args.length < 1) return reply('Link Nya Mana?')
              if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
@@ -2820,7 +2819,7 @@ case 'youtubedl':
 				}
 				break
     case 'image':
-      if (!isUser) return reply(mess.noregis)
+      
         if (isBanned) return reply(mess.banned)
             if (args.length < 1) return reply('Masukan teks!')
             const gimg = args.join('');
@@ -2835,7 +2834,7 @@ case 'youtubedl':
  	case 'ttnowm':
  	case 'tiktokdl':
  	case 'ttdl':
- 	  if (!isUser) return reply(mess.noregis)
+ 	  
  	    if (isBanned) return reply(mess.banned)
  		if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://vm.tiktok.com/ZSJkHUCwK/`)
         reply(mess.wait)
@@ -2852,7 +2851,7 @@ case 'youtubedl':
 	            break
 	            
 	            case 'ytmp4':
-	              if (!isUser) return reply(mess.noregis)
+	              
 	     if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}ytmp4 [linkYt]*`)
 			let isLinks2 = args[0].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
@@ -2875,7 +2874,7 @@ case 'youtubedl':
 				}
 				break
      case 'brainly':
-       if (!isUser) return reply(mess.noregis)
+       
        if (isBanned) return reply(mess.banned)
 			if (args.length < 1) return reply('Pertanyaan apa')
           	brien = args.join(' ')
@@ -2888,7 +2887,7 @@ case 'youtubedl':
             })              
 			break
     case 'ig':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
         if (!isUrl(args[0]) && !args[0].includes('instagram.com')) return reply(mess.Iv)
         if (!q) return fakegroup('Linknya?')
@@ -2910,7 +2909,7 @@ case 'youtubedl':
     case 'igdownload':
     case 'igreels':
     case 'igimg':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://www.instagram.com/p/CGOivksJleVPwIQfDBplW8nDrQmOX3aVCkzUO80/`)
                 reply(mess.wait)
@@ -2922,7 +2921,7 @@ case 'youtubedl':
              await sendMediaURL(from, igehdl)
               break
     case 'fb':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             if (!q) return reply('Linknya?')
             if (!isUrl(args[0]) && !args[0].includes('facebook.com')) return reply(mess.Iv)
@@ -2936,7 +2935,7 @@ case 'youtubedl':
             break    
   case 'telesticker':
       case 'telestick':
-        if (!isUser) return reply(mess.noregis)
+        
         if (isBanned) return reply(mess.banned)
         if (args.length == 0) return reply(`Example: ${prefix + command} https://t.me/addstickers            /LINE_Menhera_chan_ENG`)
         ini_url = args[0]
@@ -2949,7 +2948,7 @@ case 'youtubedl':
             break
             
   case 'tiktokaudio':
-    if (!isUser) return reply(mess.noregis)
+    
     if (isBanned) return reply(mess.banned)
  		if (!isUrl(args[0]) && !args[0].includes('tiktok.com')) return reply(mess.Iv)
  		if (!q) return fakegroup('Linknya?')
@@ -2966,7 +2965,7 @@ case 'youtubedl':
    
 //=====================STALKER MENU======================//
     case 'igstalk':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
 				reply('[❗] Sabar lagi stalking IG nya')
 				get_result = await fetchJson(`https://api.lolhuman.xyz/api/stalkig/${body.slice(9)}?apikey=${LolKey}`)
@@ -2982,7 +2981,7 @@ case 'youtubedl':
 				hexa.sendMessage(from, buffer, image, {quoted: mek, caption: txt})
 				break
             case 'stalkgithub':
-              if (!isUser) return reply(mess.noregis)
+              
               if (isBanned) return reply(mess.banned)
              if (args.length == 0) return reply(`Example: ${prefix + command} LoL-Human`)
               username = args[0]
@@ -3028,7 +3027,7 @@ case 'youtubedl':
             break
             */
     case'twitter':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             if (!isUrl(args[0]) && !args[0].includes('twitter.com')) return reply(mess.Iv)
             if (!q) return fakegroup('Linknya?')
@@ -3039,7 +3038,7 @@ case 'youtubedl':
             break
     case 'runtime':
     case 'test':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             run = process.uptime() 
             teks = `${kyun(run)}`
@@ -3047,7 +3046,7 @@ case 'youtubedl':
             break  
 	case 'speed':
 	case 'ping':
-	  if (!isUser) return reply(mess.noregis)
+	  
 	  if (isBanned) return reply(mess.banned)
 			const timestamp = speed();
 			const latensi = speed() - timestamp
@@ -3059,7 +3058,7 @@ case 'youtubedl':
 			})
 			break  
     case 'totag':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             encmedia = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -3137,7 +3136,7 @@ case 'youtubedl':
         }
         break
     case 'tomp4':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             ger = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -3151,7 +3150,7 @@ case 'youtubedl':
             fs.unlinkSync(owgi)
             break
     case 'tourl':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo ) && args.length == 0) {
             boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
@@ -3164,13 +3163,13 @@ case 'youtubedl':
             break	
 //=======================OTHER MENU=====================//
     case 'readmore':
-      if (!isUser) return reply(mess.noregis)
+      
       if (isBanned) return reply(mess.banned)
       zonk = '‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎'
       hexa.sendMessage(from, zonk, text, {quoted: mek})
       break
     case 'inspect':
-      if (!isUser) return reply(mess.noregis)
+      
           if (isBanned) return reply(mess.banned)
             try {
             if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return reply(mess.Iv)
@@ -3202,7 +3201,7 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
              }
              break
               case 'ssweb':
-        if (!isUser) return reply(mess.noregis)
+        
          if (isBanned) return reply(mess.banned)
         if (args.length == 0) return reply(`Example: ${prefix + command} https://github.com/BerrRecode/`)
           ini_link = args[0]
@@ -3210,7 +3209,7 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
           await hexa.sendMessage(from, ini_buffer, image, { quoted: mek })
                     break
       case 'spamsms':
-        if (!isUser) return reply(mess.noregis)
+        
             if (isBanned) return reply(mess.banned)
                     if (args.length == 0) return reply(`Example: ${prefix + command} 628481749928`)
                     reply('Sabar lagi ngespam nomornya!')
@@ -3226,7 +3225,7 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
                     reply("Success")
                     break       
       case 'spamchat':
-        if (!isUser) return reply(mess.noregis)
+        
         if (isBanned) return reply(mess.banned)
                     if (args.length < 1) return reply(`Mau Spamchat ke siapa? Contoh: ${prefix}spamchat 628481749928 Oy bwang`)
                     if (args[0].startsWith('08')) return reply('Gunakan kode bahasa kak')
