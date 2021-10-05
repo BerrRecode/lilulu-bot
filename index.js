@@ -2746,8 +2746,8 @@ hexa.cmd.on('asupan', async (data) => {
     case 'asupanrandom':
             if (isBanned) return reply(mess.banned)
             asupn = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${LolKey}`)
-            asu = asupn.result
-            await sendMediaURL(from, asu)
+            asu = await getBuffer(asupn.result)
+            hexa.sendMessage(from, asu, video, {quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4"})
                break
 	case 'setthumb':
 	  if (!isOwner) return reply(mess.only.ownerb)
