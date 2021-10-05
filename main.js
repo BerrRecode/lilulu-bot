@@ -29,10 +29,10 @@ const starts = async (hexa = new WAConnection()) => {
 
     fs.existsSync('./LiluluBot.json') && hexa.loadAuthInfo('./LiluluBot.json')
     hexa.on('connecting', () => {
-        start('2', 'Memasukkan....')
+        start('2', 'Login...')
     })
     hexa.on('open', () => {
-        success('2', 'crot ahh dh masuk ngab:)')
+        success('2', 'DONE! jangan lupa follow ig gw @efzyn_')
     })
     await hexa.connect({timeoutMs: 30*1000})
         fs.writeFileSync('./LiluluBot.json', JSON.stringify(hexa.base64EncodedAuthInfo(), null, '\t'))
@@ -102,14 +102,15 @@ hexa.on('CB:action,,call', async json => {
         })
 //===============function anti delete=================//
 //ambil di bitcbot
-hexa.on('message-delete', async (m) => {
-if (m.key.remoteJid == 'status@broadcast') return
-if (!m.key.fromMe) {
-m.message = (Object.keys(m.message)[0] === 'ephemeralMessage') ? m.message.ephemeralMessage.message : m.message
+/*
+hexa.on('message-delete', async (mek) => {
+if (mek.key.remoteJid == 'status@broadcast') return
+if (!mek.key.fromMe) {
+mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
 const jam = moment.tz('Asia/Jakarta').format('HH:mm:ss')
 let d = new Date
-let c = hexa.chats.get(m.key.remoteJid)
-let a = c.messages.dict[`${m.key.id}|${m.key.fromMe ? 1 : 0}`]
+let c = hexa.chats.get(mek.key.remoteJid)
+let a = c.messages.dict[`${mek.key.id}|${mek.key.fromMe ? 1 : 0}`]
 let co3ntent = hexa.generateForwardMessageContent(a, false)
 let c3type = Object.keys(co3ntent)[0]
 let locale = 'id'
@@ -121,16 +122,142 @@ day: 'numeric',
 month: 'long',
 year: 'numeric'
 })
-hexa.copyNForward(m.key.remoteJid, m.message)
-hexa.sendMessage(m.key.remoteJid, `▷\`\`\`Anti Delete\`\`\`
+hexa.copyNForward(mek.key.remoteJid, mek.message)
+hexa.sendMessage(mek.key.remoteJid, `▷\`\`\`Anti Delete\`\`\`
 
-▢ \`\`\`Nama : @${m.participant.split("@")[0]}\`\`\`
+▢ \`\`\`Nama : @${mek.participant.split("@")[0]}\`\`\`
 ▢ \`\`\`Tipe : ${c3type}\`\`\`
-▢ \`\`\`Tanggal : ${jam} - ${week} ${weton} - ${calender}\`\`\``, MessageType.text, {quoted: m.message, contextInfo: {"mentionedJid": [m.participant]}})
+▢ \`\`\`Tanggal : ${jam} - ${week} ${weton} - ${calender}\`\`\``, MessageType.text, {quoted: mek.message, contextInfo: {"mentionedJid": [mek.participant]}})
 }
 })
-		    
 
+//=================Anti Delete=================//
+	hexa.on('message-delete', async (mek) => {
+		try {
+	    const from = mek.key.remoteJid
+		const messageStubType = WA_MESSAGE_STUB_TYPES[mek.messageStubType] || 'MESSAGE'
+		const dataRevoke = JSON.parse(fs.readFileSync('./src/gc-revoked.json'))
+		const dataCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked.json'))
+		const dataBanCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked-banlist.json'))
+		const sender = mek.key.fromMe ? hexa.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
+		const isRevoke = mek.key.remoteJid.endsWith('@s.whatsapp.net') ? true : mek.key.remoteJid.endsWith('@g.us') ? dataRevoke.includes(from) : false
+		const isCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : dataCtRevoke.data ? true : false
+		const isBanCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : !dataBanCtRevoke.includes(sender) ? true : false
+		if (messageStubType == 'REVOKE') {
+			console.log(`Status untuk grup : ${!isRevoke}\nStatus semua kontak : ${!isCtRevoke}\nStatus kontak dikecualikan : ${!isBanCtRevoke}`)
+			if (!isRevoke) return
+			if (!isCtRevoke) return
+			if (!isBanCtRevoke) return
+			const from = mek.key.remoteJid
+			const isGroup = mek.key.remoteJid.endsWith('@g.us') ? true : false
+			let int
+			let infoMSG = JSON.parse(fs.readFileSync('./src/msg.data.json'))
+			const id_deleted = mek.key.id
+			const conts = mek.key.fromMe ? hexa.user.jid : hexa.contacts[sender] || { notify: jid.replace(/@.+/, '') }
+			const pushname = mek.key.fromMe ? hexa.user.name : conts.notify || conts.vname || conts.name || '-'
+			const opt4tag = {
+				contextInfo: { mentionedJid: [sender] }
+			}
+			for (let i = 0; i < infoMSG.length; i++) {
+				if (infoMSG[i].key.id == id_deleted) {
+					const dataInfo = infoMSG[i]
+					const type = Object.keys(infoMSG[i].message)[0]
+					const timestamp = infoMSG[i].messageTimestamp
+					int = {
+						no: i,
+						type: type,
+						timestamp: timestamp,
+						data: dataInfo
+					}
+				}
+			}
+			const index = Number(int.no)
+			const body = int.type == 'conversation' ? infoMSG[index].message.conversation : int.type == 'extendedTextMessage' ? infoMSG[index].message.extendedTextMessage.text : int.type == 'imageMessage' ? infoMSG[index].message.imageMessage.caption : int.type == 'stickerMessage' ? 'Sticker' : int.type == 'audioMessage' ? 'Audio' : int.type == 'videoMessage' ? infoMSG[index].videoMessage.caption : infoMSG[index]
+			const mediaData = int.type === 'extendedTextMessage' ? JSON.parse(JSON.stringify(int.data).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : int.data
+			var itsme = `0@s.whatsapp.net`
+				var split = `${fake}`
+				var selepbot72 = {
+					contextInfo: {
+						participant: itsme,
+						quotedMessage: {
+							extendedTextMessage: {
+								text: split,
+							}
+						}
+					}
+				}
+			if (int.type == 'conversation' || int.type == 'extendedTextMessage') {
+				const strConversation = `		 「 ANTI-DELETE 」
+
+- Nama : ${pushname} 
+- Nomer : ${sender.replace('@s.whatsapp.net', '')}
+- Tipe : Text
+- Waktu : ${moment.unix(int.timestamp).format('HH:mm:ss')}
+- Tanggal : ${moment.unix(int.timestamp).format('DD/MM/YYYY')}
+- Pesan : ${body ? body : '-'}`
+				hexa.sendMessage(from, strConversation, MessageType.text, selepbot72)
+			} else if (int.type == 'stickerMessage') {
+				var itsme = `0@s.whatsapp.net`
+					var split = `${fake}`
+					const pingbro23 = {
+						contextInfo: {
+							participant: itsme,
+							quotedMessage: {
+								extendedTextMessage: {
+									text: split,
+								}
+							}
+						}
+					}
+				const filename = `${sender.replace('@s.whatsapp.net', '')}-${moment().unix()}`
+				const savedFilename = await hexa.downloadAndSaveMediaMessage(int.data, `./media/sticker/${filename}`)
+				const strConversation = `		 「 ANTI-DELETE 」
+
+- Nama : ${pushname} 
+- Nomer : ${sender.replace('@s.whatsapp.net', '')}
+- Tipe : Sticker
+- Waktu : ${moment.unix(int.timestamp).format('HH:mm:ss')}
+- Tanggal : ${moment.unix(int.timestamp).format('DD/MM/YYYY')}`
+
+				const buff = fs.readFileSync(savedFilename)
+				hexa.sendMessage(from, strConversation, MessageType.text, opt4tag)
+				hexa.sendMessage(from, buff, MessageType.sticker, pingbro23)
+				fs.unlinkSync(savedFilename)
+
+			} else if (int.type == 'imageMessage') {
+				var itsme = `0@s.whatsapp.net`
+					var split = `${fake}`
+					const pingbro22 = {
+						contextInfo: {
+							participant: itsme,
+							quotedMessage: {
+								extendedTextMessage: {
+									text: split,
+								}
+							}
+						}
+					}
+				const filename = `${sender.replace('@s.whatsapp.net', '')}-${moment().unix()}`
+				const savedFilename = await hexa.downloadAndSaveMediaMessage(int.data, `./media/revoke/${filename}`)
+				const buff = fs.readFileSync(savedFilename)
+				const strConversation = `	 「 ANTI-DELETE 」
+
+- Nama : ${pushname} 
+- Nomer : ${sender.replace('@s.whatsapp.net', '')}
+- Tipe : Image
+- Waktu : ${moment.unix(int.timestamp).format('HH:mm:ss')}
+- Tanggal : ${moment.unix(int.timestamp).format('DD/MM/YYYY')}
+- Pesan : ${body ? body : '-'}\`\`\``
+				hexa.sendMessage(from, buff, MessageType.image, { contextInfo: { mentionedJid: [sender] }, caption: strConversation })
+				fs.unlinkSync(savedFilename)
+			}
+		}
+	} catch (e) {
+		console.log('Message : %s', color(e, 'green'))
+	}
+})
+
+*/
 		    
 }
 
