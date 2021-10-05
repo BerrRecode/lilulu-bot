@@ -2746,22 +2746,7 @@ hexa.cmd.on('asupan', async (data) => {
     case 'asupanrandom':
             if (isBanned) return reply(mess.banned)
             asupn = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${LolKey}`)
-            asu = await sendMediaURL(from, asupn.result)
-            teks = 'nih'
-           buttons = [{buttonId:`${prefix}asupan2`, 
-               buttonText:{displayText:'NEXT'},type:1}]
-             /*
-               imageMsg = (await hexa.prepareMessageMedia(fs.readFileSync(`./lib/lilulu.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./lib/lilulu.jpeg`)})).imageMessage
-          */
-               buttonsMessage = {
-               contentText: `${asu}`,
-               footerText: 'Next for more video',
-               buttons: buttons,
-               headerType: 5
-      }
-
-               prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
-               hexa.relayWAMessage(prep)
+            hexa.sendMessage(from, asupn.result, video, {quoted: mek})
                break
 	case 'setthumb':
 	  if (!isOwner) return reply(mess.only.ownerb)
