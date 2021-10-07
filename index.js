@@ -1118,31 +1118,24 @@ mentionedJid: jids
 await hexa.sendMessage(from, options, text)
 break
 //=====================GROUP MENU=====================//
-case 'add':
-		if (!isGroupAdmins) return reply(mess.only.adming)
-		if (!isGroup) return reply(mess.only.group)
-		
-		if (isBanned) return reply(mess.banned)
-					if (args.length < 1) return reply('Yang mau di add jin ya?')
-					if (args[0].startsWith('08')) return reply('Gunakan kode negara kak')
-					try {
-						num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
-						hexa.groupAdd(from, [num])
-					} catch (e) {
-						console.log('Error :', e)
-						reply('Gagal menambahkan target, mungkin karena di private')
-					}
-					break
-	case 'kick':
-	  if (!isGroupAdmins) return reply(mess.only.adming)
-	  if (!isGroup) return reply(mess.only.group)
-	  
-	  if (isBanned) return reply(mess.banned)
-	  if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
+     case 'add':
+			if (!isGroup) return reply(mess.only.group)
+			if (!isGroupAdmins) return reply(mess.only.adming)
+			if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+			if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
+			add = mek.message.extendedTextMessage.contextInfo.participant
+		    hexa.groupAdd(from, [add])
+				reply('Sukses menambahkan peserta')
+				break
+				case 'kick':
+			if (!isGroup) return reply(mess.only.group)
+			if (!isGroupAdmins) return reply(mess.only.adming)
+			if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+			if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
 			kick = mek.message.extendedTextMessage.contextInfo.participant
 		    hexa.groupRemove(from, [kick])
-						reply('Sukses mengeluarkan anggota')
-						break
+						reply('Sukses mengeluarkan peserta')
+                    break
  case 'demote':
                 if (!isGroup) return reply(mess.only.group)
                 if (!isGroupAdmins) return reply(mess.only.adming)
@@ -1279,12 +1272,9 @@ case 'add':
 					reply(`Sukses mengganti deskripsi grup ke ${body.slice(10)}`)
 					break
   	case 'creategrup':
-  	case 'creategroup':
-  	case 'creategc':
-  	  if (!isOwner) return reply(mess.only.ownerb)
 			if (!isGroup) return reply(mess.only.group)
-      if (args.length < 1) return reply(`Ketik ${prefix}creategrup nama grup|@tag member`)
-				argz = arg.split('|')
+				if (args.length < 1) return reply(`Penggunaan ${prefix}creategrup nama grup|@tag member`)
+			argz = arg.split('|')
 				if (mek.message.extendedTextMessage != undefined){
                     mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
                     for (let i = 0; i < mentioned.length; i++){
@@ -1362,60 +1352,6 @@ case 'add':
                     }
           reply(aefka)
         break
-  case 'antidelete':
-				if (!isGroup) return reply(mess.only.group)
-			if (!isGroupAdmins) return reply(mess.only.adming)
-				const dataRevoke = JSON.parse(fs.readFileSync('./src/gc-revoked.json'))
-				const dataCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked.json'))
-				const dataBanCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked-banlist.json'))
-				const isRevoke = dataRevoke.includes(from)
-				const isCtRevoke = dataCtRevoke.data
-				const isBanCtRevoke = dataBanCtRevoke.includes(sender) ? true : false
-				const argz = body.split(' ')
-				if (argz.length === 1) return hexa.sendMessage(from, `Penggunaan fitur antidelete :\n\n${prefix}antidelete [aktif/mati] (Untuk grup)\n${prefix}antidelete [ctaktif/ctmati] (untuk semua kontak)\n${prefix}antidelete banct 628558xxxxxxx (banlist kontak)`, MessageType.text, {quoted: fkontak})
-				if (argz[1] == 'aktif') {
-					if (isGroup) {
-						if (isRevoke) return hexa.sendMessage(from, `Antidelete telah diaktifkan di grup ini sebelumnya!`, MessageType.text, {quoted: fkontak})
-						dataRevoke.push(from)
-						fs.writeFileSync('./src/gc-revoked.json', JSON.stringify(dataRevoke, null, 2))
-						hexa.sendMessage(from, `Succes Enable Antidelete Grup!`, MessageType.text, {quoted: fkontak})
-					} else if (!isGroup) {
-						hexa.sendMessage(from, `Untuk kontak penggunaan ${prefix}antidelete ctaktif`, MessageType.text, {quoted: fkontak})
-					}
-				} else if (argz[1] == 'ctaktif') {
-					if (!isGroup) {
-						if (isCtRevoke) return hexa.sendMessage(from, `Antidelete telah diaktifkan di semua kontak sebelumnya!`, MessageType.text, {quoted: fkontak})
-						dataCtRevoke.data = true
-						fs.writeFileSync('./src/ct-revoked.json', JSON.stringify(dataCtRevoke, null, 2))
-						hexa.sendMessage(from, `Antidelete diaktifkan disemua kontak!`, MessageType.text, {quoted: fkontak})
-					} else if (isGroup) {
-						hexa.sendMessage(from, `Untuk grup penggunaan ${prefix}antidelete aktif`, MessageType.text, {quoted: fkontak})
-					}
-				} else if (argz[1] == 'banct') {
-					if (isBanCtRevoke) return hexa.sendMessage(from, `kontak ini telah ada di database banlist!`, MessageType.text, {quoted: fkontak})
-					if (argz.length === 2 || argz[2].startsWith('0')) return hexa.sendMessage(from, `Masukan nomer diawali dengan 62! contoh 62859289xxxxx`, MessageType.text, {quoted: fkontak})
-					dataBanCtRevoke.push(argz[2] + '@s.whatsapp.net')
-					fs.writeFileSync('./src/ct-revoked-banlist.json', JSON.stringify(dataBanCtRevoke, null, 2))
-					hexa.sendMessage(from, `Kontak ${argz[2]} telah dimasukan ke banlist antidelete secara permanen!`, MessageType.text, {quoted: fkontak})
-				} else if (argz[1] == 'mati') {
-					if (isGroup) {
-						const index = dataRevoke.indexOf(from)
-						dataRevoke.splice(index, 1)
-						fs.writeFileSync('./src/gc-revoked.json', JSON.stringify(dataRevoke, null, 2))
-						hexa.sendMessage(from, `Succes disable Antidelete Grup!`, MessageType.text, {quoted: fkontak})
-					} else if (!isGroup) {
-						hexa.sendMessage(from, `Untuk kontak penggunaan ${prefix}antidelete ctmati`, MessageType.text, {quoted: fkontak})
-					}
-				} else if (argz[1] == 'ctmati') {
-					if (!isGroup) {
-						dataCtRevoke.data = false
-						fs.writeFileSync('./src/ct-revoked.json', JSON.stringify(dataCtRevoke, null, 2))
-						hexa.sendMessage(from, `Antidelete dimatikan disemua kontak!`, MessageType.text, {quoted: fkontak})
-					} else if (isGroup) {
-						hexa.sendMessage(from, `Untuk grup penggunaan ${prefix}antidelete mati`, MessageType.text, {quoted: fkontak})
-					}
-				}
-				break
 //==================BATAS BRO================//
     case 'linkwa':
       
@@ -3026,6 +2962,14 @@ case 'youtubedl':
             }
             break
             */
+            case 'join':
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
+				 if (args.length < 1) return reply('Link nya mana?')
+					hexa.query({
+json:["action", "invite", `${args[0].replace('https://chat.whatsapp.com/','')}`]
+})
+reply('Sukses bergabung dalam group')
+break
     case'twitter':
       
           if (isBanned) return reply(mess.banned)
