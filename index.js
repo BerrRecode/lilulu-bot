@@ -833,6 +833,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 *│*➪ _${prefix}brainly_ <query>
 *│*➪ _${prefix}image_ <query>
 *│*➪ _${prefix}anime_ <random>
+*│*➪ _${prefix}pixiv_
 *│*➪ _${prefix}pinterest_ <query>
 *│*➪ _${prefix}komiku_ <query>
 *│*➪ _${prefix}chara_ <query>
@@ -1866,6 +1867,13 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             )
             });
             break
+      case 'pixiv':
+            if (isBanned) return reply(mess.banned)
+            if (args.length == 0) return reply(`Example: ${prefix + command} loli kawaii`)
+             query = args.join(" ")
+             ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/pixiv?apikey=${LolKey}&query=${query}`)
+              await hexa.sendMessage(from, ini_buffer, image, { quoted: mek })
+                    break
     case 'kontak':
       
       if (isBanned) return reply(mess.banned)
