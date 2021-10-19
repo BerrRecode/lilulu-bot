@@ -1871,7 +1871,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             if (isBanned) return reply(mess.banned)
             if (args.length == 0) return reply(`Example: ${prefix + command} loli kawaii`)
              query = args.join(" ")
-             ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/pixiv?apikey=${LolKey}&query=${query}`)
+             ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/wallpaper?apikey=${LolKey}&query=${query}`)
               await hexa.sendMessage(from, ini_buffer, image, { quoted: mek })
                     break
     case 'kontak':
