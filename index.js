@@ -68,6 +68,7 @@ const afk = JSON.parse(fs.readFileSync('./database/afk.json'))
 const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
 const user = JSON.parse(fs.readFileSync('./database/user.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
+const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 
 //============APIKEY DISNI===========//
 LolKey = 'BismillahBarokah' //BELI DI https://lolhuman.xys
@@ -183,6 +184,7 @@ module.exports = hexa = async (hexa, mek) => {
 		//const isOwner = ownerNumber.includes(sender)
         const isVote = isGroup ? voting.includes(from) : false
         const isWelkom = isGroup ? welkom.includes(from) : false
+        const isNsfw = isGroup ? nsfw.includes(from) : false
         const conts = mek.key.fromMe ? hexa.user.jid : hexa.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         if (isCmd) cmdadd()
         const pushname = mek.key.fromMe ? hexa.user.name : conts.notify || conts.vname || conts.name || '-'
@@ -195,6 +197,7 @@ module.exports = hexa = async (hexa, mek) => {
 			banned : 'maaf anda TerBanned🚫',
 			noregis : `Maaf anda belum terdaftar di Database ${namabot}, ketik !verify untuk daftar`,
 			udhregis : `Anda telah terdaftar di Database ${namabot}`,
+			nsfwOff : 'Fitur NSFW tidak aktif, hubungi owner/admin grup untuk mengaktifkannya!',
 			error: {
 				stick: 'bukan sticker itu:v',
 				Iv: 'Linknya error:v',
@@ -757,176 +760,228 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
                
     case 'pe':
     case 'lmenu':
-      
      if (isBanned) return reply(mess.banned)
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
-    	var pe = `*╭─❒ 「 BOT INFO 」 ──────*
-*│*➪ *BOT NAME : 𝙻𝚒𝚕𝚞𝚕𝚞𝙱𝚘𝚝*
-*│*➪ *OWNER : ${owner.split('@')[0]}*
-*│*➪ *BATTERY : ${baterai.battery}*
-*│*➪ *PREFIX :「 MULTI PREFIX 」*
-*│*➪ *TOTAL HIT : ${cmddhit.length} Today*
-*│*➪ *BOT MODE : ${banChats ? "SELF-MODE" : "PUBLIC-MODE"}*
-*└──────────────────❒*
+    	var pe = `╭─❒ 「 BOT INFO 」
+│➪ BOT NAME : 𝙻𝚒𝚕𝚞𝚕𝚞𝙱𝚘𝚝
+│➪ OWNER : ${owner.split('@')[0]}
+│➪ BATTERY : ${baterai.battery}
+│➪ PREFIX :「 MULTI PREFIX 」
+│➪ TOTAL HIT : ${cmddhit.length} Today
+│➪ BOT MODE : ${banChats ? "SELF-MODE" : "PUBLIC-MODE"}
+└──────────────────❒
 
-*╭─❒ 「 USER & TIME 」 ──────*
-*│*➪ ${ucapanWaktu} ${pushname}
-*│*➪ *NAME  : ${pushname}*
-*│*➪ *NOMOR : ${sender.split('@')[0]}*
-*│*➪ *WIB   : ${timeWib}*
-*│*➪ *WIT   : ${timeWit}*
-*│*➪ *WITA  : ${timeWita}*
-*└──────────────────❒*
+╭─❒ 「 USER & TIME 」
+│➪ ${ucapanWaktu} ${pushname}
+│➪ NAME  : ${pushname}
+│➪ NOMOR : ${sender.split('@')[0]}
+│➪ WIB   : ${timeWib}
+│➪ WIT   : ${timeWit}
+│➪ WITA  : ${timeWita}
+└──────────────────❒
 ​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
-*╭─❒ OWNER*
-*│*➪ _${prefix}mode_
-*│*➪ _${prefix}bc_
-*│*➪ _${prefix}bc2_
-*│*➪ _${prefix}bcgc_
-*│*➪ _${prefix}ban_
-*│*➪ _${prefix}unban_
-*│*➪ _${prefix}setcmd_
-*│*➪ _${prefix}delcmd_
-*│*➪ _${prefix}listcmd_
-*│*➪ _${prefix}shutdown_
-*│*➪ _${prefix}status_
-*│*➪ _${prefix}leave_
-*│*➪ _${prefix}oleave_
-*│*➪ _${prefix}leaveall_
-*│*➪ _${prefix}setthumb_
-*│*➪ _${prefix}setfakeimg_
-*│*➪ _${prefix}setreply_
-*│*➪ _${prefix}settarget_
-*└──────────────────❒*
+❒ OWNER ❐
+๏ ${prefix}mode
+๏ ${prefix}bc
+๏ ${prefix}bc2
+๏ ${prefix}bcgc
+๏ ${prefix}ban
+๏ ${prefix}unban
+๏ ${prefix}setcmd
+๏ ${prefix}delcmd
+๏ ${prefix}listcmd
+๏ ${prefix}shutdown
+๏ ${prefix}status
+๏ ${prefix}leave
+๏ ${prefix}oleave
+๏ ${prefix}leaveall
+๏ ${prefix}setthumb
+๏ ${prefix}setfakeimg
+๏ ${prefix}setreply
+๏ ${prefix}settarget
 
-*╭─❒ GROUP MENU*
-*│*➪ _${prefix}welcome_
-*│*➪ _${prefix}add_
-*│*➪ _${prefix}kick_
-*│*➪ _${prefix}promote_
-*│*➪ _${prefix}demote_
-*│*➪ _${prefix}group_
-*│*➪ _${prefix}afk_
-*│*➪ _${prefix}linkgc_
-*│*➪ _${prefix}setnamegc_
-*│*➪ _${prefix}setdeskgc_
-*│*➪ _${prefix}creategrup_
-*│*➪ _${prefix}voting_
-*│*➪ _${prefix}delvote_
-*│*➪ _${prefix}listadmin_
-*└──────────────────❒*
+❒ GROUP MENU ❐
+๏ ${prefix}welcome
+๏ ${prefix}add
+๏ ${prefix}kick
+๏ ${prefix}promote
+๏ ${prefix}demote
+๏ ${prefix}group
+๏ ${prefix}afk
+๏ ${prefix}linkgc
+๏ ${prefix}setnamegc
+๏ ${prefix}setdeskgc
+๏ ${prefix}creategrup
+๏ ${prefix}voting
+๏ ${prefix}delvote
+๏ ${prefix}listadmin
 
-*╭─❒ DOWNLOAD*
-*│*➪ _${prefix}ytsearch_ <query>
-*│*➪ _${prefix}igstalk_ <query>
-*│*➪ _${prefix}play_ <query>
-*│*➪ _${prefix}video_ <query>
-*│*➪ _${prefix}ytmp3_ <link>
-*│*➪ _${prefix}ytmp4_ <link>
-*│*➪ _${prefix}igdl_ <link>
-*│*➪ _${prefix}igstory_ <username>
-*│*➪ _${prefix}twitter_ <link>
-*│*➪ _${prefix}tiktok_ <link>
-*│*➪ _${prefix}tiktokaudio_ <link>
-*│*➪ _${prefix}fb_ <link>
-*│*➪ _${prefix}telestick_ <link>
-*│*➪ _${prefix}brainly_ <query>
-*│*➪ _${prefix}image_ <query>
-*│*➪ _${prefix}anime_ <random>
-*│*➪ _${prefix}pixiv_
-*│*➪ _${prefix}pinterest_ <query>
-*│*➪ _${prefix}komiku_ <query>
-*│*➪ _${prefix}chara_ <query>
-*│*➪ _${prefix}playstore_ <query>
-*│*➪ _${prefix}otaku_ <query>
-*└──────────────────❒*
+❒ DOWNLOAD ❐
+๏ ${prefix}ytsearch
+๏ ${prefix}igstalk
+๏ ${prefix}play
+๏ ${prefix}video
+๏ ${prefix}ytmp3
+๏ ${prefix}ytmp4
+๏ ${prefix}igdl
+๏ ${prefix}igstory
+๏ ${prefix}twitter
+๏ ${prefix}tiktok
+๏ ${prefix}tiktokaudio
+๏ ${prefix}fb
+๏ ${prefix}telestick
+๏ ${prefix}brainly
+๏ ${prefix}komiku
+๏ ${prefix}chara
+๏ ${prefix}playstore
+๏ ${prefix}otaku 
 
-*╭─❒ MAKER*
-*│*➪ _${prefix}sticker_
-*│*➪ _${prefix}swm_ <author|packname>
-*│*➪ _${prefix}take_ <author|packname>
-*│*➪ _${prefix}fdeface_
-*│*➪ _${prefix}emoji_
-*└──────────────────❒*
+❒ RANDOM IMG ❐
+๏ ${prefix}pinterest
+๏ ${prefix}wallpaper2
+๏ ${prefix}wallpaper
+๏ ${prefix}anime 
+๏ ${prefix}image 
+๏ ${prefix}cogan
+๏ ${prefix}cecan 
+๏ ${prefix}wallnime
+๏ ${prefix}animefanart
+๏ ${prefix}kemonomimi
 
-*╭─❒ CONVERT*
-*│*➪ _${prefix}toimg_
-*│*➪ _${prefix}tomp3_
-*│*➪ _${prefix}tomp4_
-*│*➪ _${prefix}slow_
-*│*➪ _${prefix}fast_
-*│*➪ _${prefix}reverse_
-*│*➪ _${prefix}tourl_
-*└──────────────────❒*
+❒ MAKER ❐
+๏ ${prefix}sticker
+๏ ${prefix}swm
+๏ ${prefix}take
+๏ ${prefix}fdeface
+๏ ${prefix}emoji
 
-*╭─❒ UP SW*
-*│*➪ _${prefix}upswteks_
-*│*➪ _${prefix}upswimage_
-*│*➪ _${prefix}upswvideo_
-*└──────────────────❒*
+❒ CONVERT ❐
+๏ ${prefix}toimg
+๏ ${prefix}tomp3
+๏ ${prefix}tomp4
+๏ ${prefix}slow
+๏ ${prefix}fast
+๏ ${prefix}reverse
+๏ ${prefix}tourl
 
-*╭─❒ FUN*
-*│*➪ _${prefix}fitnah_
-*│*➪ _${prefix}fitnahpc_
-*│*➪ _${prefix}teruskan_
-*│*➪ _${prefix}kontak_
-*└──────────────────❒*
+❒ UP SW ❐
+๏ ${prefix}upswteks
+๏ ${prefix}upswimage
+๏ ${prefix}upswvideo
 
-*╭─❒ RANDOM TEXT*
-*│*➪ _${prefix}quotes_
-*│*➪ _${prefix}quotesdilan_
-*│*➪ _${prefix}quotesislami_
-*│*➪ _${prefix}katabijak_
-*│*➪ _${prefix}quotesanime_
-*│*➪ _${prefix}bucin_
-*└──────────────────❒*
+❒ FUN ❐
+๏ ${prefix}fitnah
+๏ ${prefix}fitnahpc
+๏ ${prefix}teruskan
+๏ ${prefix}kontak
+๏ ${prefix}memerandom
+๏ ${prefix}memeindo
+๏ ${prefix}darkjoke
 
-*╭─❒ TAG*
-*│*➪ _${prefix}hidetag_
-*│*➪ _${prefix}tagall_
-*│*➪ _${prefix}kontag_
-*│*➪ _${prefix}sticktag_
-*│*➪ _${prefix}totag_
-*└──────────────────❒*
+❒ PRIMBON ❐
+๏ ${prefix}artinama
+๏ ${prefix}zodiak
+๏ ${prefix}jodoh
+๏ ${prefix}weton
+๏ ${prefix}tgljadian
 
-*╭─❒ INFOMENU*
-*│*➪ _${prefix}infoowner_
-*│*➪ _${prefix}infosc_
-*│*➪ _${prefix}cektokenlistrik_
-*│*➪ _${prefix}wikipedia_
-*│*➪ _${prefix}covidindo_
-*│*➪ _${prefix}covidglobal_
-*│*➪ _${prefix}lolcek_
-*│*➪ _${prefix}chord_ <judul lagu>
-*│*➪ _${prefix}lirik_ <judul lagu>
-*│*➪ _${prefix}jadwaltv_
-*│*➪ _${prefix}jadwaltvnow_
-*└──────────────────❒*
+❒ RANDOM TEXT ❐
+๏ ${prefix}quotes
+๏ ${prefix}quotesdilan
+๏ ${prefix}quotesislami
+๏ ${prefix}katabijak
+๏ ${prefix}quotesanime
+๏ ${prefix}bucin
 
-*╭─❒ OTHER*
-*│*➪ _${prefix}ping_
-*│*➪ _${prefix}inspect_
-*│*➪ _${prefix}caripesan_
-*│*➪ _${prefix}linkwa query_
-*│*➪ _${prefix}ssweb_
-*│*➪ _${prefix}spamsms_ <62xxxx>
-*│*➪ _${prefix}spamchat_ <628xxxx>
-*│*➪ _${prefix}get_
-*│*➪ _${prefix}jadibot_
-*│*➪ _${prefix}listjadibot_
-*│*➪ _${prefix}get_
-*│*➪ _${prefix}readmore_
-*│*➪ _${prefix}term_ <code>
-*│*➪ _x_ <code>
-*│*➪ _vote_
-*│*➪ _devote_
-*└──────────────────❒*
+❒ TAG ❐
+๏ ${prefix}hidetag
+๏ ${prefix}tagall
+๏ ${prefix}kontag
+๏ ${prefix}sticktag
+๏ ${prefix}totag
 
-*╭─❒ 「 PESAN 」*  
-*│Thank you very much for using this bot.*
-*│And sorry if there are still many errors.*
-*│We will fix the error soon :)*
-*└──────────────────❍* `
+❒ INFOMENU ❐
+๏ ${prefix}infoowner
+๏ ${prefix}infosc
+๏ ${prefix}cektokenlistrik
+๏ ${prefix}wikipedia
+๏ ${prefix}covidindo
+๏ ${prefix}covidglobal
+๏ ${prefix}lolcek
+๏ ${prefix}chord
+๏ ${prefix}lirik
+๏ ${prefix}jadwaltv
+๏ ${prefix}jadwaltvnow
+
+❒ NSFW MENU ❐
+๏ ${prefix}lewdk
+๏ ${prefix}erok
+๏ ${prefix}tits
+๏ ${prefix}keta
+๏ ${prefix}solo
+๏ ${prefix}eron
+๏ ${prefix}lewd
+๏ ${prefix}trap
+๏ ${prefix}yuri
+๏ ${prefix}ero
+๏ ${prefix}holoero
+๏ ${prefix}erofeet
+๏ ${prefix}blowjob
+๏ ${prefix}cum_jpg
+๏ ${prefix}eroyuri
+๏ ${prefix}hentai
+๏ ${prefix}femdom
+๏ ${prefix}nsfw_avatar
+๏ ${prefix}kemonomimi
+๏ ${prefix}pussy_jpg
+๏ ${prefix}lewdkemo
+๏ ${prefix}hololewd
+๏ ${prefix}futanari
+๏ ${prefix}hololewd
+๏ ${prefix}hentai4everyone
+๏ ${prefix}animebellybutton
+๏ ${prefix}biganimetiddies
+๏ ${prefix}lewdanimegirls
+๏ ${prefix}hentaifemdom
+๏ ${prefix}animearmpits
+๏ ${prefix}hentaiparadise
+๏ ${prefix}animethighss
+๏ ${prefix}animebooty
+๏ ${prefix}animefeets
+๏ ${prefix}sideoppai
+๏ ${prefix}hololewd
+๏ ${prefix}ahegao
+๏ ${prefix}ecchi
+๏ ${prefix}yaoi
+๏ ${prefix}trap
+๏ ${prefix}chiisaihentai
+๏ ${prefix}loli
+๏ ${prefix}waifu
+๏ ${prefix}neko
+
+❒ OTHER ❐
+๏ ${prefix}ping
+๏ ${prefix}inspect
+๏ ${prefix}caripesan
+๏ ${prefix}linkwa query
+๏ ${prefix}ssweb
+๏ ${prefix}spamsms
+๏ ${prefix}spamchat
+๏ ${prefix}get
+๏ ${prefix}jadibot
+๏ ${prefix}listjadibot
+๏ ${prefix}get
+๏ ${prefix}readmore
+๏ ${prefix}term<code>
+๏ x
+๏ vote
+๏ devote
+
+╭─❒ 「 PESAN 」 
+│Thank you very much for using this bot.
+│And sorry if there are still many errors.
+│We will fix the error soon :)
+└──────────────────❍`
 buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId:`${prefix}igowner`,buttonText:{displayText:'⎙ SOSMED'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕DONASI'},type:1}]
       
         buttonsMessage = {
@@ -936,7 +991,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
                headerType: 1
 }
 
-          prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+          prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
                hexa.relayWAMessage(prep)
                break
                
@@ -989,7 +1044,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
       headerType: 4
     }
     
-    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
                hexa.relayWAMessage(prep)
                break
                
@@ -1353,6 +1408,23 @@ break
                     }
           reply(aefka)
         break
+    case 'nsfw':
+				if (!isGroup) return reply(mess.group)
+				if (!isGroupAdmins) return reply('Fitur ini hanya untuk owner dan admin grup')
+				if (args.length < 1) return reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
+				if (Number(args[0]) === 1) {
+				if (isNsfw) return reply(`Fitur ${command} sudah aktif !!!`)
+				nsfw.push(from)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`Berhasil mengaktifkan fitur ${command} pada group ini !!!`)
+				} else if (Number(args[0]) === 0) {
+				nsfw.splice(from, 1)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`Berhasil menonaktifkan fitur ${command} pada group ini !!!`)
+				} else {
+				reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
+				}
+				break
 //==================BATAS BRO================//
     case 'linkwa':
       
@@ -1445,6 +1517,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             let li = await getBuffer(acak)
             await hexa.sendMessage(from,li,image,{quoted: mek})
             break
+            /*
     case 'pinterest':
       
       if (isBanned) return reply(mess.banned)
@@ -1454,18 +1527,21 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             let di = await getBuffer(ac)
             await hexa.sendMessage(from,di,image,{quoted: mek})
             break
+            */
     case 'playstore':
-      
       if (isBanned) return reply(mess.banned)
-            if(!q) return reply('lu nyari apa?')
-            let play = await hx.playstore(q)
-            let store = '❉─────────────────────❉\n'
-            for (let i of play){
+      if (args.length == 0) return reply(`Aplikasi apa yang mau di cari bro?\ncontoh: ${prefix + command} whatsapp`)
+         var apk = args.join(' ')
+         rest = await fetchJson(`https://api.lolhuman.xyz/api/playstore?apikey=${LolKey}&query=${apk}`)
+         restbro = rest.result
+         let store = '❉─────────────────────❉\n'
+            for (let i of restbro){
             store += `\n*「 _PLAY STORE_ 」*\n
-- *Nama* : ${i.name}
-- *Link* : ${i.link}\n
+- *Nama* : ${i.title}
+- *Link* : ${i.url}
 - *Dev* : ${i.developer}
-- *Link Dev* : ${i.link_dev}\n❉─────────────────────❉`
+- *Rating* : ${i.scoreText}
+- *Harga* : ${i.priceText}\n❉─────────────────────❉`
             }
             reply(store)
             break
@@ -1649,7 +1725,80 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             const responye = await hexa.sendMessage(jids, `${split[1]}`, MessageType.text, options)
             await hexa.deleteMessage(jids, { id: responye.messageID, remoteJid: jids, fromMe: true })
             break
-            
+      case 'memeindo':
+      case 'darkjoke':
+        if (isBanned) return reply(mess.banned)
+        mems = await getBuffer(`https://api.lolhuman.xyz/api/meme/${command}?apikey=${LolKey}`)
+        await hexa.sendMessage(from, mems, image, {quoted: mek})
+        break
+    case 'memerandom':
+      if (isBanned) return reply(mess.banned)
+      memernd = await getBuffer(`https://api.lolhuman.xyz/api/random/meme?apikey=${LolKey}`)
+      await hexa.sendMessage(from, memernd, image, {quoted: mek})
+      break
+//=============================================================//
+//========================PRIMBON==============================//
+    case 'artinama':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`sertakan namanya!\ncontoh: ${prefix + command} Fauzan`)
+      nama = body.slice(10)
+      arti = await fetchJson(`https://api.lolhuman.xyz/api/artinama?apikey=${LolKey}&nama=${nama}`)
+      artnam = arti.result 
+      hexa.sendMessage(from, artnam, text, {quoted: mek})
+      break
+    case 'zodiak':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`sertakan zodiakmu ya!!`)
+      zdk = body.slice(8)
+      zdksaya = await fetchJson(`https://api.lolhuman.xyz/api/zodiak/${zdk}?apikey=${LolKey}`)
+      hexa.sendMessage(from, zdksaya.result, text, {quoted: mek})
+      break
+    case 'jodoh':
+      if (isBanned) return reply(mess.banned)
+      if (args.length < 1)return reply(`contoh: ${prefix + command} fauzan|doi`)
+      jodo = args.join(' ')
+      nama1 = jodo.split("|")[0];
+      nama2 = jodo.split("|")[1];
+      bufff = await fetchJson(`https://api.lolhuman.xyz/api/jodoh/${nama1}/${nama2}?apikey=${LolKey}`)
+      jdsayy = bufff.result
+      teks = `Positif : ${jdsayy.positif}\n`
+      teks += `Negative : ${jdsayy.negatif}\n`
+      teks += `Deskripsi : ${jdsayy.deskripsi}\n`
+      bgpoto = await getBuffer(jdsayy.image)
+      hexa.sendMessage(from, bgpoto, image, {quoted: mek, caption: teks})
+      break
+    case 'weton':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`pengguanaan urutan: tanggal, bulan, tahun\nContoh: ${prefix + command} 19|06|1999`)
+      wet = args.join(' ')
+      tingil = body.slice(7)
+      bulbul = wet.split("|")[0];
+      tahu = wet.split("|")[1];
+   /* tingil adalah tanggal
+      bulbul adalah bulan
+      tahu adalah tahun */
+      wetonn = await fetchJson(`https://api.lolhuman.xyz/api/weton/${tingil}/${bulbul}/${tahu}?apikey=${LolKey}`)
+      resnya =  wetonn.result
+      teks = `Weton : ${resnya.weton}\n`
+      teks += `Karakter : ${resnya.karakter}\n`
+      teks += `Pekerjaan : ${resnya.pekerjaan}\n`
+      teks += `Rezeki : ${resnya.rejeki}\n`
+      teks += `Jodoh : ${resnya.jodoh}\n`
+      hexa.sendMessage(from, teks, text, {quoted: mek})
+      break
+    case 'tanggaljadian':
+    case 'tgljadian':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`contoh: ${prefix + command} 19 12 2018`)
+      haduh = args.join(' ')
+      tanggal = args[0]
+      bulan = args[1]
+      tahun = args[2]
+      resmi = await fetchJson(`https://api.lolhuman.xyz/api/jadian/${tanggal}/${bulan}/${tahun}?apikey=${LolKey}`)
+      teks = `Karakteristik : ${resmi.result.karakteristik}\nDeskripsi : ${resmi.result.deskripsi}`
+      reply(teks)
+      break
+//=============================================================//
 //====================RANDOM TEXT==========================//
     case 'quote':
     case 'quotes':
@@ -1846,8 +1995,8 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             fs.unlinkSync(ran)
             })
             break
+//======================RANDOM IMAGE=====================°=====//
     case 'anime':
-      
       if (isBanned) return reply(mess.banned)
             reply(mess.wait)
             fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-gambar-anime.txt')
@@ -1867,13 +2016,55 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             )
             });
             break
-      case 'pixiv':
+      case 'wallpaper2':
             if (isBanned) return reply(mess.banned)
             if (args.length == 0) return reply(`Example: ${prefix + command} loli kawaii`)
-             query = args.join(" ")
-             ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/wallpaper?apikey=${LolKey}&query=${query}`)
-              await hexa.sendMessage(from, ini_buffer, image, { quoted: mek })
+             query = args.join(' ')
+             reply(mess.wait)
+             wall = await fetchJson(`https://api.lolhuman.xyz/api/wallpaper?apikey=${LolKey}&query=${query}`)
+             restwall = wall.result
+             wallp = await getBuffer(restwall)
+             await hexa.sendMessage(from, wallp, image, {quoted: mek})
                     break
+    case 'pinterest':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply('gambar apa yang mau di cari?')
+      poto = args.join('')
+      reply(mess.wait)
+      penteres = await fetchJson(`https://api.lolhuman.xyz/api/pinterest?apikey=${LolKey}&query=${poto}`)
+      gam = await getBuffer(penteres.result)
+      await hexa.sendMessage(from, gam, image, {quoted: mek})
+      break
+    case 'image':
+      if (isBanned) return reply(mess.banned)
+      if (args.length < 1) return reply(`gambar apa yang mau di cari?\ncontoh: ${prefix + command} loli kawaii`)
+      srcp = args.join(' ')
+      reply(mess.wait)
+      gamb = await getBuffer(`https://api.lolhuman.xyz/api/gimage?apikey=${LolKey}&query=${srcp}`)
+      await hexa.sendMessage(from, gamb, image, {quoted: mek})
+      break
+    case 'cogan':
+    case 'cecan':
+    case 'wallnime':
+      if (isBanned) return reply(mess.banned)
+      reply(mess.wait)
+      ranmek = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey=${LolKey}`)
+      await hexa.sendMessage(from, ranmek, image, {quoted: mek})
+      break
+    case 'animefanart':
+      if (isBanned) return reply(mess.banned)
+      reply(mess.wait)
+      animfan = await getBuffer(`https://api.lolhuman.xyz/api/random/art?apikey=${LolKey}`)
+      await hexa.sendMessage(from, animfan, image, {quoted: mek})
+      break
+    case 'kemonomimi':
+    case 'wallpaper':
+      if (isBanned) return reply(mess.banned)
+      reply(mess.wait)
+      randm2 = await getBuffer(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${LolKey}`)
+      await hexa.sendMessage(from, randm2, image, {quoted: mek})
+      break
+//===============================================================//
     case 'kontak':
       
       if (isBanned) return reply(mess.banned)
@@ -2762,6 +2953,7 @@ case 'youtubedl':
 				reply(mess.error.api)
 				}
 				break
+				/*
     case 'image':
       
         if (isBanned) return reply(mess.banned)
@@ -2774,6 +2966,7 @@ case 'youtubedl':
             hexa.sendMessage(from,{url:images},image,{quoted:mek})
             });
             break
+            */
  	case 'tiktok':
  	case 'ttnowm':
  	case 'tiktokdl':
@@ -3113,6 +3306,64 @@ break
             reply('kirim/reply gambar/video')
             }
             break	
+//===================NSFW MENU=================================//
+                case 'lewdk':
+                case 'erok':
+                case 'tits':
+                case 'keta':
+                case 'solo':
+                case 'eron':
+                case 'lewd':
+                case 'trap':
+                case 'yuri':
+                case 'ero':
+                case 'holoero':
+                case 'erofeet':
+                case 'blowjob':
+                case 'cum_jpg':
+                case 'eroyuri':
+                case 'hentai':
+                case 'femdom':
+                case 'nsfw_avatar':
+                case 'kemonomimi':
+                case 'pussy_jpg':
+                case 'lewdkemo':
+                case 'hololewd':
+                case 'futanari':
+                case 'hololewd':
+				if (!isNsfw) return reply(mess.nsfwOff)
+				if (isBanned) return reply(mess.banned)
+				reply(mess.wait)
+				efweh = await getBuffer(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${LolKey}`)
+				await hexa.sendMessage(from, efweh, image, {quoted: mek})
+				break
+				case 'hentai4everyone':
+				case 'animebellybutton':
+				case 'biganimetiddies':
+				case 'lewdanimegirls':
+				case 'hentaifemdom':
+				case 'animearmpits':
+				case 'hentaiparadise':
+				case 'animethighss':
+				case 'animebooty':
+				case 'animefeets':
+				case 'sideoppai':
+				case 'hololewd':
+				case 'ahegao':
+				case 'ecchi':
+				case 'yaoi':
+				case 'trap':
+				case 'chiisaihentai':
+				case 'loli':
+				case 'waifu':
+				case 'neko':
+				if (!isNsfw) return reply(mess.nsfwOff)
+				if (isBanned) return reply(mess.banned)
+				reply(mess.wait)
+				lapan = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/${command}?apikey=${LolKey}`)
+				await hexa.sendMessage(from, lapan, image, {quoted: mek})
+				break
+//=====================================================================================================//
 //=======================OTHER MENU=====================//
     case 'readmore':
       
