@@ -900,7 +900,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}sticktag
 ๏ ${prefix}totag
 
-❒ INFOMENU ❐
+❒ INFO MENU ❐
 ๏ ${prefix}infoowner
 ๏ ${prefix}infosc
 ๏ ${prefix}cektokenlistrik
@@ -912,6 +912,9 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}lirik
 ๏ ${prefix}jadwaltv
 ๏ ${prefix}jadwaltvnow
+๏ ${prefix}cekresijnt
+๏ ${prefix}jaraktempuh
+๏ ${prefix}indbeasiswa
 
 ❒ NSFW MENU ❐
 ๏ ${prefix}lewdk
@@ -2539,6 +2542,84 @@ esceh = `❥ *info script bot*
     prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
       hexa.relayWAMessage(prep)
 			break
+		case 'cekresijnt':
+		  if (isBanned) return reply(mess.banned)
+		  if (args.length < 1) return reply(`sertakan nomor resinya bro\nContoh: ${prefix + command} JT2591489094`)
+		  resi = args.join(' ')
+		  jnt = await fetchJson(`https://api.lolhuman.xyz/api/resi/jnt/${resi}?apikey=${LolKey}`)
+		  resolt = jnt.result
+		  pengirimnya = resolt.pengirim
+		  penerimanya = resolt.penerima
+		  lacakresi = resolt.history
+		  teks = `*CEK NOMOR RESI*\n
+*======Info Resi=======*
+No Resi : ${resolt.no_resi}
+Status : ${resolt.status}
+Posisi saat ini : ${resolt.current_position}
+Dari : ${resolt.from}
+Untuk : ${resolt.to}\n
+*======Info Pengirim======*
+Nama : ${pengirimnya.name}
+Alamat : ${pengirimnya.address}\n
+*======Info Penerima=======*
+Nama : ${penerimanya.name}
+Alamat : ${penerimanya.address}\n\n
+*------History------*\n`
+		  for (var i of lacakresi){
+		    teks += `Waktu : ${i.time}
+Posisi : ${i.position}
+Keterangan : ${i.desc}\n\n`
+		  }
+		  reply(teks)
+		  break
+		case 'kodepos':
+		  if (isBanned) return reply(mess.banned)
+		  if (args.length == 0) return reply(`Sertakan nama desa/kecamatan/kota\nContoh: ${prefix + command} buduan`)
+		  kotaa = body.slice(9)
+		  kodebro = await fetchJson(`https://api.lolhuman.xyz/api/kodepos?apikey=${LolKey}&query=${kotaa}`)
+		  resilt = kodebro.result
+		  isi = `*====POSTAL CODE====*\n`
+		  for (var postt of resilt){
+		  isi += `Provinsi  : ${postt.province}
+Kota/Kab  : ${postt.city}
+kecamatan : ${postt.subdistrict}
+Desa      : ${postt.urban}
+Kode pos  : ${postt.postalcode}\n\n`
+}
+      reply(isi)
+      break
+  case 'jaraktempuh':
+     if (isBanned) return reply(mess.banned)
+		  if (args.length == 0) return reply(`Sertakan kota asal dan tujuan\nContoh: ${prefix + command} situbondo-probolinggo`)
+		  kotaa = args.join(' ')
+		  kota1 = kotaa.split("-")[0]
+		  kota2 = kotaa.split("-")[1]
+		  jeson = await fetchJson(`https://api.lolhuman.xyz/api/jaraktempuh?apikey=${LolKey}&kota1=${kota1}&kota2=${kota2}`)
+		  jaraks = jeson.result
+		  teks = `*Jarak ${kota1} - ${kota2}*
+Asal : ${jaraks.from.name}
+tujuan : ${jaraks.to.name}
+Jarak : ${jaraks.jarak}
+=====Waktu Tempuh=====
+Kereta api : ${jaraks.kereta_api}
+Pesawat : ${jaraks.pesawat}
+Mobil : ${jaraks.mobil}
+Motor : ${jaraks.motor}
+Jalan kaki : ${jaraks.jalan_kaki}`
+    hexa.sendMessage(from, teks, text, {quoted: mek})
+    break
+  case 'indbeasiswa':
+  case 'caribeasiswa':
+    if (isBanned) return reply(mess.banned)
+    bea = await fetchJson(`https://api.lolhuman.xyz/api/indbeasiswa?apikey=${LolKey}`)
+    siswa = bea.result
+    beasis = `*Kumpulan Beasiswa Indonesia*\n\n`
+    for (var b of siswa){
+      beasis += `${b.title}
+more info: ${b.link}\n\n`
+    }
+    reply(beasis)
+    break
 //===============BATAS NI=====================//
 	case 'play':
 	  
