@@ -3189,8 +3189,7 @@ case 'youtubedl':
                 reply(mess.wait)
                 link = args.join(' ')
                 igeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
-                dlnya = await getBuffer(igeh.result)
-            igehdl = dlnya
+            igehdl = igeh.result
             const captions = 'nih ngab'
              sendMediaURL(from, link, captions)
             await sendMediaURL(from, igehdl)
@@ -3223,9 +3222,8 @@ sendMediaURL(from,`${res.result.link}`,`${res.result.desc}`)
       reply(mess.wait)
       lenk = args.join(' ')
       ogeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${lenk}`)
-      vib = '\n'
-      vib += await getBuffer(ogeh.result)
-      hexa.sendMessage(from, vib, video, {quoted: mek})
+      vib = await getBuffer(ogeh.result)
+      hexa.sendMessage(from, vib, video, {quoted: mek, caption: 'nih ngab'})
       break
       case 'igimg':
       if (isBanned) return reply(mess.banned)
@@ -3233,9 +3231,8 @@ sendMediaURL(from,`${res.result.link}`,`${res.result.desc}`)
       reply(mess.wait)
       lonk = args.join(' ')
       ugeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${lonk}`)
-      vik = '\n'
-      vik += await getBuffer(ugeh.result)
-      hexa.sendMessage(from, vik, image, {quoted: mek})
+      vik = await getBuffer(ugeh.result)
+      hexa.sendMessage(from, vik, image, {quoted: mek, caption: 'nih ngab'})
       break
     case 'fb':
           if (isBanned) return reply(mess.banned)
