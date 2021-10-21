@@ -3190,8 +3190,7 @@ case 'youtubedl':
                 link = args.join(' ')
                 igeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
                 dlnya = await getBuffer(igeh.result)
-            igehdl = '\n\n'
-            igehdl += dlnya
+            igehdl = dlnya
             const captions = 'nih ngab'
              sendMediaURL(from, link, captions)
             await sendMediaURL(from, igehdl)
@@ -3203,8 +3202,7 @@ case 'youtubedl':
       link = args.join(' ')
       igeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
       dlnya = await getBuffer(igeh.result)
-      igehdl = '\n\n'
-      igehdl += dlnya
+      igehdl = dlnya
       ini_type = image
       if (link.includes(".mp4")) ini_type = video
 hexa.sendMessage(from, igehdl, ini_type, {quoted: mek})
