@@ -56,7 +56,7 @@ const starts = async (hexa = new WAConnection()) => {
 			}
 			let buff = await getBuffer(ppimg)
 			welcomimg = fs.readFileSync('./src/welcomimg.jpg')
-			masuk =`Halo @${num.split('@')[0]}\n*Selamat Datang Di ${mdata.subject}*\n\nSilahkan baca Deskripsi grup dulu ya!\nketik *!menu* untuk menampilkan fitur bot\njangan lupa donasi ya :)`
+			masuk =`Halo @${mem.split('@')[0]}\n*Selamat Datang Di ${mdata.subject}*\n\nSilahkan baca Deskripsi grup dulu ya!\nketik *!menu* untuk menampilkan fitur bot\njangan lupa donasi ya :)`
             hexa.sendMessage(mdata.id, welcomimg, MessageType.image, {caption: masuk, quoted: fkontakk, thumbnail: fs.readFileSync('./src/welcomimg.jpg')})
 			} else if (anu.action == 'remove') {
 			fkontakk = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(anu.jid ? { remoteJid: '62838505090133-1604595598@g.us' } : {})}, message: { "contactMessage":{"displayName": `${mdata.subject}`,"vcard":`BEGIN:VCARD\nVERSION:3.0\nN:2;FznAdm;;;\nFN:FznAdm\nitem1.TEL;waid=6285156724122:6285156724122\nitem1.X-ABLabel:Mobile\nEND:VCARD` }}}
@@ -68,7 +68,7 @@ const starts = async (hexa = new WAConnection()) => {
 			}
 			let buff = await getBuffer(ppimg)
 			gdbyimg = fs.readFileSync('./src/byeimg.jpg')
-			keluar =`Selamat tinggal @${num.split('@')[0]}\nNanti kalo udh balik, jangan lupa bawa oleh-oleh ya`
+			keluar =`Selamat tinggal @${mem.split('@')[0]}\nNanti kalo udh balik, jangan lupa bawa oleh-oleh ya`
             hexa.sendMessage(mdata.id, gdbyimg, MessageType.image, {caption: keluar, quoted: fkontakk, thumbnail: fs.readFileSync('./src/byeimg.jpg')})
 			}
 //===========function promote demote detected============//
