@@ -2058,7 +2058,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
              wall = await fetchJson(`https://api.lolhuman.xyz/api/wallpaper?apikey=${LolKey}&query=${query}`)
              restwall = wall.result
              wallp = await getBuffer(restwall)
-             await hexa.sendMessage(from, wallp, image, {quoted: mek})
+             await hexa.sendMessage(from, wallp, image, {quoted: mek, caption: 'nih wallpapernya'})
                     break
     case 'pinterest':
       if (isBanned) return reply(mess.banned)
@@ -2067,7 +2067,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       reply(mess.wait)
       penteres = await fetchJson(`https://api.lolhuman.xyz/api/pinterest?apikey=${LolKey}&query=${poto}`)
       gam = await getBuffer(penteres.result)
-      await hexa.sendMessage(from, gam, image, {quoted: mek})
+      await hexa.sendMessage(from, gam, image, {quoted: mek, caption: 'nih ngab'})
       break
     case 'image':
       if (isBanned) return reply(mess.banned)
@@ -2075,7 +2075,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       srcp = args.join(' ')
       reply(mess.wait)
       gamb = await getBuffer(`https://api.lolhuman.xyz/api/gimage?apikey=${LolKey}&query=${srcp}`)
-      await hexa.sendMessage(from, gamb, image, {quoted: mek})
+      await hexa.sendMessage(from, gamb, image, {quoted: mek, caption: 'nih ngab'})
       break
     case 'cogan':
     case 'cecan':
@@ -2083,13 +2083,13 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       if (isBanned) return reply(mess.banned)
       reply(mess.wait)
       ranmek = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey=${LolKey}`)
-      await hexa.sendMessage(from, ranmek, image, {quoted: mek})
+      await hexa.sendMessage(from, ranmek, image, {quoted: mek, caption: 'nih ngab'})
       break
     case 'animefanart':
       if (isBanned) return reply(mess.banned)
       reply(mess.wait)
       animfan = await getBuffer(`https://api.lolhuman.xyz/api/random/art?apikey=${LolKey}`)
-      await hexa.sendMessage(from, animfan, image, {quoted: mek})
+      await hexa.sendMessage(from, animfan, image, {quoted: mek, caption: 'wibu awokwok'})
       break
       /*
     case 'kemonomimi':
@@ -3570,7 +3570,7 @@ break
 				if (isBanned) return reply(mess.banned)
 				reply(mess.wait)
 				efweh = await getBuffer(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${LolKey}`)
-				await hexa.sendMessage(from, efweh, image, {quoted: mek})
+				await hexa.sendMessage(from, efweh, image, {quoted: mek, caption: 'jangan 💦 yah'})
 				break
 				case 'hentai4everyone':
 				case 'animebellybutton':
@@ -3596,7 +3596,7 @@ break
 				if (isBanned) return reply(mess.banned)
 				reply(mess.wait)
 				lapan = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/${command}?apikey=${LolKey}`)
-				await hexa.sendMessage(from, lapan, image, {quoted: mek})
+				await hexa.sendMessage(from, lapan, image, {quoted: mek, caption: 'Jangan 💦 yahh'})
 				break
 //=====================================================================================================//
 //=======================OTHER MENU=====================//
