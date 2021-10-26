@@ -2954,7 +2954,7 @@ hexa.cmd.on('asupan', async (data) => {
     case 'asupanghea':
       if (isBanned) return reply(mess.banned)
       reply(mess.wait)
-      asukon = await getBuffer(`https://dapuhy-api.herokuapp.com/api/asupan/${command}?apikey=${DapKey}`)
+      asukon = await getBuffer(`https://api.dapuhy.ga/api/asupan/${command}?apikey=${DapKey}`)
       comlai = 'mantep gak tuh?'
       hexa.sendMessage(from, asukon, video, {quoted: mek, caption: comlai})
       break
