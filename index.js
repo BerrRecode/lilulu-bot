@@ -61,6 +61,7 @@ const { y2mateA, y2mateV } = require('./lib/y2mate')
 const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
 const petik = ('```')
 const pdua = ('"')
+
 //===============JSON FILE===================//
 const afk2 = JSON.parse(fs.readFileSync('./lib/off.json'))
 const voting = JSON.parse(fs.readFileSync('./lib/voting.json'))
@@ -123,7 +124,7 @@ if(time2 < "06:00:00"){
 var ucapanWaktu = 'Selamat pagi 🌈'                                       }
 //=================================================//
 // Sticker Cmd
-// Funcation Stick Cmd , Sorry Bang saya Encrip hehe:)
+// Function Stick Cmd , Sorry Bang saya Encrypt hehe:)
 function _0x187e(){const _0x5201c3=['354332XZSVKt','stringify','10gXCFmS','writeFileSync','chats','826660vMhFZs','push','831785OvEahb','9YWQYLr','30yImjxS','6342256ZSdPUT','2360940FsKSew','forEach','333777enEhHA','keys','5973359gTLRyl'];_0x187e=function(){return _0x5201c3;};return _0x187e();}function _0x53ad(_0x327943,_0x496650){const _0x187e5a=_0x187e();return _0x53ad=function(_0x53ad6b,_0x638151){_0x53ad6b=_0x53ad6b-0x7b;let _0x56c9cd=_0x187e5a[_0x53ad6b];return _0x56c9cd;},_0x53ad(_0x327943,_0x496650);}(function(_0x5c82b1,_0x583797){const _0x404869=_0x53ad,_0x5daaac=_0x5c82b1();while(!![]){try{const _0x4771ab=-parseInt(_0x404869(0x88))/0x1+parseInt(_0x404869(0x8a))/0x2*(parseInt(_0x404869(0x85))/0x3)+-parseInt(_0x404869(0x83))/0x4+parseInt(_0x404869(0x7f))/0x5*(-parseInt(_0x404869(0x81))/0x6)+parseInt(_0x404869(0x87))/0x7+parseInt(_0x404869(0x82))/0x8+-parseInt(_0x404869(0x80))/0x9*(-parseInt(_0x404869(0x7d))/0xa);if(_0x4771ab===_0x583797)break;else _0x5daaac['push'](_0x5daaac['shift']());}catch(_0x52bd20){_0x5daaac['push'](_0x5daaac['shift']());}}}(_0x187e,0x7c338));const addCmd=(_0x36813b,_0x481a74)=>{const _0x5c67d7=_0x53ad,_0x3aa4ea={'id':_0x36813b,'chats':_0x481a74};_scommand[_0x5c67d7(0x7e)](_0x3aa4ea),fs[_0x5c67d7(0x7b)]('./database/scommand.json',JSON[_0x5c67d7(0x89)](_scommand));},getCommandPosition=_0x467b73=>{const _0xde6c6=_0x53ad;let _0x564579=null;Object[_0xde6c6(0x86)](_scommand)[_0xde6c6(0x84)](_0x12d946=>{_scommand[_0x12d946]['id']===_0x467b73&&(_0x564579=_0x12d946);});if(_0x564579!==null)return _0x564579;},getCmd=_0x2ac48e=>{const _0x252724=_0x53ad;let _0x3b3ee6=null;Object[_0x252724(0x86)](_scommand)[_0x252724(0x84)](_0x2c0eb9=>{_scommand[_0x2c0eb9]['id']===_0x2ac48e&&(_0x3b3ee6=_0x2c0eb9);});if(_0x3b3ee6!==null)return _scommand[_0x3b3ee6][_0x252724(0x7c)];},checkSCommand=_0x214db0=>{const _0x4d3d7e=_0x53ad;let _0x597323=![];return Object[_0x4d3d7e(0x86)](_scommand)['forEach'](_0x2b847a=>{_scommand[_0x2b847a]['id']===_0x214db0&&(_0x597323=!![]);}),_0x597323;};
 module.exports = hexa = async (hexa, mek) => {
 	try {
@@ -160,6 +161,7 @@ module.exports = hexa = async (hexa, mek) => {
 		const isCmd = body.startsWith(prefix)
   	const arg = budy.slice(command.length + 2, budy.length)
 		const q = args.join(' ')
+		const c = args.join(' ')
 		const botNumber = hexa.user.jid
 		const botNumberss = hexa.user.jid + '@c.us'
 		const isGroup = from.endsWith('@g.us')
@@ -823,12 +825,14 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}delvote
 ๏ ${prefix}listadmin
 
-❒ DOWNLOAD ❐
+❒ DOWNLOAD MENU ❐
 ๏ ${prefix}ytsearch
 ๏ ${prefix}play
-๏ ${prefix}video
+๏ ${prefix}video 
 ๏ ${prefix}ytmp3
+๏ ${prefix}yt2mp3
 ๏ ${prefix}ytmp4
+๏ ${prefix}ytshort
 ๏ ${prefix}igdl
 ๏ ${prefix}igimg
 ๏ ${prefix}igvid
@@ -1438,6 +1442,7 @@ break
           reply(aefka)
         break
     case 'nsfw':
+        if (isBanned) return reply(mess.banned)
 				if (!isGroup) return reply(mess.group)
 				if (!isGroupAdmins) return reply('Fitur ini hanya untuk owner dan admin grup')
 				if (args.length < 1) return reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
@@ -2649,55 +2654,6 @@ more info: ${b.link}\n\n`
     reply(beasis)
     break
 //===============BATAS NI=====================//
-	case 'play':
-	  
-	  if (isBanned) return reply(mess.banned)
-			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
-			  fakegroup(mess.wait)
-            var srch = args.join('')
-    		aramas = await yts(srch);
-    		aramat = aramas.all 
-   			var mulaikah = aramat[0].url							
-                  try {
-                    yta(mulaikah)
-                    .then((res) => {
-                        const { dl_link, thumb, title, filesizeF, filesize } = res
-                        axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
-                        .then(async (a) => {
-                        if (Number(filesize) >= 100000) return sendMediaURL(from, thumb, `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
-                        const captions = `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
-                        sendMediaURL(from, thumb, captions)
-                        await sendMediaURL(from, dl_link).catch(() => reply('error'))
-                        })                
-                        })
-                        } catch (err) {
-                        reply(mess.error.api)
-                        }
-                   break  
-        case 'video':
-          
-          if (isBanned) return reply(mess.banned)
-            if (args.length === 0) return reply(`Kirim perintah *${prefix}video* _Judul lagu yang akan dicari_`)
-            var srch = args.join('')
-            aramas = await yts(srch);
-            aramat = aramas.all 
-            var mulaikah = aramat[0].url                            
-                  try {
-                    ytv(mulaikah)
-                    .then((res) => {
-                        const { dl_link, thumb, title, filesizeF, filesize } = res
-                        axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
-                        .then(async (a) => {
-                        if (Number(filesize) >= 100000) return sendMediaURL(from, thumb, `*PLAY VIDEO*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
-                        const captions = `*PLAY VIDEO*\n\n*Title* : ${title}\n*Ext* : MP4\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
-                        sendMediaURL(from, thumb, captions)
-                        await sendMediaURL(from, dl_link).catch(() => reply('error'))
-                        })                
-                        })
-                        } catch (err) {
-                        reply(mess.error.api)
-                        }
-                   break      
     case 'sticker': 
     case 'stiker':
     case 'sg':
@@ -3048,7 +3004,56 @@ hexa.cmd.on('asupan', async (data) => {
     		console.log(teks)
    			})
     		break
-//=================DOWNLOADMENU=====================//
+//=================DOWNLOAD MENU=====================//
+case 'play':
+	  
+	  if (isBanned) return reply(mess.banned)
+			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
+			  fakegroup(mess.wait)
+            var srch = args.join('')
+    		aramas = await yts(srch);
+    		aramat = aramas.all 
+   			var mulaikah = aramat[0].url							
+                  try {
+                    yta(mulaikah)
+                    .then((res) => {
+                        const { dl_link, thumb, title, filesizeF, filesize } = res
+                        axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
+                        .then(async (a) => {
+                        if (Number(filesize) >= 100000) return sendMediaURL(from, thumb, `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
+                        const captions = `*PLAY MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
+                        sendMediaURL(from, thumb, captions)
+                        await sendMediaURL(from, dl_link).catch(() => reply('error'))
+                        })                
+                        })
+                        } catch (err) {
+                        reply(mess.error.api)
+                        }
+                   break  
+        case 'video':
+          
+          if (isBanned) return reply(mess.banned)
+            if (args.length === 0) return reply(`Kirim perintah *${prefix}video* _Judul lagu yang akan dicari_`)
+            var srch = args.join('')
+            aramas = await yts(srch);
+            aramat = aramas.all 
+            var mulaikah = aramat[0].url                            
+                  try {
+                    ytv(mulaikah)
+                    .then((res) => {
+                        const { dl_link, thumb, title, filesizeF, filesize } = res
+                        axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
+                        .then(async (a) => {
+                        if (Number(filesize) >= 100000) return sendMediaURL(from, thumb, `*PLAY VIDEO*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
+                        const captions = `*PLAY VIDEO*\n\n*Title* : ${title}\n*Ext* : MP4\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
+                        sendMediaURL(from, thumb, captions)
+                        await sendMediaURL(from, dl_link).catch(() => reply('error'))
+                        })                
+                        })
+                        } catch (err) {
+                        reply(mess.error.api)
+                        }
+                   break      
 case 'youtubedl':
   
         if (isBanned) return reply(mess.banned)
@@ -3072,9 +3077,22 @@ case 'youtubedl':
               hexa.relayWAMessage(prep)
               fs.unlinkSync(`./ytmp.jpeg`)
               break
-	case 'ytmp3':
+    case 'ytmp3':
+      if (isBanned) return reply(mess.banned)
+      if (args.length < 1) return reply(`Contoh: ${prefix + command} (link youtubenya)`)
+      qu = args.join(' ')
+      los = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${LolKey}&url=${qu}`)
+      reply(mess.wait)
+      yot = los.result
+      thumb = await getBuffer(yot.thumbnail)
+      vivid = await getBuffer(yot.link)
+      tetel = `Judul: ${yot.title}\nSize: ${yot.size}\n\nSilahkan tunggu beberapa saat, File media sedang diproses⏳`
+      hexa.sendMessage(from, thumb, image, {quoted: fkontak, caption: tetel})
+      hexa.sendMessage(from, vivid, MessageType.audio, {mimetype: "audio/mp4", quoted: mek})
+      break
+	case 'yt2mp3':
 	  if (isBanned) return reply(mess.banned)
-			if (args.length === 0) return reply(`Kirim perintah *${prefix}ytmp3 [linkYt]*`)
+			if (args.length === 0) return reply(`Kirim perintah *${prefix}yt2mp3 [linkYt]*`)
 			let isLinks = args[0].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
 			if (!isLinks) return reply(mess.error.Iv)
 				try {
@@ -3084,7 +3102,7 @@ case 'youtubedl':
 				const { dl_link, thumb, title, filesizeF, filesize } = res
 				axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
 				.then((a) => {
-			    if (Number(filesize) >= 30000) return sendMediaURL(from, thumb, `*Data Berhasil Dimekatkan!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
+			    if (Number(filesize) >= 30000) return sendMediaURL(from, thumb, `*Data Berhasil Didapatkan!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
 				const captions = `*YTMP3*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
 				sendMediaURL(from, thumb, captions)
 				sendMediaURL(from, dl_link).catch(() => reply(mess.error.api))
@@ -3094,20 +3112,7 @@ case 'youtubedl':
 				reply(mess.error.api)
 				}
 				break
-				/*
-    case 'image':
-      
-        if (isBanned) return reply(mess.banned)
-            if (args.length < 1) return reply('Masukan teks!')
-            const gimg = args.join('');
-            reply(mess.wait)
-            gis(gimg, async (error, result) => {
-            n = result
-            images = n[Math.floor(Math.random() * n.length)].url
-            hexa.sendMessage(from,{url:images},image,{quoted:mek})
-            });
-            break
-            */
+
  	case 'tiktok':
  	case 'ttnowm':
  	case 'tiktokdl':
@@ -3142,7 +3147,7 @@ case 'youtubedl':
 				axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
 				.then((a) => {
 				if (Number(filesize) >= 40000) return sendMediaURL(from, thumb, `*YTMP 4!*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_Untuk durasi lebih dari batas disajikan dalam mektuk link_`)
-				const captionsYtmp4 = `*Data Berhasil Dimekatkan!*\n\n*Title* : ${title}\n*Ext* : MP4\n*Size* : ${filesizeF}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
+				const captionsYtmp4 = `*Data Berhasil Didapatkan!*\n\n*Title* : ${title}\n*Ext* : MP4\n*Size* : ${filesizeF}\n\n_Silahkan tunggu file media sedang dikirim mungkin butuh beberapa menit_`
 				sendMediaURL(from, thumb, captionsYtmp4)
 				sendMediaURL(from, dl_link).catch(() => reply(mess.error.api))
 				})		
@@ -3151,6 +3156,20 @@ case 'youtubedl':
 			    reply(mess.error.api)
 				}
 				break
+	  case 'ytshort':
+	  case 'ytreels':
+	    if (isBanned) return reply(mess.banned)
+	    if (args.length == 0) return reply(`sertakan link youtube shortnya bro\ncontoh: ${prefix + command} https://youtube.com/shorts/OpcuRTCSWOc?feature=share`)
+	    ling = args.join(' ')
+	    reply(mess.wait)
+	    linknye = await fetchJson(`https://api.lolhuman.xyz/api/ytreels?apikey=${LolKey}&url=${ling}`)
+	    ress = linknye.result
+	    thumbn = await getBuffer(ress.thumbnail)
+	    pipid = await getBuffer(ress.video)
+	    teks = `Judul: ${ress.title}\n\nFile sedang di proses, silahkan tunggu beberapa saat! `
+	    hexa.sendMessage(from, thumbn, image, {quoted: mek, caption: teks})
+	    hexa.sendMessage(from, pipid, video, {quoted: mek})
+	    break
      case 'brainly':
        
        if (isBanned) return reply(mess.banned)
@@ -3198,13 +3217,19 @@ case 'youtubedl':
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://www.instagram.com/p/CGOivksJleVPwIQfDBplW8nDrQmOX3aVCkzUO80/`)
       reply(mess.wait)
-      link = args.join(' ')
-      igeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
-      dlnya = await getBuffer(igeh.result)
-      igehdl = dlnya
-      ini_type = image
-      if (link.includes(".mp4")) ini_type = video
-hexa.sendMessage(from, igehdl, ini_type, {quoted: mek})
+      link = args[0]
+      link = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
+      dlnya = await getBuffer(link.result)
+      for (let x of dlnya){
+        if (x.includes(".mp4")){
+          //let dlnya = await getBuffer(x.result)
+          hexa.sendMessage(from, x, video, {quoted: mek})
+        }
+        else {
+          //let dlnya = await getBuffer(x.result)
+          hexa.sendMessage(from, x, image, {quoted: mek})
+        }
+      }
               break
       case 'igdl3':
 if (isBanned) return reply(mess.banned)
