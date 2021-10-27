@@ -3305,16 +3305,8 @@ case 'play2':
       qory = args.join(' ')
       beb = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${qory}`)
       kuh = beb.result 
-      inpoh = kuh.info
-      themb = await getBuffer(inpoh.thumbnail)
       audin = kuh.audio 
       musnya = await getBuffer(audin.link)
-      audd = `*Title :* ${inpoh.title}
-*Uploader :* ${inpoh.uploader}
-*Durasi :* ${inpoh.duration}
-*Bitrate :* ${audin.bitrate}
-*Size :* ${audin.size}`
-        hexa.sendMessage(from, themb, image, {quoted: fkontak, caption: audd})
         hexa.sendMessage(from, musnya, MessageType.audio, {mimetype: "audio/mp4", quoted: mek})
       break
     case 'playvdo':
@@ -3324,17 +3316,8 @@ case 'play2':
       qory = args.join(' ')
       bob = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${qory}`)
       kun = bob.result 
-      inpo = kun.info
-      themb = await getBuffer(inpo.thumbnail)
       vdo = kun.video
       vidbro = await getBuffer(vdo.link)
-      vide = `*Title :* ${inpo.title}
-*Uploader :* ${inpo.uploader}
-*Durasi :* ${inpo.duration}
-*Type :* ${vdo.type}
-*Resolusi :* ${vdo.resolution}
-*Size :* ${vdo.size}`
-        hexa.sendMessage(from, themb, image, {quoted: fkontak, caption: vide})
         hexa.sendMessage(from, vidbro, video, {quoted: mek})
       break
       case 'play':
