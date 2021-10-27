@@ -70,12 +70,13 @@ const afk = JSON.parse(fs.readFileSync('./database/afk.json'))
 const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
 const user = JSON.parse(fs.readFileSync('./database/user.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
+const _update = JSON.parse(fs.readFileSync('./database/bot/update.json'))
 const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 
 //============APIKEY DISNI===========//
 LolKey = 'BismillahBarokah' //BELI DI https://lolhuman.xys
 ZeksKey = 'YOUR APIKEY' //DAFTAR DI http://zeks.me/
-DapKey = 'PaujanDapKey' //DAFTAR DI https://mekuhy-api.herokuapp.com/
+DapKey = 'PaujanDapKey' //DAFTAR DI https://api.dapuhy-api.ga/
 
 //=================CMD================//
 cmddhit =[]
@@ -787,8 +788,18 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 │➪ WITA  : ${timeWita}
 └──────────────────❒
 ‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎‎
+❒ ISLAM MENU ❐
+๏ ${prefix}listsurah
+๏ ${prefix}quran
+๏ ${prefix}ayat
+๏ ${prefix}audiosurah
+๏ ${prefix}audioayat
+๏ ${prefix}jadwalsholat
+๏ ${prefix}niatsholat
+๏ ${prefix}asmaulhusna
+๏ ${prefix}kisahnabi
 
-❒ OWNER ❐
+❒ OWNER MENU ❐
 ๏ ${prefix}mode
 ๏ ${prefix}bc
 ๏ ${prefix}bc2
@@ -801,7 +812,10 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}shutdown
 ๏ ${prefix}status
 ๏ ${prefix}leave
-๏ ${prefix}oleave
+๏ ${prefix}oleave 
+๏ ${prefix}addupdate
+๏ ${prefix}infoupdate
+๏ ${prefix}resetupdate
 ๏ ${prefix}leaveall
 ๏ ${prefix}setthumb
 ๏ ${prefix}setfakeimg
@@ -816,7 +830,8 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}demote
 ๏ ${prefix}group 
 ๏ ${prefix}nsfw
-๏ ${prefix}afk
+๏ ${prefix}afk 
+๏ ${prefix}delete
 ๏ ${prefix}linkgc
 ๏ ${prefix}setnamegc
 ๏ ${prefix}setdeskgc
@@ -824,20 +839,21 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}voting
 ๏ ${prefix}delvote
 ๏ ${prefix}listadmin
+๏ ${prefix}sider
 
 ❒ DOWNLOAD MENU ❐
 ๏ ${prefix}ytsearch
-๏ ${prefix}play
+๏ ${prefix}play 
+๏ ${prefix}play2
 ๏ ${prefix}video 
-๏ ${prefix}ytmp3
+๏ ${prefix}ytdl
 ๏ ${prefix}yt2mp3
-๏ ${prefix}ytmp4
 ๏ ${prefix}ytshort
 ๏ ${prefix}igdl
 ๏ ${prefix}igimg
 ๏ ${prefix}igvid
 ๏ ${prefix}twitter
-๏ ${prefix}tiktok
+๏ ${prefix}twnowm
 ๏ ${prefix}tiktokaudio
 ๏ ${prefix}fb
 ๏ ${prefix}telestick
@@ -1225,6 +1241,23 @@ break
 						*/
 						reply('maaf fitur ini sedang dalam perbaikan')
                     break
+    case 'okick':
+             if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+          if (!isGroupAdmins) return reply(mess.only.adming)
+             if (!isGroup) return reply(mess.only.group)
+             kick(from, mentionUser)
+             break
+      case 'oadd':
+             if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
+             entah = arg.split("|")[0]
+             entah = entah.replace(new RegExp("[()+-/ +/]", "gi"), "")
+             entah = `${entah}@s.whatsapp.net`
+             hexa.groupAdd(from, [entah])
+             } else {
+             entah = mek.message.extendedTextMessage.contextInfo.participant
+             hexa.groupAdd(from, [entah])
+}
+             break
  case 'demote':
                 if (!isGroup) return reply(mess.only.group)
                 if (!isGroupAdmins) return reply(mess.only.adming)
@@ -1459,6 +1492,49 @@ break
 				reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
 				}
 				break
+ case 'listonline':
+             if (!isGroup) return reply(`Only group`)
+             try {
+             let ido = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : from
+             let online = [...Object.keys(hexa.chats.get(ido).presences), hexa.user.jid]
+             hexa.sendMessage(from, 'List Online:\n' + online.map(v => '- @' + v.replace(/@.+/, '')).join `\n`, text, { quoted: mek, contextInfo: { mentionedJid: online }})
+             } catch (e) {
+             reply(`${e}`)
+}
+             break
+      case 'sider':
+             if(!isGroup) return reply(mess.only.group)
+             try {
+             infom = await hexa.messageInfo(from, mek.message.extendedTextMessage.contextInfo.stanzaId)
+             tagg = []
+             teks = `*• Dibaca oleh:*\n\n`
+             for(let i of infom.reads){
+             teks += '@' + i.jid.split('@')[0] + '\n'
+             teks += `> ` + moment(`${i.t}` * 1000).tz('Asia/Jakarta').format('DD/MM/YYYY HH:mm:ss') + '\n\n'
+             tagg.push(i.jid)
+}
+             teks += `*• Tersampaikan pada:*\n\n`
+             for(let i of infom.deliveries){
+             teks += '@' + i.jid.split('@')[0] + '\n'
+             teks += `> ` + moment(`${i.t}` * 1000).tz('Asia/Jakarta').format('DD/MM/YYYY HH:mm:ss') + '\n\n'
+             tagg.push(i.jid)
+}
+             mentions(teks, tagg, true)
+             } catch (e) {
+             console.log(color(e))
+             reply('Reply chat bot!')
+}
+             break
+    case 'd':
+        case 'del':
+        case 'delete': // MR.CYSER
+               try {
+               if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply chat bot')
+               hexa.deleteMessage(from, {id: mek.message.extendedTextMessage.contextInfo.stanzaId, remoteJid: from, fromMe: true})
+               } catch (e){
+               reply('Reply chat bot')
+}
+               break
 //==================BATAS BRO================//
     case 'linkwa':
       
@@ -2416,6 +2492,178 @@ case 'upswaudio':
 				hexa.blockUser (`${body.slice(9)}@c.us`, 'remove')
 			    hexa.sendMessage(from, `Perintah Diterima, Membuka Blockir ${body.slice(9)}@c.us`, text, {quoted: fkontak})
 				break
+	case 'addupdate':
+             if (!isOwner) return reply(mess.only.ownerb)
+             if (!q) return reply(`Example: ${command} update fitur`)
+           _update.push(q)
+             fs.writeFileSync('./database/bot/update.json', JSON.stringify(_update))
+             reply(`Update fitur berhasil ditambahkan ke database!`)
+             break
+      case 'infoupdate':
+             let updateList = `*── 「 UPDATE BOT 」 ──*\n\n\n`
+             for (let i of _update) {
+             updateList += `•> ${i}\n`
+}
+             reply(updateList)
+             break
+      case 'resetupdate':
+             if (!isOwner) return reply(mess.only.ownerb)
+             var reset = []
+            // glimit = reset
+           _update = reset
+             //console.log('Hang tight, it\'s time to reset')
+            // fs.writeFileSync('./database/bot/glimit.json', JSON.stringify(glimit))
+             fs.writeFileSync('./database/bot/update.json', JSON.stringify(_update))
+             reply('Oke Desu ~')
+             break
+    case 'clearall':
+             if (!isOwner) return  reply(mess.only.ownerb)
+             anu = await hexa.chats.all()
+             hexa.setMaxListeners(25)
+             for (let _ of anu) {
+             hexa.deleteChat(_.jid)
+          }
+             reply('Sukses clear all chat :)')
+             break
+       case 'kickall': // Anti Banned
+        if (isOwner) return reply(mess.only.ownerb)
+              for (let i of groupMembers) {
+              await kickMember(from, [i.jid])
+}
+              break
+//=========================ISLAM MENU==========================//
+case 'listsurah':
+  if (isBanned) return reply(mess.banned)
+  data_api = await fetchJson(`https://api.lolhuman.xyz/api/quran?apikey=${LolKey}`)
+  data_ress = data_api.result 
+  teks = `*List Surah:*\n`
+  for (var x in data_ress){
+     teks += `${x}. ${data_ress[x]}\n`
+  }
+  reply(teks)
+  break
+case 'quran': 
+  if (isBanned) return reply(mess.banned)
+  if (args.length == 0) return reply(`sertakan nomor surah-nya\ncontoh: ${prefix + command}18`)
+  qs = args.join(' ')
+  get_result = await fetchJson(`https://api.lolhuman.xyz/api/quran/${qs}?apikey=${LolKey}`)
+  sursur = get_result.result 
+  let surr = `Surah : ${sursur.surah}\nAsma : ${sursur.asma}\nSurah ke : ${sursur.nomor}\nJumlah Ayat : ${sursur.jumlah_ayat}\nDiturunkan Di : ${sursur.type}\nKeterangan : ${sursur.keterangan}\n\n======Ayatnya======\n`
+  for (let i of get_result.result.ayat){
+    arab = i.arab
+    nomber = i.ayat
+    arte = i.indonesia
+    surr += `${arab} {${nomber}}\nArtinya : ${arte}\n`
+  }
+  reply(surr)
+  break
+  case 'ayat':
+    if (isBanned) return reply(mess.banned)
+    if (args.length < 1) return reply(`ayat keberapa bang?\ncontoh : ${prefix + command} 4/6`)
+				reply(mess.wait)
+				ct = args.join(' ')
+				dap1 = ct.split('/')[0]
+                dap2 = ct.split('/')[1]
+				biss = await fetchJson(`https://api.lolhuman.xyz/api/quran/${dap1}/${dap2}?apikey=${LolKey}`)
+				millah = biss.result
+				halal = `Nomor : ${millah.nomor}\nAsma : ${millah.asma}\nSurah : ${millah.surah}\nJumlah Ayat : ${millah.jumlah_ayat}\nDiturunkan Di : ${millah.type}\nKeterangan : ${millah.keterangan}`
+				teks = '=================\n'
+				for (let i of biss.result.ayat) {
+				teks += `Ayat : ${i.ayat}\nArab : ${i.arab}\nIndonesia : ${i.indonesia}\nLatin : ${i.latin}\n=================\n`
+				suara = await getBuffer(i.audio)
+				hexa.sendMessage(from, suara, audio, {mimetype: 'audio/mp3', quoted: mek})
+				}
+                hexa.sendMessage(from, halal, text, {quoted: fkontak})
+                reply(teks.trim())
+                break
+    case 'audiosurah': 
+      if (isBanned) return reply(banned)
+      if (args.length == 0) return reply(`Contoh: ${prefix + command} 114`)
+      reply(mess.wait)
+      qry = args.join(' ')
+      resst = await getBuffer(`https://api.lolhuman.xyz/api/quran/audio/${qry}?apikey=${LolKey}`)
+      hexa.sendMessage(from, resst, audio, {mimetype: "audio/mp4", quoted: mek})
+      break
+    case 'audioayat':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`sertakan nomor surah dan ayat keberapa\ncontoh: ${prefix + command} 114:3`)
+      qorro = args.join(' ')
+        surat = qorro.split(":")[0]
+          ayaat = qorro.split(":")[1]
+      data_apis = await getBuffer(`https://api.lolhuman.xyz/api/quran/audio/${surat}/${ayaat}?apikey=${LolKey}`)
+      hexa.sendMessage(from, data_apis, audio, {mimetype: "audio/mp4", quoted: mek})
+      break
+    case 'waktusholat':
+    case 'jadwalsholat':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`contoh: ${prefix + command} situbondo`)
+      citi = args.join(' ')
+      wktsh = await fetchJson(`https://api.lolhuman.xyz/api/sholat/${citi}?apikey=${LolKey}`)
+      adzan = wktsh.result
+      teks = `========*WAKTU SHOLAT*========
+Wilayah : ${adzan.wilayah}
+Tanggal : ${adzan.tanggal}
+Subuh : ${adzan.subuh}
+Dzuhur : ${adzan.dzuhur}
+Ashar : ${adzan.ashar}
+Maghrib : ${adzan.maghrib}
+isya' : ${adzan.isya}
+=======================
+Sahur : ${adzan.sahur}
+Imsak : ${adzan.imsak}
+Sholat Dhuha : ${adzan.dhuha}
+Terbit Matahari : ${adzan.terbit}`
+          hexa.sendMessage(from, teks, text, {quoted: fkontak})
+      break
+    case 'niatsholat':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`contoh: ${prefix + command} ashar`)
+      five = args.join(' ')
+      limawaktu = await fetchJson(`https://api.lolhuman.xyz/api/niatsholat/${five}?apikey=${LolKey}`)
+      niat = limawaktu.result
+      sholatkuy = `*${niat.name}*\n
+${niat.ar}
+Latin : ${niat.latin}
+Artinya : ${niat.id}`
+          hexa.sendMessage(from, sholatkuy, text, {quoted: fkontak})
+      break
+    case 'asmaulhusna':
+    case 'nama99':
+      if (isBanned) return reply(mess.banned)
+      asmaul = await fetchJson(`https://api.lolhuman.xyz/api/asmaulhusna?apikey=${LolKey}`)
+      husna = asmaul.result
+      baik = `Asmaul Husna ke : ${husna.index}
+Arab : ${husna.ar}
+Latin : ${husna.latin}
+arti : ${husna.id}
+Inggrisnya : ${husna.en}`
+
+buttons = [{buttonId:`${prefix}nama99`, buttonText:{displayText:'NEXT'},type:1},
+    {buttonId:`${prefix}menu`, buttonText:{displayText:'📑 MENU'},type:1}]
+      buttonsMessage = {
+      contentText: `${baik}`,
+      footerText: `©lilulu-bot 2k21`,
+      buttons: buttons,
+      headerType: 1
+    }
+    
+    prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+               hexa.relayWAMessage(prep)
+      break
+    case 'kisahnabi':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`contoh: ${prefix + command} muhammad`)
+      nabi = args.join(' ')
+      kisahnya = await fetchJson(`https://api.lolhuman.xyz/api/kisahnabi/${nabi}?apikey=${LolKey}`)
+      alkisah = kisahnya.result
+      cerita = `*Kisah Nabi ${alkisah.name}*
+Tahun Lahir : ${alkisah.thn_kelahiran}
+Tempat Lahir : ${alkisah.place}
+Umur : ${alkisah.age}
+Kisah : \n${alkisah.story}`
+        hexa.sendMessage(from, cerita, text, {quoted: mek})
+      break
+//========================BATAS BRO============================//
 //=================INFO MENU===================//
 case 'ctokenlistrik':
       case 'ctlistrik':
@@ -2729,8 +2977,6 @@ more info: ${b.link}\n\n`
 			})
 			break
 	case 'ytsearch':
-	  
-	  if (isBanned) return reply(mess.banned)
 			if (args.length < 1) return reply('Tolong masukan query!')
 			var srch = args.join('');
 			try {
@@ -2749,7 +2995,7 @@ more info: ${b.link}\n\n`
             ytresult += '❏ Durasi: ' + video.timestamp + '\n'
             ytresult += '❏ Upload: ' + video.ago + '\n________________________\n\n'
     		});
-    		ytresult += '◩ *SELF-BOT*'
+    		ytresult += '◩ *LILULU-BOT*'
     		await fakethumb(tbuff,ytresult)
 			break
 	case 'setreply':
@@ -3005,8 +3251,7 @@ hexa.cmd.on('asupan', async (data) => {
    			})
     		break
 //=================DOWNLOAD MENU=====================//
-case 'play':
-	  
+case 'play2':
 	  if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
 			  fakegroup(mess.wait)
@@ -3031,13 +3276,12 @@ case 'play':
                         }
                    break  
         case 'video':
-          
           if (isBanned) return reply(mess.banned)
             if (args.length === 0) return reply(`Kirim perintah *${prefix}video* _Judul lagu yang akan dicari_`)
             var srch = args.join('')
             aramas = await yts(srch);
             aramat = aramas.all 
-            var mulaikah = aramat[0].url                            
+            var mulaikah = aramat[0].url                     
                   try {
                     ytv(mulaikah)
                     .then((res) => {
@@ -3054,8 +3298,72 @@ case 'play':
                         reply(mess.error.api)
                         }
                    break      
+    case 'playmsc':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`Sertakan link YT-nya bro\nContoh: ${prefix + command} `)
+      reply(mess.wait)
+      qory = args.join(' ')
+      beb = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${qory}`)
+      kuh = beb.result 
+      inpoh = kuh.info
+      themb = await getBuffer(inpoh.thumbnail)
+      audin = kuh.audio 
+      musnya = await getBuffer(audin.link)
+      audd = `*Title :* ${inpoh.title}
+*Uploader :* ${inpoh.uploader}
+*Durasi :* ${inpoh.duration}
+*Bitrate :* ${audin.bitrate}
+*Size :* ${audin.size}`
+        hexa.sendMessage(from, themb, image, {quoted: fkontak, caption: audd})
+        hexa.sendMessage(from, musnya, MessageType.audio, {mimetype: "audio/mp4", quoted: mek})
+      break
+    case 'playvdo':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`Sertakan link YT-nya bro\nContoh: ${prefix + command} `)
+      reply(mess.wait)
+      qory = args.join(' ')
+      bob = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${qory}`)
+      kun = bob.result 
+      inpo = kun.info
+      themb = await getBuffer(inpo.thumbnail)
+      vdo = kun.video
+      vidbro = await getBuffer(vdo.link)
+      vide = `*Title :* ${inpo.title}
+*Uploader :* ${inpo.uploader}
+*Durasi :* ${inpo.duration}
+*Type :* ${vdo.type}
+*Resolusi :* ${vdo.resolution}
+*Size :* ${vdo.size}`
+        hexa.sendMessage(from, themb, image, {quoted: fkontak, caption: vide})
+        hexa.sendMessage(from, vidbro, video, {quoted: mek})
+      break
+      case 'play':
+      case 'ytplay':
+        if (isBanned) return reply(mess.banned)
+        if (!q) return reply('judul lagunya mana?')
+        apinya = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${q}`)
+       let teksbre = `*Sukses, Data berhasil didapatkan*\n
+*Title :* ${apinya.result.info.title}
+*Uploader :* ${apinya.result.info.uploader}
+*Channel :* ${apinya.result.info.channel}
+*Views :* ${apinya.result.info.view}
+*Duration :* ${apinya.result.info.duration}
+*Size audio :* ${apinya.result.audio.size}
+*Size video :* ${apinya.result.video.size}\n
+*Jenis File :* Video/Audio
+`
+
+buttons = [{buttonId:`${prefix}playmsc ${q}`, buttonText:{displayText:'🎵 AUDIO'},type:1}, {buttonId:`${prefix}playvdo ${q}`,buttonText:{displayText:'📽 VIDEO'},type:1}]
+
+imageMessage = (await hexa.prepareMessageMedia({url:apinya.result.info.thumbnail}, 'imageMessage', {thumbnail:Buffer.alloc(0)})).imageMessage
+
+buttonsMessage = {contentText: teksbre,footerText: 'silahkan pilih jenis file di bawah',imageMessage,buttons,headerType:4}
+
+prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+hexa.relayWAMessage(prep)
+        break
+ /*       
 case 'youtubedl':
-  
         if (isBanned) return reply(mess.banned)
              if (args.length < 1) return reply('Link Nya Mana?')
              if(!isUrl(args[0]) && !args[0].includes('youtu')) return reply(mess.error.Iv)
@@ -3077,6 +3385,35 @@ case 'youtubedl':
               hexa.relayWAMessage(prep)
               fs.unlinkSync(`./ytmp.jpeg`)
               break
+              */
+    case 'ytdl':
+    case 'youtubedl':
+      if (isBanned) return reply(mess.banned)
+      if (!q) return reply('sertakan link youtubenya')
+      data_audio = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio?apikey=${LolKey}&url=${q}`)
+      data_video = await fetchJson(`https://api.lolhuman.xyz/api/ytvideo?apikey=${LolKey}&url=${q}`)
+      data_ress = `${data_video.result}`
+      let yotek = `*Sukses, Data berhasil didapatkan*\n 
+*Title :* ${data_video.result.title}
+*Uploader :* ${data_video.result.uploader}
+*Channel :* ${data_video.result.channel}
+*Duration :* ${data_video.result.duration}
+*Views :* ${data_video.result.view}
+*Like :* ${data_video.result.like}
+*Dislike :* ${data_video.result.dislike}
+*Size Video :* ${data_video.result.link.size}
+*Size audio :* ${data_audio.result.link.size}\n 
+*Jenis File :* Video/Audio
+`
+buttons = [{buttonId:`${prefix}ytmp3 ${q}`, buttonText:{displayText:'🎵 AUDIO'},type:1}, {buttonId:`${prefix}ytmp4 ${q}`,buttonText:{displayText:'📽 VIDEO'},type:1}]
+
+imageMessage = (await hexa.prepareMessageMedia({url:data_audio.result.thumbnail}, 'imageMessage', {thumbnail:Buffer.alloc(0)})).imageMessage
+
+buttonsMessage = {contentText: yotek,footerText: 'silahkan pilih jenis file di bawah',imageMessage,buttons,headerType:4}
+
+prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+hexa.relayWAMessage(prep)
+      break
     case 'ytmp3':
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`Contoh: ${prefix + command} (link youtubenya)`)
@@ -3134,7 +3471,6 @@ case 'youtubedl':
 	            break
 	            
 	            case 'ytmp4':
-	              
 	     if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}ytmp4 [linkYt]*`)
 			let isLinks2 = args[0].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
