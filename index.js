@@ -76,7 +76,7 @@ const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 //============APIKEY DISNI===========//
 LolKey = 'BismillahBarokah' //BELI DI https://lolhuman.xys
 ZeksKey = 'YOUR APIKEY' //DAFTAR DI http://zeks.me/
-DapKey = 'PaujanDapKey' //DAFTAR DI https://api.dapuhy-api.ga/
+DapKey = 'PaujanDapKey' //DAFTAR DI https://api.dapuhy.ga/
 
 //=================CMD================//
 cmddhit =[]
@@ -847,15 +847,17 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}play2
 ๏ ${prefix}video 
 ๏ ${prefix}ytdl
-๏ ${prefix}yt2mp3
+๏ ${prefix}ytmp3
+๏ ${prefix}ytmp4
 ๏ ${prefix}ytshort
-๏ ${prefix}igdl
-๏ ${prefix}igimg
-๏ ${prefix}igvid
-๏ ${prefix}twitter
+๏ ${prefix}igdl 
+๏ ${prefix}fb
+๏ ${prefix}twitterimg 
+๏ ${prefix}twittervideo
 ๏ ${prefix}twnowm
 ๏ ${prefix}tiktokaudio
-๏ ${prefix}fb
+๏ ${prefix}spotify 
+๏ ${prefix}jooxplay
 ๏ ${prefix}telestick
 ๏ ${prefix}brainly
 ๏ ${prefix}komiku
@@ -1005,7 +1007,7 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}waifu
 ๏ ${prefix}neko
 
-❒ OTHER ❐
+❒ OTHER MENU ❐
 ๏ ${prefix}ping
 ๏ ${prefix}inspect
 ๏ ${prefix}caripesan
@@ -1018,6 +1020,10 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}listjadibot
 ๏ ${prefix}get
 ๏ ${prefix}readmore
+๏ ${prefix}resoomer
+๏ ${prefix}tinyurl
+๏ ${prefix}cuttly
+๏ ${prefix}isgd
 ๏ ${prefix}term<code>
 ๏ x
 ๏ vote
@@ -3313,8 +3319,8 @@ case 'play2':
       if (isBanned) return reply(mess.banned)
       if (args.length == 0) return reply(`Sertakan link YT-nya bro\nContoh: ${prefix + command} `)
       reply(mess.wait)
-      qory = args.join(' ')
-      bob = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${qory}`)
+      qiry = args.join(' ')
+      bob = await fetchJson(`https://api.lolhuman.xyz/api/ytplay?apikey=${LolKey}&query=${qiry}`)
       kun = bob.result 
       vdo = kun.video
       vidbro = await getBuffer(vdo.link)
@@ -3388,7 +3394,7 @@ case 'youtubedl':
 *Size audio :* ${data_audio.result.link.size}\n 
 *Jenis File :* Video/Audio
 `
-buttons = [{buttonId:`${prefix}ytmp3 ${q}`, buttonText:{displayText:'🎵 AUDIO'},type:1}, {buttonId:`${prefix}ytmp4 ${q}`,buttonText:{displayText:'📽 VIDEO'},type:1}]
+buttons = [{buttonId:`${prefix}ytaudiobutton ${q}`, buttonText:{displayText:'🎵 AUDIO'},type:1}, {buttonId:`${prefix}ytvidiobutton ${q}`,buttonText:{displayText:'📽 VIDEO'},type:1}]
 
 imageMessage = (await hexa.prepareMessageMedia({url:data_audio.result.thumbnail}, 'imageMessage', {thumbnail:Buffer.alloc(0)})).imageMessage
 
@@ -3397,20 +3403,20 @@ buttonsMessage = {contentText: yotek,footerText: 'silahkan pilih jenis file di b
 prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
 hexa.relayWAMessage(prep)
       break
-    case 'ytmp3':
+    case 'ytaudiobutton':
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`Contoh: ${prefix + command} (link youtubenya)`)
       qu = args.join(' ')
       los = await fetchJson(`https://api.lolhuman.xyz/api/ytaudio2?apikey=${LolKey}&url=${qu}`)
-      reply(mess.wait)
+      reply('Tunggu beberapa saat, media sedang di proses ⏳')
       yot = los.result
-      thumb = await getBuffer(yot.thumbnail)
+      //thumb = await getBuffer(yot.thumbnail)
       vivid = await getBuffer(yot.link)
-      tetel = `Judul: ${yot.title}\nSize: ${yot.size}\n\nSilahkan tunggu beberapa saat, File media sedang diproses⏳`
-      hexa.sendMessage(from, thumb, image, {quoted: fkontak, caption: tetel})
+      /*tetel = `Judul: ${yot.title}\nSize: ${yot.size}\n\nSilahkan tunggu beberapa saat, File media sedang diproses⏳`
+      hexa.sendMessage(from, thumb, image, {quoted: fkontak, caption: tetel})*/
       hexa.sendMessage(from, vivid, MessageType.audio, {mimetype: "audio/mp4", quoted: mek})
       break
-	case 'yt2mp3':
+	case 'ytmp3':
 	  if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}yt2mp3 [linkYt]*`)
 			let isLinks = args[0].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
@@ -3432,28 +3438,7 @@ hexa.relayWAMessage(prep)
 				reply(mess.error.api)
 				}
 				break
-
- 	case 'tiktok':
- 	case 'ttnowm':
- 	case 'tiktokdl':
- 	case 'ttdl':
- 	  
- 	    if (isBanned) return reply(mess.banned)
- 		if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://vm.tiktok.com/ZSJkHUCwK/`)
-        reply(mess.wait)
-        link = args.join(' ')
-        fznn = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${LolKey}&url=${link}`)
-        uhyy = fznn.result
-        buffer = await getBuffer(uhyy.link)
-        magee = await getBuffer(uhyy.thumbnail)
-        apatar = await getBuffer(uhyy.author.avatar)
-        textt = `Username : ${uhyy.author.username}\nNickname : ${uhyy.author.nickname}\nTitle : ${uhyy.title}\nKeywords : ${uhyy.keywords}\nDescription : ${uhyy.description}\nDuration : ${uhyy.duration}\nDigg Count : ${uhyy.statistic.diggCount}\nShare Count : ${uhyy.statistic.shareCount}\nComment Count : ${uhyy.statistic.commentCount}\nPlay Count : ${uhyy.statistic.playCount}\n`
-         hexa.sendMessage(from, apatar, image, {quoted: mek, caption: 'profile yang punya video:v'})
-         hexa.sendMessage(from, magee, image, {quoted: mek, caption: textt})
-         hexa.sendMessage(from, buffer, video, {quoted: mek, caption: 'nih videonya'})
-	            break
-	            
-	            case 'ytmp4':
+				case 'ytmp4':
 	     if (isBanned) return reply(mess.banned)
 			if (args.length === 0) return reply(`Kirim perintah *${prefix}ytmp4 [linkYt]*`)
 			let isLinks2 = args[0].match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
@@ -3475,6 +3460,15 @@ hexa.relayWAMessage(prep)
 			    reply(mess.error.api)
 				}
 				break
+		case 'ytvidiobutton':
+		  if (isBanned) return reply(mess.banned)
+		  if (args.length < 1) return reply(`Contoh: ${prefix + command} (link youtubenya)`)
+		  vid = args.join(' ')
+		  reply('Tunggu beberapa saat, media sedang di proses⏳')
+		  ytvid = await fetchJson(`https://api.dapuhy.ga/api/socialmedia/ytmp4?url=${vid}&apikey=${DapKey}`)
+		  outvid = await getBuffer(ytvid.url)
+		  hexa.sendMessage(from, outvid, video, {quoted: mek, caption: 'Sukses'})
+		  break
 	  case 'ytshort':
 	  case 'ytreels':
 	    if (isBanned) return reply(mess.banned)
@@ -3489,6 +3483,28 @@ hexa.relayWAMessage(prep)
 	    hexa.sendMessage(from, thumbn, image, {quoted: mek, caption: teks})
 	    hexa.sendMessage(from, pipid, video, {quoted: mek})
 	    break
+
+ 	case 'tiktok':
+ 	case 'ttnowm':
+ 	case 'tiktokdl':
+ 	case 'ttdl':
+ 	  
+ 	    if (isBanned) return reply(mess.banned)
+ 		if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://vm.tiktok.com/ZSJkHUCwK/`)
+        reply(mess.wait)
+        link = args.join(' ')
+        fznn = await fetchJson(`https://api.lolhuman.xyz/api/tiktok?apikey=${LolKey}&url=${link}`)
+        uhyy = fznn.result
+        buffer = await getBuffer(uhyy.link)
+        magee = await getBuffer(uhyy.thumbnail)
+        apatar = await getBuffer(uhyy.author.avatar)
+        textt = `Username : ${uhyy.author.username}\nNickname : ${uhyy.author.nickname}\nTitle : ${uhyy.title}\nKeywords : ${uhyy.keywords}\nDescription : ${uhyy.description}\nDuration : ${uhyy.duration}\nDigg Count : ${uhyy.statistic.diggCount}\nShare Count : ${uhyy.statistic.shareCount}\nComment Count : ${uhyy.statistic.commentCount}\nPlay Count : ${uhyy.statistic.playCount}\n`
+         hexa.sendMessage(from, apatar, image, {quoted: mek, caption: 'profile yang punya video:v'})
+         hexa.sendMessage(from, magee, image, {quoted: mek, caption: textt})
+         hexa.sendMessage(from, buffer, video, {quoted: mek, caption: 'nih videonya'})
+	            break
+	            
+	            
      case 'brainly':
        
        if (isBanned) return reply(mess.banned)
@@ -3525,42 +3541,25 @@ hexa.relayWAMessage(prep)
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://www.instagram.com/p/CGOivksJleVPwIQfDBplW8nDrQmOX3aVCkzUO80/`)
                 reply(mess.wait)
-                link = args.join(' ')
-                igeh = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
-            igehdl = igeh.result
-            const captions = 'nih ngab'
-             sendMediaURL(from, link, captions)
-            await sendMediaURL(from, igehdl)
+                igeh = await fetchJson(`https://api.dapuhy.ga/api/socialmedia/igdownload?url=${q}&apikey=${DapKey}`)
+               // users = igeh.user 
+                teks = `*Nama User : ${igeh.user.username}*
+*Nama Panjang : ${igeh.user.full_name}*
+*Pengikut : ${igeh.user.followers}*\n
+*WARNING!*\n_Silahkan pilih format file berdasarkan media yang akan di download, misal ingin download vidio ig maka pilihlah file type video, jangan pilih yang image karena akan error_`
+        //propel = await getBuffer(users.profile_picurl)
+        
+        buttons = [{buttonId:`${prefix}igimageboss ${q}`, buttonText:{displayText:'📸 IMAGE'},type:1}, {buttonId:`${prefix}igvidioboss ${q}`,buttonText:{displayText:'📽 VIDEO'},type:1}]
+
+imageMessage = (await hexa.prepareMessageMedia({url:igeh.user.profile_picurl}, 'imageMessage', {thumbnail:Buffer.alloc(0)})).imageMessage
+
+buttonsMessage = {contentText: teks,footerText: 'silahkan pilih sesuai jenis file!',imageMessage,buttons,headerType:4}
+
+prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+hexa.relayWAMessage(prep)
               break
-    case 'igdl2':
-      if (isBanned) return reply(mess.banned)
-      if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://www.instagram.com/p/CGOivksJleVPwIQfDBplW8nDrQmOX3aVCkzUO80/`)
-      reply(mess.wait)
-      link = args[0]
-      link = await fetchJson(`https://api.lolhuman.xyz/api/instagram?apikey=${LolKey}&url=${link}`)
-      dlnya = await getBuffer(link.result)
-      for (let x of dlnya){
-        if (x.includes(".mp4")){
-          //let dlnya = await getBuffer(x.result)
-          hexa.sendMessage(from, x, video, {quoted: mek})
-        }
-        else {
-          //let dlnya = await getBuffer(x.result)
-          hexa.sendMessage(from, x, image, {quoted: mek})
-        }
-      }
-              break
-      case 'igdl3':
-if (isBanned) return reply(mess.banned)
-if (!c) return reply('Linknya?')
-var { igDownloader } = require('./lib/igdown')
-   res = await igDownloader(`${c}`).catch(e => {
-reply(mess.error.api)
-})
-console.log(res)
-sendMediaURL(from,`${res.result.link}`,`${res.result.desc}`)
-                    break
-    case 'igvid':
+    
+    case 'igvidioboss':
       if (isBanned) return reply(mess.banned)
       if (args.length == 0) return reply('sertakan linknya bro !!!')
       reply(mess.wait)
@@ -3569,7 +3568,7 @@ sendMediaURL(from,`${res.result.link}`,`${res.result.desc}`)
       vib = await getBuffer(ogeh.result)
       hexa.sendMessage(from, vib, video, {quoted: mek, caption: 'nih ngab'})
       break
-      case 'igimg':
+      case 'igimageboss':
       if (isBanned) return reply(mess.banned)
       if (args.length == 0) return reply('sertakan linknya bro !!!')
       reply(mess.wait)
@@ -3578,17 +3577,15 @@ sendMediaURL(from,`${res.result.link}`,`${res.result.desc}`)
       vik = await getBuffer(ugeh.result)
       hexa.sendMessage(from, vik, image, {quoted: mek, caption: 'nih ngab'})
       break
-    case 'fb':
-          if (isBanned) return reply(mess.banned)
-            if (!q) return reply('Linknya?')
-            if (!isUrl(args[0]) && !args[0].includes('facebook.com')) return reply(mess.Iv)
-            reply(mess.wait)
-            te = args.join(' ')
-            hx.fbdown(`${te}`)
-            .then(G => {
-            ten = `${G.HD}`
-            sendMediaURL(from,ten,`*Link video_normal* : ${G.Normal_video}`)
-            })
+    case 'fbdl':
+      case 'fb':
+         if (isBanned) return reply(mess.banned)
+         if (args.length < 0) return reply(`contoh ${prefix + command} (linknya)`)
+         ff = args.join(' ')
+         reply('File sedang di proses⏳')
+         burik = await fetchJson(`https://api.lolhuman.xyz/api/facebook?apikey=${LolKey}&url=${ff}`)
+         fblite = await getBuffer(burik.result)
+         hexa.sendMessage(from, fblite, video, {quoted: mek})
             break    
   case 'telesticker':
       case 'telestick':
@@ -3626,7 +3623,129 @@ sendMediaURL(from,`${res.result.link}`,`${res.result.desc}`)
       hexa.sendMessage(from, ttmusik, MessageType.audio, {mimetype: "audio/mp4", quoted: mek})
       reply(mess.wait)
       break
-     		
+    case 'twitterimg': 
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply(`Contoh: ${prefix + command} https://twitter.com/memefess/status/1385161473232543747`)
+      orl = args.join(' ')
+      twitApi = await fetchJson(`https://api.lolhuman.xyz/api/twitterimage?apikey=${LolKey}&url=${orl}`)
+      twitRes = twitApi.result
+      twitCont = await getBuffer(twitRes.link)
+      teks = `*INFO USER*
+Name : ${twitRes.user.name}
+Username : ${twitRes.user.username}
+Link PP : ${twitRes.user.photo}\n
+*POST INFO*
+Title : ${twitRes.title}
+Publish : ${twitRes.publish}`
+    hexa.sendMessage(from, twitCont, image, {quoted: mek, caption: teks})
+      break
+    case 'twittervideo': 
+    case 'twitmp4': 
+      if (isBanned) return reply(mess.banned)
+      if (!q) return reply(`contoh: ${prefix + command} (link vidio twitternya)`)
+      twitInfo = await fetchJson(`https://api.lolhuman.xyz/api/twitter2?apikey=${LolKey}&url=${q}`)
+      twitVid = await fetchJson(`https://api.lolhuman.xyz/api/twitter?apikey=${LolKey}&url=${q}`)
+      twtResult = twitInfo.result 
+      twtUser = twtResult.user
+      twtCaption = `*USER INFO*
+Name : ${twtUser.name}
+Username : ${twtUser.username}
+Title : ${twtResult.title}
+Publish : ${twtResult.publish}
+Duration : ${twtResult.duration}\n 
+*RESOLUTION OPTION*\n`
+    for (let x of twitVid.result.link) {
+      twtCaption += `•> ${x.resolution}\n`
+    }
+    
+    buttons = [{buttonId:`${prefix}twtlow ${q}`, buttonText:{displayText:'⚪ LOW/270P'},type:1},
+    {buttonId:`${prefix}twtmedium ${q}`, buttonText:{displayText:'🔵 MEDIUM/360P'},type:1},
+    {buttonId:`${prefix}twthd ${q}`, buttonText:{displayText:'🔴 HD/720P'},type:1}]
+
+imageMessage = (await hexa.prepareMessageMedia({url:twitInfo.result.thumbnail}, 'imageMessage', {thumbnail:Buffer.alloc(0)})).imageMessage
+
+buttonsMessage = {contentText: twtCaption,footerText: 'silahkan pilih resolusi dibawah ini!',imageMessage,buttons,headerType:4}
+
+prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+hexa.relayWAMessage(prep)
+      break
+      
+    case 'twtlow': 
+      if (args.length == 0) return reply(`sertakan link vidio twitter`)
+      ini_q = args[0]
+      reply('Tunggu sebentar, file media sedang di proses⏳')
+    ini_url = await fetchJson(`https://api.dapuhy.ga/api/socialmedia/twitter?url=${ini_q}&apikey=${DapKey}`)
+      ini_res = ini_url.download 
+      ini_vid = await getBuffer(ini_res.low)
+        await hexa.sendMessage(from, ini_vid, video, { quoted: mek, caption: 'Resolution: low/270P'})
+      break
+    case 'twtmedium': 
+      if (args.length == 0) return reply(`sertakan link vidio twitter`)
+      twmed = args[0]
+      reply('Tunggu sebentar, file media sedang di proses⏳')
+    twMedium = await fetchJson(`https://api.dapuhy.ga/api/socialmedia/twitter?url=${twmed}&apikey=${DapKey}`)
+      twRestmed = twMedium.download
+      twVidmed = await getBuffer(twRestmed.medium)
+        await hexa.sendMessage(from, twVidmed, video, { quoted: mek, caption: 'Resolution: medium/360P'})
+      break
+    case 'twthd': 
+      if (args.length == 0) return reply(`sertakan link vidio twitter`)
+      twHd = args[0]
+      reply('Tunggu sebentar, file media sedang di proses⏳')
+    twApihd = await fetchJson(`https://api.dapuhy.ga/api/socialmedia/twitter?url=${twHd}&apikey=${DapKey}`)
+      twHddl = twApihd.download
+      twHdvid = await getBuffer(twHddl.hd)
+        await hexa.sendMessage(from, twHdvid, video, { quoted: mek, caption: 'Resolution: HD/720P'})
+      break
+    case 'spotify': 
+      if (isBanned) return reply(mess.banned)
+      if (!q) return reply(`Contoh: ${prefix + command} (link spotify)`)
+      reply('Mohon bersabar, Permintaan sedang di proses⏳')
+      spot = await fetchJson(`https://api.lolhuman.xyz/api/spotify?apikey=${LolKey}&url=${q}`)
+      sresul = spot.result
+     // sthumbnail = await getBuffer(sresul.thumbnail)
+      toks = `*SPOTIFY DOWNLOADER*\n 
+*Judul : ${sresul.title}*
+*Artis : ${sresul.artists}*
+*Durasi : ${sresul.duration}*\n 
+_Tunggu beberapa saat, file preview lagunya sedang di proses⏳`
+      spoau = await getBuffer(sresul.preview_url)
+      
+      buttons = [{buttonId:`${prefix}audiospoti ${q}`, buttonText:{displayText:'📥DOWNLOAD FULL NOW'},type:1}]
+
+imageMessage = (await hexa.prepareMessageMedia({url:spot.result.thumbnail}, 'imageMessage', {thumbnail:Buffer.alloc(0)})).imageMessage
+
+buttonsMessage = {contentText: toks,footerText: 'tekan tombol untuk download lagunya',imageMessage,buttons,headerType:4}
+
+prep = await hexa.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+hexa.relayWAMessage(prep)
+hexa.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quoted: mek})
+      break
+      case 'audiospoti': 
+        if (args.length == 0) return reply(`Contoh: ${prefix + command} (linknya)`)
+        aud = args.join(' ')
+        reply('File sedang diproses ⏳')
+        rs = await fetchJson(`https://api.lolhuman.xyz/api/spotify?apikey=${LolKey}&url=${aud}`)
+        fname = rs.result.title
+        musspof = await getBuffer(rs.result.link)
+        hexa.sendMessage(from, musspof, MessageType.audio, {mimetype: "audio/mp4", filename: `${fname}.mp3`,quoted: mek})
+        break
+    case 'jooxplay':
+       if (args.length == 0) return reply(`Example: ${prefix + command} Melukis Senja`)
+             query = args.join(" ")
+            get_result = await fetchJson(`https://api.lolhuman.xyz/api/jooxplay?apikey=${LolKey}&query=${query}`)
+            get_result = get_result.result
+            ini_txt = `Title : ${get_result.info.song}\n`
+            ini_txt += `Artists : ${get_result.info.singer}\n`
+            ini_txt += `Duration : ${get_result.info.duration}\n`
+            ini_txt += `Album : ${get_result.info.album}\n`
+            ini_txt += `Uploaded : ${get_result.info.date}\n`
+            ini_txt += `Lirik :\n ${get_result.lirik}\n`
+            thumbnail = await getBuffer(get_result.image)
+            await hexa.sendMessage(from, thumbnail, image, { quoted: fkontak, caption: ini_txt })
+            get_audio = await getBuffer(get_result.audio[0].link)
+            await hexa.sendMessage(from, get_audio, audio, { mimetype: 'audio/mp4', filename: `${get_result.info.song}.mp3`, quoted: mek })
+                    break
 //=====================BATAS DOWNLOAD MENU=====================//
    
 //=====================STALKER MENU======================//
@@ -3725,16 +3844,6 @@ json:["action", "invite", `${args[0].replace('https://chat.whatsapp.com/','')}`]
 })
 reply('Sukses bergabung dalam group')
 break
-    case'twitter':
-      
-          if (isBanned) return reply(mess.banned)
-            if (!isUrl(args[0]) && !args[0].includes('twitter.com')) return reply(mess.Iv)
-            if (!q) return fakegroup('Linknya?')
-            ten = args[0]
-            var res = await hx.twitter(`${ten}`)
-            ren = `${g.HD}`
-            sendMediaURL(from,ren,'DONE')
-            break
     case 'runtime':
     case 'test':
       
@@ -4031,7 +4140,27 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
                     .then(() => { hexa.sendMessage(`${mansed}`, options, text, {quoted: fkontak})})
                     reply('awokwok SPAM CHAT BERHASIL:)')
                     break
-                    
+    case 'resoomer':
+      case 'persingkat':
+        if (isBanned) return reply(mess.banned)
+        if (args.length < 1) return reply(`Contoh: ${prefix + command} (teksnya)`)
+        tok = args.join(' ')
+        reply('Proses...')
+        apisoomer = await fetchJson(`https://api.lolhuman.xyz/api/resoomer?apikey=${LolKey}&text=${tok}`)
+        apisult = apisoomer.result
+        hexa.sendMessage(from, apisult, text, {quoted: mek})
+        break
+    case 'tinyurl':
+      case 'cuttly':
+        case 'isgd':
+      if (isBanned) return reply(mess.banned)
+      if (args.length == 0) return reply('sertakan link yang mau di pendekkan bro')
+      sh = args.join(' ')
+      reply('process...')
+      short = await fetchJson(`https://api.dapuhy.ga/api/others/${command}?url=${sh}&apikey=${DapKey}`)
+      shsult = short.result
+      hexa.sendMessage(from, shsult, text, {quoted: mek})
+      break
 //=============================================================//
 //========================MENU LIST CMD========================//
   //case 'asupan':
