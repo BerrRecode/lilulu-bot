@@ -845,9 +845,9 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 
 ❒ DOWNLOAD MENU ❐
 ๏ ${prefix}ytsearch
-๏ ${prefix}play 
+๏ ${prefix}play
 ๏ ${prefix}play2
-๏ ${prefix}video 
+๏ ${prefix}video2 
 ๏ ${prefix}ytdl
 ๏ ${prefix}ytmp3
 ๏ ${prefix}ytmp4
@@ -1014,7 +1014,9 @@ hexa.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { for
 ๏ ${prefix}inspect
 ๏ ${prefix}caripesan
 ๏ ${prefix}linkwa query
-๏ ${prefix}ssweb
+๏ ${prefix}ssweb 
+๏ ${prefix}ssweb2
+๏ ${prefix}ssweb3
 ๏ ${prefix}spamsms
 ๏ ${prefix}spamchat
 ๏ ${prefix}get
@@ -3283,7 +3285,7 @@ case 'play2':
                         reply(mess.error.api)
                         }
                    break  
-        case 'video':
+        case 'video2':
           if (isBanned) return reply(mess.banned)
             if (args.length === 0) return reply(`Kirim perintah *${prefix}video* _Judul lagu yang akan dicari_`)
             var srch = args.join('')
@@ -4076,6 +4078,7 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
         ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/ssweb?apikey=${LolKey}&url=${ini_link}`)
           await hexa.sendMessage(from, ini_buffer, image, { quoted: mek })
                     break
+                    /*
         case 'ssweb2':
           if (isBanned) return reply(mess.banned)
           if (args.length == 0) return reply(`sertakan link webnya`)
@@ -4083,14 +4086,15 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
           apeh = await getBuffer(`https://api.site-shot.com/?url=${wep}&userkey=${ApiSite}&full_size=1&format=jpeg`)
           sendMediaURL(from, apeh, image, {quoted: mek})
           break
-        case 'ssweb3':
+          */
+        case 'ssweb2':
           if (args.length == 0) return reply(`sertakan link websitenya`)
           qa = args.join(' ')
           reply('screenshot in progres...')
           resll = await getBuffer(`https://api.screenshotmachine.com?key=${SsMcn}&url=${qa}&device=desktop&dimension=1024x768&format=jpg`)
           hexa.sendMessage(from, resll, image, {quoted: mek})
           break
-        case 'ssweb4': 
+        case 'ssweb3': 
           if (args.length == 0) return reply(`sertakan link websitenya`)
           ssw = args.join(' ')
           reply('screenshot in progres...')
