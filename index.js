@@ -90,7 +90,7 @@ isCharge: "" || false
 }
 banChats = true
 offline = false
-namabot = `${petik}LILULU-BOT${petik}`
+namabot = 'LILULU-BOT'
 ownerNumber = ["6285156724122@s.whatsapp.net"]
 targetpc = '62838505090133'
 namaowner = 'FznAdmn'
@@ -752,13 +752,13 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
         txtt =`Hai Kak ${pushname}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
                buttons = [{buttonId:`${prefix}pe`, 
-               buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1}]
+               buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1}, {buttonId:`${prefix}officialgc`,buttonText:{displayText:'🎭 GROUP LILULU-BOT'},type:1}]
 
                imageMsg = (await fznadmn.prepareMessageMedia(fs.readFileSync(`./lib/lilulu.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./lib/lilulu.jpeg`)})).imageMessage
 
                buttonsMessage = {
                contentText: `${txtt}`,
-               footerText: '© Creator FznAdmn', imageMessage: imageMsg,
+               footerText: '©FznAdmn', imageMessage: imageMsg,
                buttons: buttons,
                headerType: 4
       }
@@ -819,6 +819,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}infoupdate
 ๏ ${prefix}resetupdate
 ๏ ${prefix}leaveall
+๏ ${prefix}setpp
 ๏ ${prefix}setthumb
 ๏ ${prefix}setfakeimg
 ๏ ${prefix}setreply
@@ -841,7 +842,8 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}voting
 ๏ ${prefix}delvote
 ๏ ${prefix}listadmin
-๏ ${prefix}sider
+๏ ${prefix}sider 
+๏ ${prefix}user
 
 ❒ DOWNLOAD MENU ❐
 ๏ ${prefix}ytsearch
@@ -1011,6 +1013,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 
 ❒ OTHER MENU ❐
 ๏ ${prefix}ping
+๏ ${prefix}speed
 ๏ ${prefix}inspect
 ๏ ${prefix}caripesan
 ๏ ${prefix}linkwa query
@@ -1067,6 +1070,10 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
              await sleep(3000)
              process.exit()
              break
+    case 'officialgc': 
+      gece = `Yuk join di grup official ${namabot}\n\nLink: https://chat.whatsapp.com/Js6oZK5vblfHhGfNhNiaRZ`
+      reply(gece)
+      break
   
     case 'donasi':
       
@@ -1487,7 +1494,8 @@ break
     case 'nsfw':
         if (isBanned) return reply(mess.banned)
 				if (!isGroup) return reply(mess.group)
-				if (!isGroupAdmins) return reply('Fitur ini hanya untuk owner dan admin grup')
+				if (!isGroupAdmins) return reply('Hanya admin grup yang bisa aktifkan mode nsfw')
+				if (!isUser) return reply(mess.noregis)
 				if (args.length < 1) return reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
 				if (Number(args[0]) === 1) {
 				if (isNsfw) return reply(`Fitur ${command} sudah aktif !!!`)
@@ -1545,6 +1553,11 @@ break
                reply('Reply chat bot')
 }
                break
+    case 'totaluser': 
+      case 'user': 
+        tot = `${petik}total verified users ${namabot} : ${user.length}${petik}`
+        fkontak(tot)
+        break
 //==================BATAS BRO================//
     case 'linkwa':
       
@@ -1673,7 +1686,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             break
              
     case 'status':
-      if (isBanned) return reply(mess.banned)
+      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
             break
     
@@ -2281,7 +2294,6 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
 case 'welcome':
 				if (!isGroup) return reply(mess.only.group)
 			if (!isGroupAdmins) return reply(mess.only.adming)
-			
 				if (args.length < 1) return reply('[❗] Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan')
 				if (Number(args[0]) === 1) {
 				if (isWelkom) return reply(`[❗] Fitur ${command} sudah aktif`)
@@ -2305,7 +2317,7 @@ case 'leave':
 				break
 	case 'oleave':
 				if (!isGroup) return reply(mess.only.group)
-				if (!isOwner) return reply(mess.only.ownerb)
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 				setTimeout( () => {
 				fznadmn.groupLeave (from) 
 				}, 2000)
@@ -2315,7 +2327,7 @@ case 'leave':
 				}, 0)
 				break
 	case 'leaveall':
-    if (!isOwner) return reply(mess.only.ownerb) 
+    if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
      let totalgroup = fznadmn.chats.array.filter(u => u.jid.endsWith('@g.us')).map(u => u.jid)
      for (let id of totalgroup) {
     sendMess(id, 'Byee', null)
@@ -2334,12 +2346,14 @@ case 'leave':
 		reply('Sukses')
 				break
     case 'upswteks':
+      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
       if (isBanned) return reply(mess.banned)
             if (!q) return fakestatus('Isi teksnya!')
             fznadmn.sendMessage('status@broadcast', `${q}`, extendedText)
             fakegroup(`Sukses Up story wea teks ${q}`)
             break
 case 'upswaudio':
+  if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
   if (isBanned) return reply(mess.banned)
             if (isQuotedAudio) {
             const swsw = isQuotedAudio ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -2352,6 +2366,7 @@ case 'upswaudio':
             }
             break
     case 'upswimage':
+      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
       if (isBanned) return reply(mess.banned)
             if (isQuotedImage) {
             const swsw = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -2364,6 +2379,7 @@ case 'upswaudio':
             }
             break
     case 'upswvideo':
+      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
       if (isBanned) return reply(mess.banned)
             if (isQuotedVideo) {
             const swsw = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
@@ -2422,16 +2438,16 @@ case 'upswaudio':
         ]);
       break
     case 'public':
-      if (!isOwner) return reply(mess.only.ownerb)
-          	if (!mek.key.fromMe) return fakestatus('SELF-BOT')
+      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
+          	//if (!mek.key.fromMe) return fakestatus('SELF-BOT')
           	if (banChats === false) return
           	// var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
           	banChats = false
           	fakestatus(`「 *PUBLIC-MODE* 」`)
           	break
 	case 'self':
-	  if (!isOwner) return reply(mess.only.ownerb)
-	  if (!mek.key.fromMe) return fakestatus('SELF-BOT')
+	  if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
+	  //if (!mek.key.fromMe) return fakestatus('SELF-BOT')
           	if (banChats === true) return
           	uptime = process.uptime()
          	 // var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
@@ -2439,8 +2455,7 @@ case 'upswaudio':
           	fakestatus(`「 *SELF-MODE* 」`)
           	break
  	case 'hidetag':
-			/*if (!mek.key.fromMe) return fakestatus('SELF-BOT')*/
-			if (!isOwner) return reply(mess.only.ownerb)
+		if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 			if (!isGroup) return reply(mess.only.group)
 			var value = args.join(' ')
 			var group = await fznadmn.groupMetadata(from)
@@ -2473,14 +2488,14 @@ case 'upswaudio':
 					break
 					
 				case 'ban':
-				if (!isOwner) return reply(mess.only.ownerb)
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 				bnnd = `${args[0].replace('@', '')}@s.whatsapp.net`
 				ban.push(bnnd)
 				fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
 				reply(`Nomor ${bnnd} telah dibanned!`)
 				break
 				case 'unban':
-				if (!isOwner) return reply(mess.only.ownerb)
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 				ya = `${args[0].replace('@', '')}@s.whatsapp.net`
 				unb = ban.indexOf(mek)
 				ban.splice(unb, 1)
@@ -2490,7 +2505,7 @@ case 'upswaudio':
 				
 				case 'block':
 				if (!isGroup) return reply(mess.only.group)
-				if (!isOwner) return reply(mess.only.ownerb)
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 				fznadmn.updatePresence(from, Presence.composing) 
 				fznadmn.chatRead (from)
 				fznadmn.blockUser (`${body.slice(7)}@c.us`, 'add')
@@ -2498,12 +2513,12 @@ case 'upswaudio':
 				break
 		        case 'unblock':
 				if (!isGroup) return reply(mess.only.group)
-				if (!isOwner) return reply(mess.only.ownerb)
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
 				fznadmn.blockUser (`${body.slice(9)}@c.us`, 'remove')
 			    fznadmn.sendMessage(from, `Perintah Diterima, Membuka Blockir ${body.slice(9)}@c.us`, text, {quoted: fkontak})
 				break
 	case 'addupdate':
-             if (!isOwner) return reply(mess.only.ownerb)
+             if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
              if (!q) return reply(`Example: ${command} update fitur`)
            _update.push(q)
              fs.writeFileSync('./database/bot/update.json', JSON.stringify(_update))
@@ -2517,7 +2532,7 @@ case 'upswaudio':
              reply(updateList)
              break
       case 'resetupdate':
-             if (!isOwner) return reply(mess.only.ownerb)
+             if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
              var reset = []
             // glimit = reset
            _update = reset
@@ -2527,7 +2542,7 @@ case 'upswaudio':
              reply('Oke Desu ~')
              break
     case 'clearall':
-             if (!isOwner) return  reply(mess.only.ownerb)
+             if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
              anu = await fznadmn.chats.all()
              fznadmn.setMaxListeners(25)
              for (let _ of anu) {
@@ -2536,11 +2551,12 @@ case 'upswaudio':
              reply('Sukses clear all chat :)')
              break
        case 'kickall': // Anti Banned
-        if (isOwner) return reply(mess.only.ownerb)
+        if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerb)
               for (let i of groupMembers) {
               await kickMember(from, [i.jid])
 }
               break
+
 //=========================ISLAM MENU==========================//
 case 'listsurah':
   if (isBanned) return reply(mess.banned)
@@ -3857,8 +3873,6 @@ break
             fakegroup(teks)
             break  
 	case 'speed':
-	case 'ping':
-	  
 	  if (isBanned) return reply(mess.banned)
 			const timestamp = speed();
 			const latensi = speed() - timestamp
@@ -3869,6 +3883,12 @@ break
 			fakegroup(pingnya)
 			})
 			break  
+	case 'ping':
+	  case 'tes':
+	    if (isBanned) return reply(mess.banned)
+	    ono = `*Hallo bro, ${namabot} is activated*`
+	    fznadmn.sendMessage(from, ono, text, {quoted: mek})
+	    break
     case 'totag':
       
           if (isBanned) return reply(mess.banned)
@@ -3999,6 +4019,7 @@ break
                 case 'futanari':
                 case 'hololewd':
 				if (!isNsfw) return reply(mess.nsfwOff)
+				if (!isUser) return reply('Daftar terlebih dahulu untuk menggunakan fitur ini. cara daftar ketik *!verify*')
 				if (isBanned) return reply(mess.banned)
 				reply(mess.wait)
 				efweh = await getBuffer(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${LolKey}`)
@@ -4025,6 +4046,7 @@ break
 				case 'waifu':
 				case 'neko':
 				if (!isNsfw) return reply(mess.nsfwOff)
+				if (!isUser) return reply('Daftar terlebih dahulu untuk menggunakan fitur ini. cara daftar ketik *!verify*')
 				if (isBanned) return reply(mess.banned)
 				reply(mess.wait)
 				lapan = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/${command}?apikey=${LolKey}`)
@@ -4117,8 +4139,8 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
                     reply("Success")
                     break       
       case 'spamchat':
-        
         if (isBanned) return reply(mess.banned)
+        if (!isUser) return reply(mess.noregis)
                     if (args.length < 1) return reply(`Mau Spamchat ke siapa? Contoh: ${prefix}spamchat 628481749928 Oy bwang`)
                     if (args[0].startsWith('08')) return reply('Gunakan kode bahasa kak')
                     if (args[0].startsWith(`${owner}`)) return reply(`Mau Ngapain Spam Ke ownerku ${namaowner}?👿`)
