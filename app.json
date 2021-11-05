@@ -1,16 +1,7 @@
 {
-  "name": "LILULU-BOT",
+  "name": "lilulu-bot",
   "description": "lilulu whatsapp bot build with nodejs",
   "repository": "https://github.com/BerrRecode/lilulu-bot",
   "logo": "https://i.ibb.co/84dYvnH/88ae68c16b70100441e86fb010b84e82.jpg",
-  "keywords": ["nodejs", "bot", "whatsapp bot"],
-  "buildpacks": [{
-    "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick"
-  }, {
-    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-  }, {
-    "url": "https://github.com/sasukeuchiha912/heroku-buildpack-neofetch"
-  }, {
-    "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
-    }]
+  "keywords": ["nodejs", "bot", "whatsapp bot"]
 }
