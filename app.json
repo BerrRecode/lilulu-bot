@@ -10,5 +10,7 @@
     "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
   }, {
     "url": "https://github.com/sasukeuchiha912/heroku-buildpack-neofetch"
- }]
+  }, {
+    "url": "https://github.com/heroku/heroku-buildpack-nodejs#latest"
+    }]
 }
