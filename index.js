@@ -721,21 +721,21 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
         if (!mek.key.fromMe && banChats === true) return
 switch (command) {
     case 'jadibot':
-      
+      if (!isUser) return reply(mess.noregis)
     if(!mek.key.fromMe) return reply('Tidak bisa jadibot di dalam bot')
     jadibot(reply,fznadmn,from)
     break
     case 'stopjadibot':
-      
+if (!isUser) return reply(mess.noregis)
     if(!mek.key.fromMe)return reply('tidak bisa stopjadibot kecuali owner')
     stopjadibot(reply)
     break
 case 'teruskan':
-  
+if (!isUser) return reply(mess.noregis)
 fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { forwardingScore: 210, isForwarded: true }})
             break
     case 'listbot':
-      
+      if (!isUser) return reply(mess.noregis)
     let tekss = '「 *LIST JADIBOT* 」\n'
     for(let i of listjadibot) {
     tekss += `*Nomor* : ${i.jid.split('@')[0]}
@@ -747,7 +747,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
     break
     
 	case 'menu':
-	  
+	  if (!isUser) return reply(mess.noregis)
 	  if (isBanned) return reply(mess.banned)
         txtt =`Hai Kak ${pushname}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
@@ -769,6 +769,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
                
     case 'pe':
     case 'lmenu':
+      if (!isUser) return reply(mess.noregis)
      if (isBanned) return reply(mess.banned)
      tagnya = `@${sender.split('@')[0]}`
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
@@ -1057,7 +1058,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
  case 'owner':
             case 'developer':
             case 'author':
-              
+              if (!isUser) return reply(mess.noregis)
               if (isBanned) return reply(mess.banned)
                 fznadmn.sendMessage(from, {displayname: "Owner Lilulu", vcard: vcard}, MessageType.contact, { quoted: ftoko})
                     .then((res) => fznadmn.sendMessage(from, '*Tuh Kontak ownerku, jangan di spam ya!*', text, {quoted: res}))
@@ -1071,12 +1072,13 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
              process.exit()
              break
     case 'officialgc': 
+      if (!isUser) return reply(mess.noregis)
       gece = `Yuk join di grup official ${namabot}\n\nLink: https://chat.whatsapp.com/Js6oZK5vblfHhGfNhNiaRZ`
       reply(gece)
       break
   
     case 'donasi':
-      
+      if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       reply('mau donasi apa cuman liat-liat nih?')
       dnt =`◪𝗱𝗼𝗻𝗮𝘀𝗶
@@ -1217,7 +1219,7 @@ case 'buttons1':
               mentions(teksnyee, cemde, true)
               break
 case 'notif':
-  
+  if (!isUser) return reply(mess.noregis)
 if (isBanned) return reply(mess.banned)				
 if (!isGroup) return reply(mess.only.group)
 teks = `Notif dari @${sender.split("@")[0]}\n*Pesan : ${body.slice(7)}*`
@@ -1279,7 +1281,7 @@ break
                 if (!isGroup) return reply(mess.only.group)
                 if (!isGroupAdmins) return reply(mess.only.adming)
                 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                
+                if (!isUser) return reply(mess.noregis)
                 if (isBanned) return reply(mess.banned)
                 if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di turunkan dari admin group!')
                 mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -1300,7 +1302,7 @@ break
                 if (!isGroup) return reply(mess.only.group)
                 if (!isGroupAdmins) return reply(mess.only.adming)
                 if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                
+                if (!isUser) return reply(mess.noregis)
                 if (isBanned) return reply(mess.banned)
                 if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di jadikan admin group!')
                 mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -1338,7 +1340,7 @@ break
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
                    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                   
+                   if (!isUser) return reply(mess.noregis)
                    if (isBanned) return reply(mess.banned)
                    reply(`*GRUP ${groupName} TELAH DIBUKA KEMBALI❗*`)
 						fznadmn.groupSettingChange(from, GroupSettingChange.messageSend, false)
@@ -1347,7 +1349,7 @@ break
 						if (!isGroup) return reply(mess.only.group)
 						if (!isGroupAdmins) return reply(mess.only.adming)
                    if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-                   
+                   if (!isUser) return reply(mess.noregis)
                    if (isBanned) return reply(mess.banned)
 						reply(`*GRUP ${groupName} TELAH DI TUTUP. SILAHKAN TUNGGU HINGGA DIBUKA KEMBALI❗*`)
 						fznadmn.groupSettingChange(from, GroupSettingChange.messageSend, true)
@@ -1356,7 +1358,7 @@ break
         if (!isGroup) return reply(mess.only.group)
        if (!isBotGroupAdmins) return reply(mess.only.Badmin)
         if (!isGroupAdmins) return reply(mess.only.adming)
-        
+        if (!isUser) return reply(mess.noregis)
         if (isBanned) return reply(mess.banned)
         if (args.length < 1) return reply(`*${prefix}group open : untuk membuka chat grup*\n*${prefix}group close : untuk menutup grup*`)
        if (args[0] === 'open') {
@@ -1370,7 +1372,7 @@ break
     case 'group':
     case 'gcchatsetting':
       if (!isGroup && mek.key.fromMe) return reply(mess.only.group)
-      
+      if (!isUser) return reply(mess.noregis)
         if (isBanned) return reply(mess.banned)
       sendButMessage(from, 'GROUP SETTING', 'silahkan pilih salah satu dibawah ini!', [
         {
@@ -1393,7 +1395,7 @@ break
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
           if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-          
+          if (!isUser) return reply(mess.noregis)
         if (isBanned) return reply(mess.banned)
 					if (args.length < 1) return reply(`*mau di rubah apa nih nama grupnya?*\n*Contoh: ${prefix + command} grup lilulu-bot*`)
 					fznadmn.groupUpdateSubject(from, `${body.slice(11)}`)
@@ -1404,7 +1406,7 @@ break
 					if (!isGroup) return reply(mess.only.group)
 					if (!isGroupAdmins) return reply(mess.only.adming)
          if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-         
+         if (!isUser) return reply(mess.noregis)
         if (isBanned) return reply(mess.banned)
           if (args.length < 1) return reply(`Teks Deskripsi untuk grupnya mana?`)
 					fznadmn.groupUpdateDescription(from, `${body.slice(10)}`)
@@ -1425,7 +1427,7 @@ break
                 }
 				break
     case 'delvote':
-      
+      if (!isUser) return reply(mess.noregis)
         if (isBanned) return reply(mess.banned)
             if(!mek.key.remoteJid) return
             if(isVote) return reply('Tidak ada sesi Voting')
@@ -1435,7 +1437,7 @@ break
     case 'voting':
             if(!isGroupAdmins && !mek.key.fromMe) return 
             if(!isGroup) return reply(mess.only.group)
-            
+            if (!isUser) return reply(mess.noregis)
         if (isBanned) return reply(mess.banned)
             if (isVote) return reply('Sesi Voting Sedang Berlangsung Di Grup Ini')
             if(!q) return reply('*Voting*\n\n'+ prefix+ 'voting @tag target | reason  | 1 (1 = 1 Menit)')
@@ -1448,7 +1450,7 @@ break
             }
             break
     case 'listadmin':
-      
+      if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
 					if (!isGroup) return reply(mess.only.group)
 					teks = `List admin of group *${groupMetadata.subject}*\n𝗧𝗼𝘁𝗮𝗹 : ${groupAdmins.length}\n\n`
@@ -1461,7 +1463,7 @@ break
 					break
 				
 				 case "groupinfo":
-				   
+				   if (!isUser) return reply(mess.noregis)
 				   if (isBanned) return reply(mess.banned)
         if (!isGroup) return reply(mess.only.group)
         ppUrl = await fznadmn.getProfilePicture(from); // leave empty to get your own
@@ -1473,14 +1475,14 @@ break
         break;
 					case 'linkgc':
 				if (!isGroup) return reply(mess.only.group)
-				
+				if (!isUser) return reply(mess.noregis)
 			  if (isBanned) return reply(mess.banned)
 				linkgc = await fznadmn.groupInviteCode (from)
 				yeh = `https://chat.whatsapp.com/${linkgc}\n\nlink Group ${groupName}`
 				fznadmn.sendMessage(from, yeh, text, {quoted: mek})
 				break
 		case 'afk':
-		  
+		  if (!isUser) return reply(mess.noregis)
 		  if (isBanned) return reply(mess.banned)
         alasan = args.join(" ")
         afk[sender.split('@')[0]] = alasan.toLowerCase()
@@ -1511,6 +1513,7 @@ break
 				}
 				break
  case 'listonline':
+          if (!isUser) return reply(mess.noregis)
              if (!isGroup) return reply(`Only group`)
              try {
              let ido = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : from
@@ -1521,6 +1524,7 @@ break
 }
              break
       case 'sider':
+        if (!isUser) return reply(mess.noregis)
              if(!isGroup) return reply(mess.only.group)
              try {
              infom = await fznadmn.messageInfo(from, mek.message.extendedTextMessage.contextInfo.stanzaId)
@@ -1555,12 +1559,13 @@ break
                break
     case 'totaluser': 
       case 'user': 
+        if (!isUser) return reply(mess.noregis)
         tot = `${petik}total verified users ${namabot} : ${user.length}${petik}`
-        fkontak(tot)
+        reply(tot)
         break
 //==================BATAS BRO================//
     case 'linkwa':
-      
+      if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
             if(!q) return reply('cari group apa?')
             hx.linkwa(q)
