@@ -778,6 +778,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 │➪ OWNER : @${owner.split('@')[0]}
 │➪ BATTERY : ${baterai.battery}
 │➪ PREFIX :「 MULTI PREFIX 」
+│➪ TOTAL USER:  ${user.length} 
 │➪ TOTAL HIT : ${cmddhit.length} Today
 │➪ BOT MODE : ${banChats ? "SELF-MODE" : "PUBLIC-MODE"}
 └──────────────────❒
