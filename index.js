@@ -748,8 +748,9 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
     
 	case 'menu':
 	  if (!isUser) return reply(mess.noregis)
-	  if (isBanned) return reply(mess.banned)
-        txtt =`Hai Kak ${pushname}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
+	  if (isBanned) return reply(mess.banned) 
+	  nam = mek.participants[0]
+        txtt =`Hai Kak ${nam}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
                buttons = [{buttonId:`${prefix}pe`, 
                buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1}, {buttonId:`${prefix}officialgc`,buttonText:{displayText:'🎭 GROUP LILULU-BOT'},type:1}]
@@ -763,7 +764,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
                headerType: 4
       }
 
-               prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+               prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko}, contextInfo: {"mentionedJid": [nam]})
                fznadmn.relayWAMessage(prep)
                break
                
