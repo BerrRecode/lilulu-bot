@@ -86,7 +86,7 @@ cmddhit =[]
 //======setting disini ngab=======//
 baterai = {
 battery: "" || "Tidak Terdeteksi",
-isCharge: "" || false
+isCharge: "" || "false"
 }
 banChats = true
 offline = false
@@ -496,7 +496,8 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 		const dataRevoke = JSON.parse(fs.readFileSync('./src/gc-revoked.json'))
 		const dataCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked.json'))
 		const dataBanCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked-banlist.json'))
-		const sender = mek.key.fromMe ? fznadmn.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
+		//const sender = mek.key.fromMe ? fznadmn.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
+		const sender = mek.key.fromMe ? denz.user.jid : isGroup ? mek.participant : mek.key.remoteJid
 		const isRevoke = mek.key.remoteJid.endsWith('@s.whatsapp.net') ? true : mek.key.remoteJid.endsWith('@g.us') ? dataRevoke.includes(from) : false
 		const isCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : dataCtRevoke.data ? true : false
 		const isBanCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : !dataBanCtRevoke.includes(sender) ? true : false
@@ -749,8 +750,8 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 	case 'menu':
 	  if (!isUser) return reply(mess.noregis)
 	  if (isBanned) return reply(mess.banned) 
-	  nam = mek.participants[0]
-        txtt =`Hai Kak ${nam}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
+	  mension = `@${sender.split('@')[0]}`
+        txtt =`Hai Kak ${mension}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
 
                buttons = [{buttonId:`${prefix}pe`, 
                buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1}, {buttonId:`${prefix}officialgc`,buttonText:{displayText:'🎭 GROUP LILULU-BOT'},type:1}]
@@ -764,14 +765,16 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
                headerType: 4
       }
 
-               prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko}, contextInfo: {"mentionedJid": [nam]})
+               prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: {mentionedJid: [sender]}, quoted: ftoko})
                fznadmn.relayWAMessage(prep)
                break
                
     case 'pe':
     case 'lmenu':
+      bii = await fznadmn.getStatus(`${human.split('@')[0]}@s.whatsapp.net`, MessageType.text)
       if (!isUser) return reply(mess.noregis)
      if (isBanned) return reply(mess.banned)
+     //charger = `${baterai.isCharge}`
      tagnya = `@${sender.split('@')[0]}`
     wew = fs.readFileSync(`./lib/lilulu.jpeg`)
     	var pe = `╭─❒ 「 BOT INFO 」
@@ -785,9 +788,11 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 └──────────────────❒
 
 ╭─❒ 「 USER & TIME 」
-│➪ ${ucapanWaktu} ${pushname}
+│➪ ${ucapanWaktu} ${tagnya}
 │➪ NAME  : ${pushname}
-│➪ NOMOR : ${tagnya}
+│➪ NOMOR : wa.me/${human.split('@')[0]}
+│➪ BIO INFO: ${bii.status}
+│➪ ADMIN : ${isGroupAdmins ? 'Yes' : 'No'}
 │➪ WIB   : ${timeWib}
 │➪ WIT   : ${timeWit}
 │➪ WITA  : ${timeWita}
@@ -1053,7 +1058,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
                headerType: 1
 }
 
-          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: {mentionedJid: [sender, owner]}, quoted: ftoko})
                fznadmn.relayWAMessage(prep)
                break
                
@@ -1148,7 +1153,8 @@ case 'verify':
 │Pendaftaran Berhasil
 │Pada ${date} ${time}
 │Nama: ${pushname}
-│Nomor: wa.me/${sender.split('@')[0]}
+│Tags: @${sender.split('@')[0]}
+│Nomor: wa.me/${human.split('@')[0]}
 │Untuk Menggunakan Bot
 │Silahkan Kirim ${prefix}menu
 │Total Pengguna: ${user.length} Orang
@@ -1166,7 +1172,7 @@ case 'verify':
                   buttons: buttons,
                   headerType: 1
                 }
-                periv = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+                periv = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: {mentionedJid: [sender]}, quoted: fkontak})
                fznadmn.relayWAMessage(periv)
                 break
     
