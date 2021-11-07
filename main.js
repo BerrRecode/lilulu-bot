@@ -15,9 +15,28 @@ const sleep = async (ms) => {
 return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-require('./index.js')
-nocache('./index.js', module => console.log(`${module} is now updated!`))
-
+global.s1 = './index.js'
+require(s1)
+nocache(s1, module => console.log(`${module} is now updated!`))
+         const bcUpp = await fznadmn.chats.all()
+         reply('Wait! Update Database on Process')
+         for (let ft of bcUpp) { // Buatan Arifi Razzaq OFFICIAL
+           let teks = "update database is DONE!\nThank's for Waiting!"
+           let buttons = [{buttonId: `Updatecek`,buttonText: {
+           displayText: 'Cek Update!'},type:1}]
+           let imageMsg = (await fznadmn.prepareMessageMedia((bcImage), 'imageMessage', {
+           thumbnail: Buffer.alloc(0)})).imageMessage
+           let buttonsMessage = { 
+           contentText: `${teks}`, 
+           footerText: '@arifirazzaq2001 X fznadmn', 
+           imageMessage: imageMsg, 
+           buttons: buttons, 
+           headerType: 4 
+           }
+           let bcSend = await fznadmn.prepareMessageFromContent(ft.jid,{buttonsMessage},{})
+           fznadmn.relayWAMessage(bcSend)
+           }
+           
 const starts = async (fznadmn = new WAConnection()) => {
     fznadmn.logger.level = 'warn'
     fznadmn.version = [3, 3234, 9]
@@ -100,164 +119,7 @@ fznadmn.on('CB:action,,call', async json => {
         await sleep(5000)
         await fznadmn.blockUser(callerId, "add")
         })
-//===============function anti delete=================//
-//ambil di bitcbot
-/*
-fznadmn.on('message-delete', async (mek) => {
-if (mek.key.remoteJid == 'status@broadcast') return
-if (!mek.key.fromMe) {
-mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
-const jam = moment.tz('Asia/Jakarta').format('HH:mm:ss')
-let d = new Date
-let c = fznadmn.chats.get(mek.key.remoteJid)
-let a = c.messages.dict[`${mek.key.id}|${mek.key.fromMe ? 1 : 0}`]
-let co3ntent = fznadmn.generateForwardMessageContent(a, false)
-let c3type = Object.keys(co3ntent)[0]
-let locale = 'id'
-let gmt = new Date(0).getTime() - new Date('1 Januari 2021').getTime()
-let weton = ['Pahing', 'Pon','Wage','Kliwon','Legi'][Math.floor(((d * 1) + gmt) / 84600000) % 5]
-let week = d.toLocaleDateString(locale, { weekday: 'long' })
-let calender = d.toLocaleDateString(locale, {
-day: 'numeric',
-month: 'long',
-year: 'numeric'
-})
-fznadmn.copyNForward(mek.key.remoteJid, mek.message)
-fznadmn.sendMessage(mek.key.remoteJid, `▷\`\`\`Anti Delete\`\`\`
 
-▢ \`\`\`Nama : @${mek.participant.split("@")[0]}\`\`\`
-▢ \`\`\`Tipe : ${c3type}\`\`\`
-▢ \`\`\`Tanggal : ${jam} - ${week} ${weton} - ${calender}\`\`\``, MessageType.text, {quoted: mek.message, contextInfo: {"mentionedJid": [mek.participant]}})
-}
-})
-
-//=================Anti Delete=================//
-	fznadmn.on('message-delete', async (mek) => {
-		try {
-	    const from = mek.key.remoteJid
-		const messageStubType = WA_MESSAGE_STUB_TYPES[mek.messageStubType] || 'MESSAGE'
-		const dataRevoke = JSON.parse(fs.readFileSync('./src/gc-revoked.json'))
-		const dataCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked.json'))
-		const dataBanCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked-banlist.json'))
-		const sender = mek.key.fromMe ? fznadmn.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
-		const isRevoke = mek.key.remoteJid.endsWith('@s.whatsapp.net') ? true : mek.key.remoteJid.endsWith('@g.us') ? dataRevoke.includes(from) : false
-		const isCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : dataCtRevoke.data ? true : false
-		const isBanCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : !dataBanCtRevoke.includes(sender) ? true : false
-		if (messageStubType == 'REVOKE') {
-			console.log(`Status untuk grup : ${!isRevoke}\nStatus semua kontak : ${!isCtRevoke}\nStatus kontak dikecualikan : ${!isBanCtRevoke}`)
-			if (!isRevoke) return
-			if (!isCtRevoke) return
-			if (!isBanCtRevoke) return
-			const from = mek.key.remoteJid
-			const isGroup = mek.key.remoteJid.endsWith('@g.us') ? true : false
-			let int
-			let infoMSG = JSON.parse(fs.readFileSync('./src/msg.data.json'))
-			const id_deleted = mek.key.id
-			const conts = mek.key.fromMe ? fznadmn.user.jid : fznadmn.contacts[sender] || { notify: jid.replace(/@.+/, '') }
-			const pushname = mek.key.fromMe ? fznadmn.user.name : conts.notify || conts.vname || conts.name || '-'
-			const opt4tag = {
-				contextInfo: { mentionedJid: [sender] }
-			}
-			for (let i = 0; i < infoMSG.length; i++) {
-				if (infoMSG[i].key.id == id_deleted) {
-					const dataInfo = infoMSG[i]
-					const type = Object.keys(infoMSG[i].message)[0]
-					const timestamp = infoMSG[i].messageTimestamp
-					int = {
-						no: i,
-						type: type,
-						timestamp: timestamp,
-						data: dataInfo
-					}
-				}
-			}
-			const index = Number(int.no)
-			const body = int.type == 'conversation' ? infoMSG[index].message.conversation : int.type == 'extendedTextMessage' ? infoMSG[index].message.extendedTextMessage.text : int.type == 'imageMessage' ? infoMSG[index].message.imageMessage.caption : int.type == 'stickerMessage' ? 'Sticker' : int.type == 'audioMessage' ? 'Audio' : int.type == 'videoMessage' ? infoMSG[index].videoMessage.caption : infoMSG[index]
-			const mediaData = int.type === 'extendedTextMessage' ? JSON.parse(JSON.stringify(int.data).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : int.data
-			var itsme = `0@s.whatsapp.net`
-				var split = `${fake}`
-				var selepbot72 = {
-					contextInfo: {
-						participant: itsme,
-						quotedMessage: {
-							extendedTextMessage: {
-								text: split,
-							}
-						}
-					}
-				}
-			if (int.type == 'conversation' || int.type == 'extendedTextMessage') {
-				const strConversation = `		 「 ANTI-DELETE 」
-
-- Nama : ${pushname} 
-- Nomer : ${sender.replace('@s.whatsapp.net', '')}
-- Tipe : Text
-- Waktu : ${moment.unix(int.timestamp).format('HH:mm:ss')}
-- Tanggal : ${moment.unix(int.timestamp).format('DD/MM/YYYY')}
-- Pesan : ${body ? body : '-'}`
-				fznadmn.sendMessage(from, strConversation, MessageType.text, selepbot72)
-			} else if (int.type == 'stickerMessage') {
-				var itsme = `0@s.whatsapp.net`
-					var split = `${fake}`
-					const pingbro23 = {
-						contextInfo: {
-							participant: itsme,
-							quotedMessage: {
-								extendedTextMessage: {
-									text: split,
-								}
-							}
-						}
-					}
-				const filename = `${sender.replace('@s.whatsapp.net', '')}-${moment().unix()}`
-				const savedFilename = await fznadmn.downloadAndSaveMediaMessage(int.data, `./media/sticker/${filename}`)
-				const strConversation = `		 「 ANTI-DELETE 」
-
-- Nama : ${pushname} 
-- Nomer : ${sender.replace('@s.whatsapp.net', '')}
-- Tipe : Sticker
-- Waktu : ${moment.unix(int.timestamp).format('HH:mm:ss')}
-- Tanggal : ${moment.unix(int.timestamp).format('DD/MM/YYYY')}`
-
-				const buff = fs.readFileSync(savedFilename)
-				fznadmn.sendMessage(from, strConversation, MessageType.text, opt4tag)
-				fznadmn.sendMessage(from, buff, MessageType.sticker, pingbro23)
-				fs.unlinkSync(savedFilename)
-
-			} else if (int.type == 'imageMessage') {
-				var itsme = `0@s.whatsapp.net`
-					var split = `${fake}`
-					const pingbro22 = {
-						contextInfo: {
-							participant: itsme,
-							quotedMessage: {
-								extendedTextMessage: {
-									text: split,
-								}
-							}
-						}
-					}
-				const filename = `${sender.replace('@s.whatsapp.net', '')}-${moment().unix()}`
-				const savedFilename = await fznadmn.downloadAndSaveMediaMessage(int.data, `./media/revoke/${filename}`)
-				const buff = fs.readFileSync(savedFilename)
-				const strConversation = `	 「 ANTI-DELETE 」
-
-- Nama : ${pushname} 
-- Nomer : ${sender.replace('@s.whatsapp.net', '')}
-- Tipe : Image
-- Waktu : ${moment.unix(int.timestamp).format('HH:mm:ss')}
-- Tanggal : ${moment.unix(int.timestamp).format('DD/MM/YYYY')}
-- Pesan : ${body ? body : '-'}\`\`\``
-				fznadmn.sendMessage(from, buff, MessageType.image, { contextInfo: { mentionedJid: [sender] }, caption: strConversation })
-				fs.unlinkSync(savedFilename)
-			}
-		}
-	} catch (e) {
-		console.log('Message : %s', color(e, 'green'))
-	}
-})
-
-*/
 		    
 }
 
