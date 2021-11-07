@@ -15,28 +15,9 @@ const sleep = async (ms) => {
 return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-global.s1 = './index.js'
-require(s1)
-nocache(s1, module => console.log(`${module} is now updated!`))
-         const bcUpp = await fznadmn.chats.all()
-         reply('Wait! Update Database on Process')
-         for (let ft of bcUpp) { // Buatan Arifi Razzaq OFFICIAL
-           let teks = "update database is DONE!\nThank's for Waiting!"
-           let buttons = [{buttonId: `Updatecek`,buttonText: {
-           displayText: 'Cek Update!'},type:1}]
-           let imageMsg = (await fznadmn.prepareMessageMedia((bcImage), 'imageMessage', {
-           thumbnail: Buffer.alloc(0)})).imageMessage
-           let buttonsMessage = { 
-           contentText: `${teks}`, 
-           footerText: '@arifirazzaq2001 X fznadmn', 
-           imageMessage: imageMsg, 
-           buttons: buttons, 
-           headerType: 4 
-           }
-           let bcSend = await fznadmn.prepareMessageFromContent(ft.jid,{buttonsMessage},{})
-           fznadmn.relayWAMessage(bcSend)
-           }
-           
+require('./index.js')
+nocache('./index.js', module => console.log(`${module} is now updated!`))
+
 const starts = async (fznadmn = new WAConnection()) => {
     fznadmn.logger.level = 'warn'
     fznadmn.version = [3, 3234, 9]
