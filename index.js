@@ -4338,7 +4338,7 @@ break
         reply(mess.wait)
         quer = args.join(' ')
       baper = await getBuffer(`https://api.dapuhy.ga/api/ephoto/${command}?text=${quer}&apikey=${DapKey}`)
-      fznadmn.sendMessage(from, baper, image, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
+      fznadmn.sendMessage(from, baper, image, {quoted: mek})
         }catch (e){
           console.log('Error :', e)
           reply('link API error atau query salah')
@@ -4362,7 +4362,7 @@ break
         kon = args.join(' ')
         reply(mess.wait)
         lolbe = await getBuffer(`https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${LolKey}&text=${kon}`)
-        fznadmn.sendMessage(from, lolbe, image, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
+        fznadmn.sendMessage(from, lolbe, image, {quoted: mek})
       }catch(e){
         console.log('Error :', e)
         reply('API ERROR OR WRONG COMMAND')
@@ -4379,7 +4379,7 @@ break
         pa = args.split("|")[0]
         pi = args.split("|")[1]
         pon = await getBuffer(`https://api.lolhuman.xyz/api/ephoto2/${command}?apikey=${LolKey}&text1=${pa}&text2=${pi}`)
-        fznadmn.sendMessage(from, pon, image, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
+        fznadmn.sendMessage(from, pon, image, {quoted: mek})
       }catch(e){
         console.log('Error :', e)
         reply('maaf API sedang error')
