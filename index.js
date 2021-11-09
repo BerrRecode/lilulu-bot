@@ -212,7 +212,8 @@ module.exports = fznadmn = async (fznadmn, mek) => {
 			error: {
 				stick: 'bukan sticker itu:v',
 				Iv: 'Linknya error:v',
-				api: 'REST API ERROR'
+				api: 'REST API ERROR',
+				eror: 'Yah Error:('
 			},
 			only: {
 				group: 'Khususs grup ngab',
@@ -4331,18 +4332,18 @@ break
     case 'galaxybat':
     case 'brokenglass':
     case 'artpapercut':
+      try {
       if (isBanned) return reply(mess.banned)
       if (!isUser) return reply(mess.noregis)
-        try{
       if (args.length == 0) return reply(`Contoh: ${prefix + command} lilulubot`)
         reply(mess.wait)
         quer = args.join(' ')
       baper = await getBuffer(`https://api.dapuhy.ga/api/ephoto/${command}?text=${quer}&apikey=${DapKey}`)
-      fznadmn.sendMessage(from, baper, image, {quoted: mek})
-        }catch (e){
-          console.log('Error :', e)
-          reply('link API error atau query salah')
-        }
+      fznadmn.sendMessage(from, baper, image, {quoted: fkontak})
+      } catch (e) {
+        console.log(`Error:`, color(e, `red`))
+        reply(mess.error.eror)
+      }
     break
     case 'cartoongravity':
     case 'freefire':
@@ -4355,34 +4356,34 @@ break
     case 'fpslogo':
     case 'lolbanner':
     case 'avatardota':
+      try {
       if (isBanned) return reply(mess.banned)
       if (!isUser) return reply(mess.noregis)
-      try{
-        if (args.length < 1) return reply(`Contoh: ${prefix + command} LiluluBot`)
+        if (args.length == 0) return reply(`Contoh: ${prefix + command} LiluluBot`)
         kon = args.join(' ')
         reply(mess.wait)
         lolbe = await getBuffer(`https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${LolKey}&text=${kon}`)
-        fznadmn.sendMessage(from, lolbe, image, {quoted: mek})
-      }catch(e){
-        console.log('Error :', e)
-        reply('API ERROR OR WRONG COMMAND')
+        fznadmn.sendMessage(from, lolbe, image, {quoted: fkontak})
+      } catch (e) {
+        console.log(`Error :`, color(e,'red'))
+        reply(mess.error.eror)
       }
       break
     case 'codwarzone':
     case 'cutegravity':
     case 'realvintage':
+      try {
       if (isBanned) return reply(mess.banned)
       if (!isUser) return reply(mess.noregis)
-      try{
         if (args.length == 0) return reply(`Contoh: ${prefix + command} Lilulu|whatsappbot`)
         koh = args.join(' ')
-        pa = arg.split("|")[0]
-        pi = arg.split("|")[1]
+        pa = koh.split("|")[0]
+        pi = koh.split("|")[1]
         pon = await getBuffer(`https://api.lolhuman.xyz/api/ephoto2/${command}?apikey=${LolKey}&text1=${pa}&text2=${pi}`)
-        fznadmn.sendMessage(from, pon, image, {quoted: mek})
-      }catch(e){
-        console.log('Error :', e)
-        reply('maaf API sedang error')
+        fznadmn.sendMessage(from, pon, image, {quoted: fkontak})
+      } catch (e) {
+        console.log(`Error:`, color(e, `red`))
+        reply(mess.error.eror)
       }
       break
 //=======================OTHER MENU=====================//
