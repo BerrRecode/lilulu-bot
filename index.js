@@ -1,6 +1,6 @@
 // SC NYA JANGAN DI JUAL YA
 // Recode Vall Popaye
-//Thanks Buat Babang Vall Popaye + MhankBarBar + MRHRTZ + KIZAKIXD + FAUZAN
+//Thanks Buat Babang Vall Popaye + MhankBarBar + MRHRTZ + KIZAKIXD + FAUZAN + DENZ + ARIFI RAZZAQ
 //Tqtq Jan Diapus Ya Sayang
 //Gua cuman remake + nambahin fitur + fix bug
 const
@@ -72,7 +72,7 @@ const user = JSON.parse(fs.readFileSync('./database/user.json'))
 let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
 const _update = JSON.parse(fs.readFileSync('./database/bot/update.json'))
 const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
-
+const antilink = JSON.parse(fs.readFileSync('./database/antilink.json'))
 //============APIKEY DISNI===========//
 LolKey = 'BismillahBarokah' //BELI DI https://lolhuman.xys
 ZeksKey = 'YOUR APIKEY' //DAFTAR DI http://zeks.me/
@@ -156,7 +156,7 @@ module.exports = fznadmn = async (fznadmn, mek) => {
 	    baterai.battery = `${persenbat}%`
 	    baterai.isCharge = json[2][0][1].live
 	    })
-  const prefix = /^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*@,;]/.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™=|~!#$%^&.?/\\©^z+*,;]/gi) : '-'          	
+  const prefix = /^[°•π÷×¶∆£¢€¥®™=|~!#%^&.?/\\©^z+*@,;]/.test(cmd) ? cmd.match(/^[°•π÷×¶∆£¢€¥®™=|~!#%^&.?/\\©^z+*,;]/gi) : '-'          	
   body = (type === 'conversation' && mek.message.conversation.startsWith(prefix)) ? mek.message.conversation : (type == 'imageMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'videoMessage') && mek.message[type].caption.startsWith(prefix) ? mek.message[type].caption : (type == 'extendedTextMessage') && mek.message[type].text.startsWith(prefix) ? mek.message[type].text : (type == 'listResponseMessage') && mek.message[type].singleSelectReply.selectedRowId ? mek.message[type].singleSelectReply.selectedRowId : (type == 'buttonsResponseMessage') && mek.message[type].selectedButtonId ? mek.message[type].selectedButtonId : (type == 'stickerMessage') && (getCmd(mek.message[type].fileSha256.toString('base64')) !== null && getCmd(mek.message[type].fileSha256.toString('base64')) !== undefined) ? getCmd(mek.message[type].fileSha256.toString('base64')) : ""
 		budy = (type === 'conversation') ? mek.message.conversation : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : ''
 		const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()		
@@ -194,6 +194,7 @@ module.exports = fznadmn = async (fznadmn, mek) => {
 		//const isOwner = ownerNumber.includes(sender)
         const isVote = isGroup ? voting.includes(from) : false
         const isWelkom = isGroup ? welkom.includes(from) : false
+        const isAntiLink = isGroup ? antilink.includes(from) : false
         const isNsfw = isGroup ? nsfw.includes(from) : false
         const conts = mek.key.fromMe ? fznadmn.user.jid : fznadmn.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         if (isCmd) cmdadd()
@@ -497,7 +498,7 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 		const dataCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked.json'))
 		const dataBanCtRevoke = JSON.parse(fs.readFileSync('./src/ct-revoked-banlist.json'))
 		//const sender = mek.key.fromMe ? fznadmn.user.jid : mek.key.remoteJid.endsWith('@g.us') ? mek.participant : mek.key.remoteJid
-		const sender = mek.key.fromMe ? denz.user.jid : isGroup ? mek.participant : mek.key.remoteJid
+		const sender = mek.key.fromMe ? fznadmn.user.jid : isGroup ? mek.participant : mek.key.remoteJid
 		const isRevoke = mek.key.remoteJid.endsWith('@s.whatsapp.net') ? true : mek.key.remoteJid.endsWith('@g.us') ? dataRevoke.includes(from) : false
 		const isCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : dataCtRevoke.data ? true : false
 		const isBanCtRevoke = mek.key.remoteJid.endsWith('@g.us') ? true : !dataBanCtRevoke.includes(sender) ? true : false
@@ -650,7 +651,7 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
                 if (afk.hasOwnProperty(x.split('@')[0])) {
                     aefka = "Dia Lagi Afk bro!!!\n"
                     if (afk[x.split('@')[0]] != "") {
-                        aefka += "Dengan alasan " + afk[x.split('@')[0]]
+                        aefka += "Dengan alasan: " + afk[x.split('@')[0]]
                     }
                     fznadmn.sendMessage(from, aefka, text, {quoted: mek})
                 }
@@ -717,18 +718,29 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
         mentions(_vote,_p,true)   
         }
     }
-}	
+}
+        if (budy.includes("https://chat.whatsapp.com/")) {
+        if (!mek.key.fromMe){
+				if (!isGroup) return
+				if (!isAntiLink) return
+				if (isGroupAdmins) return reply('Atasan grup mah bebas yakan :v')
+				fznadmn.updatePresence(from, Presence.composing)
+				var kic = `${sender.split("@")[0]}@s.whatsapp.net`
+				reply('Link terdeteksi, Auto kick!')
+			    fznadmn.groupRemove(from, [kic]).catch((e) => {mek.reply(from, mess.Badmin)})
+			}
+			}
 //===============INI BATAS YA BRO=================//
         if (!mek.key.fromMe && banChats === true) return
 switch (command) {
     case 'jadibot':
       if (!isUser) return reply(mess.noregis)
-    if(!mek.key.fromMe) return reply('Tidak bisa jadibot di dalam bot')
+    if(mek.key.fromMe) return reply('Tidak bisa jadibot di dalam bot')
     jadibot(reply,fznadmn,from)
     break
     case 'stopjadibot':
 if (!isUser) return reply(mess.noregis)
-    if(!mek.key.fromMe)return reply('tidak bisa stopjadibot kecuali owner')
+    if(mek.key.fromMe)return reply('tidak bisa stopjadibot kecuali owner')
     stopjadibot(reply)
     break
 case 'teruskan':
@@ -835,6 +847,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 
 ❒ GROUP MENU ❐
 ๏ ${prefix}welcome
+๏ ${prefix}antilink
 ๏ ${prefix}add
 ๏ ${prefix}kick
 ๏ ${prefix}promote
@@ -911,6 +924,68 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}take
 ๏ ${prefix}fdeface
 ๏ ${prefix}emoji
+
+❒ EPHOTO MAKER ❐
+๏ ${prefix}neondevil
+๏ ${prefix}3dshiny
+๏ ${prefix}zombie3d
+๏ ${prefix}cloud
+๏ ${prefix}metal
+๏ ${prefix}neon
+๏ ${prefix}graffiticolor
+๏ ${prefix}lightgalaxy
+๏ ${prefix}hotmetalic
+๏ ${prefix}snake
+๏ ${prefix}graffiti5
+๏ ${prefix}graffiti3
+๏ ${prefix}graffiti2
+๏ ${prefix}graffiti
+๏ ${prefix}neon2
+๏ ${prefix}thunder
+๏ ${prefix}startsnight
+๏ ${prefix}cake
+๏ ${prefix}writingchalk
+๏ ${prefix}birthdaycake
+๏ ${prefix}3dhologram
+๏ ${prefix}galaxystyle
+๏ ${prefix}lighteffects
+๏ ${prefix}greenbrush
+๏ ${prefix}cakes
+๏ ${prefix}startsnight2
+๏ ${prefix}glowing
+๏ ${prefix}wetglass
+๏ ${prefix}blackpinkneon
+๏ ${prefix}3dcrack
+๏ ${prefix}3dunderwater
+๏ ${prefix}blackpink
+๏ ${prefix}bearlogo
+๏ ${prefix}watercolor
+๏ ${prefix}clouds
+๏ ${prefix}pubgmascot
+๏ ${prefix}summerbeach
+๏ ${prefix}summerbeach2
+๏ ${prefix}neonlight
+๏ ${prefix}1917
+๏ ${prefix}glow
+๏ ${prefix}wooden3d
+๏ ${prefix}galaxy
+๏ ${prefix}galaxybat
+๏ ${prefix}brokenglass
+๏ ${prefix}artpapercut
+๏ ${prefix}cartoongravity
+๏ ${prefix}freefire
+๏ ${prefix}goldplaybutton
+๏ ${prefix}silverplaybutton
+๏ ${prefix}anonymhacker
+๏ ${prefix}mlwall
+๏ ${prefix}aovwall
+๏ ${prefix}logogaming
+๏ ${prefix}fpslogo
+๏ ${prefix}lolbanner
+๏ ${prefix}avatardota
+๏ ${prefix}codwarzone
+๏ ${prefix}cutegravity
+๏ ${prefix}realvintage
 
 ❒ CONVERT ❐
 ๏ ${prefix}toimg
@@ -1247,17 +1322,73 @@ mentionedJid: jids
 await fznadmn.sendMessage(from, options, text)
 break
 //=====================GROUP MENU=====================//
-     case 'add':/*
+case 'welcome':
+  if (!isUser) return reply(mess.noregis)
+				if (!isGroup) return reply(mess.only.group)
+			if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.adming)
+				if (Number(args[0]) === 1) {
+				if (isWelkom) return reply(`[❗] Fitur ${command} sudah aktif`)
+				welkom.push(from)
+				fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
+				reply(`[❗] Berhasil mengaktifkan fitur ${command} pada group ini`)
+				} else if (Number(args[0]) === 0) {
+				welkom.splice(from, 1)
+				fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
+				reply(`[❗] Berhasil menonaktifkan fitur ${command} pada group ini`)
+				} else if (!q){
+			kom ='Silahkan pilih salah satu dibawah ini\nOn : untuk mengaktifkan\nOff : untuk menonaktifkan'
+				butwel = [{buttonId: `${prefix}welcome 1`, buttonText: {displayText: 'ON ✔'}, type: 1}, {buttonId: `${prefix}welcome 0`, buttonText: {displayText: 'OFF ✖'}, type: 1}]
+				
+				welbut = {
+				  contentText: `${kom}`,
+				  footerText: `©lilulu-bot`,
+				  buttons: butwel,
+				  headerType: 1
+				}
+				fznadmn.sendMessage(from, welbut, MessageType.buttonsMessage, {quoted: fkontak})
+			}
+				break
+    case 'antilink':
+              if (!isUser) return reply(mess.noregis)
+	        if (!isGroup) return reply(mess.only.group)
+			if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.adming)
+			if (!isBotGroupAdmins) return reply('bot harus jadi admin terlebih dahulu')
+					if (args[0] === 'on') {
+						if (isAntiLink) return reply('Sudah Aktif Kak')
+						antilink.push(from)
+						fs.writeFileSync('./database/antilink.json', JSON.stringify(antilink))
+						reply('Sukses mengaktifkan fitur antilink')
+						fznadmn.sendMessage(from, `**====================WARNING!====================*
+Grup ini sudah di pasang antilink. Jika ingin chare link grup silahkan izin terlebih dahulu kepada admin grup atau minta tolong sharekan kepada admin grup. namun jika anda tetap melanggar maka akan saya kick`, text)
+					} else if (args[0] === 'off') {
+						if (!isAntiLink) return reply('Sudah Mati Kak')
+						var ini = antilink.indexOf(from)
+						antilink.splice(ini, 1)
+						fs.writeFileSync('./database/antilink.json', JSON.stringify(antilink))
+						reply('Sukses menonaktifkan fitur antilink')
+					} else if (!q){
+ anu =`Silahkan pilih salah satu\n\non: untuk mengaktifkan\noff: untuk menonaktifkan`
+punten = [{buttonId: `${prefix}antilink off`, buttonText: {displayText: 'OFF ✖'}, type: 1},{buttonId: `${prefix}antilink on`, buttonText: {displayText: 'ON ✔'}, type: 1}]
+const btnasu = {
+    contentText: `${anu}`,
+    footerText: '©lilulu-bot',
+    buttons: punten,
+    headerType: 1
+}
+await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: ftoko})
+					}
+					break
+   /*  case 'add':
 			if (!isGroup) return reply(mess.only.group)
 			if (!isGroupAdmins) return reply(mess.only.adming)
 			if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 			if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Reply targetnya!')
 			add = mek.message.extendedTextMessage.contextInfo.participant
 		    fznadmn.groupAdd(from, [add])
-				reply('Sukses menambahkan peserta') */
+				reply('Sukses menambahkan peserta') 
 				reply('maaf fitur ini sedang dalam perbaikan')
-				break
-				case 'kick':/*
+				break */
+			/*	case 'kick':
 			if (!isGroup) return reply(mess.only.group)
 			if (!isGroupAdmins) return reply(mess.only.adming)
 			if (!isBotGroupAdmins) return reply(mess.only.Badmin)
@@ -1265,9 +1396,41 @@ break
 			kick = mek.message.extendedTextMessage.contextInfo.participant
 		    fznadmn.groupRemove(from, [kick])
 						reply('Sukses mengeluarkan peserta')
-						*/
+						
 						reply('maaf fitur ini sedang dalam perbaikan')
-                    break
+                    break */
+    case 'add':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
+					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+					if (args.length < 1) return reply('Yang mau di add jin ya?')
+					if (args[0].startsWith('08')) return reply('Gunakan kode negara bro!')
+					try {
+						num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
+						fznadmn.groupAdd(from, [num])
+					} catch (e) {
+						console.log('Error :', e)
+						reply('Gagal menambahkan target, mungkin karena di private')
+					}
+					break
+				case 'kick':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
+					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di kick!')
+					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+					if (mentioned.length > 1) {
+						teks = 'Perintah di terima, mengeluarkan :\n'
+						for (let _ of mentioned) {
+							teks += `@${_.split('@')[0]}\n`
+						}
+						mentions(teks, mentioned, true)
+						fznadmn.groupRemove(from, mentioned)
+					} else {
+						mentions(`Perintah di terima, mengeluarkan : @${mentioned[0].split('@')[0]}`, mentioned, true)
+						fznadmn.groupRemove(from, mentioned)
+					}
+					break
     case 'okick':
              if (!isBotGroupAdmins) return reply(mess.only.Badmin)
           if (!isGroupAdmins) return reply(mess.only.adming)
@@ -2317,24 +2480,6 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             }
             break
 //========================OWNER MENU=========================//
-case 'welcome':
-  if (!isUser) return reply(mess.noregis)
-				if (!isGroup) return reply(mess.only.group)
-			if (!isGroupAdmins) return reply(mess.only.adming)
-				if (args.length < 1) return reply('[❗] Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan')
-				if (Number(args[0]) === 1) {
-				if (isWelkom) return reply(`[❗] Fitur ${command} sudah aktif`)
-				welkom.push(from)
-				fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
-				reply(`[❗] Berhasil mengaktifkan fitur ${command} pada group ini`)
-				} else if (Number(args[0]) === 0) {
-				welkom.splice(from, 1)
-				fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
-				reply(`[❗] Berhasil menonaktifkan fitur ${command} pada group ini`)
-				} else {
-				reply('[❗] Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan')
-				}
-				break
 case 'leave':
   if (!isUser) return reply(mess.noregis)
 		if (!isGroup) return reply(mess.only.group)
@@ -2839,7 +2984,7 @@ esceh = `❥ *info script bot*
 ├⊳⊳ Owner: ${namaowner}
 │
 └──┤Link Github├────❥
-  ├✜ Github LiluluBOT
+  ├✜ Github Lilulu Bot
   ├✜ https://github.com/BerrRecode/
   ├✜ Github SC bot
   ├✜ https://github.com/BerrRecode/LiluluBot-fp
@@ -2847,18 +2992,20 @@ esceh = `❥ *info script bot*
   
 If you find bugs or error, please report to the OWNER Bot`
 
-     buttons = [{buttonId:`${prefix}menu`,buttonText:{displayText:'BACK TO MENU'},type:1},
-     {buttonId:`${prefix}infoowner`,buttonText:{displayText:'💎INFO OWNER'},type:1}]
+lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, type:1},
+{buttonId: `${prefix}infoowner`, buttonText: {displayText: '💎INFO OWNER'}, type:1}]
+
+  imgMsg = (await fznadmn.prepareMessageMedia(fs.readFileSync(`./src/github.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./src/github.jpeg`)})).imageMessage
+
+  batcot = {
+    contentText: `${esceh}`,
+    footerText: '©lilulu-bot',
+    imageMessage: imgMsg,
+    buttons: lokt,
+    headerType: 4
+  }
   
-    buttonsMessage = {
-      contentText: `${esceh}`,
-      footerText: '©copyright FznAdmn',
-      buttons: buttons,
-      headerType: 1
-    }
-    
-    prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
-      fznadmn.relayWAMessage(prep)
+  fznadmn.sendMessage(from, batcot, MessageType.buttonsMessage, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
                 break
     case 'infoowner':
 		        case 'infodeveloper':
@@ -2879,15 +3026,17 @@ If you find bugs or error, please report to the OWNER Bot`
   └─ ❏ https://www.instagram.com/efzyn_`
 				buttons = [{buttonId:`${prefix}menu`,buttonText:{displayText:'BACK TO MENU'},type:1},
 				{buttonId:`${prefix}infosc`,buttonText:{displayText:'🤖INFO SCRIPT'},type:1}]
+      
+      imgMsg = (await fznadmn.prepareMessageMedia(fs.readFileSync(`./src/me.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./src/me.jpeg`)})).imageMessage
   
     buttonsMessage = {
       contentText: `${infownr}`,
-      footerText: '©copyright FznAdmn',
+      footerText: '©copyright FznAdmn', imageMessage: imgMsg,
       buttons: buttons,
-      headerType: 1
+      headerType: 4
     }
     
-    prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko})
+    prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko, thumbnail: fs.readFileSync('./src/me.jpeg')})
       fznadmn.relayWAMessage(prep)
 			break
 		case 'cekresijnt':
@@ -3567,7 +3716,6 @@ fznadmn.relayWAMessage(prep)
 	    fznadmn.sendMessage(from, pipid, video, {quoted: mek})
 	    break
 
- 	case 'tiktok':
  	case 'ttnowm':
  	case 'tiktokdl':
  	case 'ttdl':
@@ -4136,6 +4284,107 @@ break
 				await fznadmn.sendMessage(from, lapan, image, {quoted: mek, caption: 'Jangan 💦 yahh'})
 				break
 //=====================================================================================================//
+//========================EPHOTO MAKER=========================//
+    case 'neondevil':
+    case '3dshiny':
+    case 'zombie3d':
+    case 'cloud':
+    case 'metal':
+    case 'neon':
+    case 'graffiticolor':
+    case 'lightgalaxy':
+    case 'hotmetalic': 
+    case 'snake':
+    case 'graffiti5':
+    case 'graffiti3':
+    case 'graffiti2':
+    case 'graffiti':
+    case 'neon2':
+    case 'thunder':
+    case 'startsnight':
+    case 'cake':
+    case 'writingchalk':
+    case 'birthdaycake':
+    case '3dhologram':
+    case 'galaxystyle':
+    case 'lighteffects':
+    case 'greenbrush':
+    case 'cakes':
+    case 'startsnight2':
+    case 'glowing':
+    case 'wetglass':
+    case 'blackpinkneon':
+    case '3dcrack':
+    case '3dunderwater':
+    case 'blackpink':
+    case 'bearlogo':
+    case 'watercolor':
+    case 'clouds':
+    case 'pubgmascot':
+    case 'summerbeach':
+    case 'summerbeach2':
+    case 'neonlight':
+    case '1917':
+    case 'glow':
+    case 'wooden3d':
+    case 'galaxy':
+    case 'galaxybat':
+    case 'brokenglass':
+    case 'artpapercut':
+      if (isBanned) return reply(mess.banned)
+      if (!isUser) return reply(mess.noregis)
+        try{
+      if (args.length == 0) return reply(`Contoh: ${prefix + command} lilulubot`)
+        reply(mess.wait)
+        quer = args.join(' ')
+      baper = await getBuffer(`https://api.dapuhy.ga/api/ephoto/${command}?text=${quer}&apikey=${DapKey}`)
+      fznadmn.sendMessage(from, baper, image, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
+        }catch (e){
+          console.log('Error :', e)
+          reply('link API error atau query salah')
+        }
+    break
+    case 'cartoongravity':
+    case 'freefire':
+    case 'goldplaybutton':
+    case 'silverplaybutton':
+    case 'anonymhacker':
+    case 'mlwall':
+    case 'aovwall':
+    case 'logogaming':
+    case 'fpslogo':
+    case 'lolbanner':
+    case 'avatardota':
+      if (isBanned) return reply(mess.banned)
+      if (!isUser) return reply(mess.noregis)
+      try{
+        if (args.length < 1) return reply(`Contoh: ${prefix + command} LiluluBot`)
+        kon = args.join(' ')
+        reply(mess.wait)
+        lolbe = await getBuffer(`https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${LolKey}&text=${kon}`)
+        fznadmn.sendMessage(from, lolbe, image, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
+      }catch(e){
+        console.log('Error :', e)
+        reply('API ERROR OR WRONG COMMAND')
+      }
+      break
+    case 'codwarzone':
+    case 'cutegravity':
+    case 'realvintage':
+      if (isBanned) return reply(mess.banned)
+      if (!isUser) return reply(mess.noregis)
+      try{
+        if (args.length == 0) return reply(`Contoh: ${prefix + command} Lilulu|whatsappbot`)
+        koh = args.join(' ')
+        pa = args.split("|")[0]
+        pi = args.split("|")[1]
+        pon = await getBuffer(`https://api.lolhuman.xyz/api/ephoto2/${command}?apikey=${LolKey}&text1=${pa}&text2=${pi}`)
+        fznadmn.sendMessage(from, pon, image, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
+      }catch(e){
+        console.log('Error :', e)
+        reply('maaf API sedang error')
+      }
+      break
 //=======================OTHER MENU=====================//
     case 'readmore':
       if (!isUser) return reply(mess.noregis)
@@ -4316,7 +4565,18 @@ return fznadmn.sendMessage(from, JSON.stringify(eval(budy.slice(2)),null,'\t'),t
 e = String(err)
 reply(e)
 }
-}  
+}
+
+if (budy.startsWith('$')){
+if (!mek.key.fromMe && !isOwner) return
+qur = budy.slice(2)
+exec(qur, (err, stdout) => {
+if (err) return reply(`${err}`)
+if (stdout) {
+reply(stdout)
+}
+})
+}
 
 	}
 if (isGroup && budy != undefined) {

@@ -10,7 +10,6 @@ const { banner, start, success } = require('./lib/functions')
 const moment = require("moment-timezone")
 const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const { color } = require('./lib/color')
-const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
 const sleep = async (ms) => {
 return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -47,6 +46,8 @@ const starts = async (fznadmn = new WAConnection()) => {
 			try {
 			console.log(anu)
 			if (anu.action == 'add') {
+			  const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
+        	if(!welkom.includes(mdata.id)) return
 			fkontakk = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(anu.jid ? { remoteJid: '62838505090133-1604595598@g.us' } : {})}, message: { "contactMessage":{"displayName": `${mdata.subject}`,"vcard":`BEGIN:VCARD\nVERSION:3.0\nN:2;FznAdm;;;\nFN:FznAdm\nitem1.TEL;waid=6285156724122:6285156724122\nitem1.X-ABLabel:Mobile\nEND:VCARD` }}}
 		    num = anu.participants[0]
 			try {
@@ -59,6 +60,8 @@ const starts = async (fznadmn = new WAConnection()) => {
 			masuk =`Halo @${mem.split('@')[0]}\n*Selamat Datang Di ${mdata.subject}*\n\nSilahkan baca Deskripsi grup dulu ya!\nketik *!menu* untuk menampilkan fitur bot\njangan lupa donasi ya :)`
             fznadmn.sendMessage(mdata.id, welcomimg, MessageType.image, {contextInfo: {"mentionedJid": [num]}, caption: masuk, quoted: fkontakk, thumbnail: fs.readFileSync('./src/welcomimg.jpg')})
 			} else if (anu.action == 'remove') {
+			  const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
+        	if(!welkom.includes(mdata.id)) return
 			fkontakk = { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(anu.jid ? { remoteJid: '62838505090133-1604595598@g.us' } : {})}, message: { "contactMessage":{"displayName": `${mdata.subject}`,"vcard":`BEGIN:VCARD\nVERSION:3.0\nN:2;FznAdm;;;\nFN:FznAdm\nitem1.TEL;waid=6285156724122:6285156724122\nitem1.X-ABLabel:Mobile\nEND:VCARD` }}}
 			num = anu.participants[0]
 			try {
@@ -101,6 +104,33 @@ fznadmn.on('CB:action,,call', async json => {
         await fznadmn.blockUser(callerId, "add")
         })
 
+fznadmn.on('message-delete', async (m) => {
+if (!m.key.fromMe && !antidelete) {
+if (!m.key.remoteJid == 'status@broadcast') return
+m.message = (Object.keys(m.message)[0] === 'ephemeralMessage') ? m.message.ephemeralMessage.message : m.message
+const jam = moment.tz('Asia/Jakarta').format('HH:mm:ss')
+let d = new Date
+let c = fznadmn.chats.get(m.key.remoteJid)
+let a = c.messages.dict[`${m.key.id}|${m.key.fromMe ? 1 : 0}`]
+let co3ntent = fznadmn.generateForwardMessageContent(a, false)
+let c3type = Object.keys(co3ntent)[0]
+let locale = 'id'
+let gmt = new Date(0).getTime() - new Date('1 Januari 2021').getTime()
+let weton = ['Pahing', 'Pon','Wage','Kliwon','Legi'][Math.floor(((d * 1) + gmt) / 84600000) % 5]
+let week = d.toLocaleDateString(locale, { weekday: 'long' })
+let calender = d.toLocaleDateString(locale, {
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+})
+fznadmn.copyNForward(m.key.remoteJid, m.message)
+fznadmn.sendMessage(m.key.remoteJid, `▷\`\`\`Anti Delete\`\`\`
+
+▢ \`\`\`Nama : @${m.participant.split("@")[0]}\`\`\`
+▢ \`\`\`Tipe : ${c3type}\`\`\`
+▢ \`\`\`Tanggal : ${jam} - ${week} ${weton} - ${calender}\`\`\``, MessageType.text, {quoted: m.message, contextInfo: {"mentionedJid": [m.participant]}})
+}
+})
 		    
 }
 
