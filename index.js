@@ -4376,8 +4376,8 @@ break
       try{
         if (args.length == 0) return reply(`Contoh: ${prefix + command} Lilulu|whatsappbot`)
         koh = args.join(' ')
-        pa = args.split("|")[0]
-        pi = args.split("|")[1]
+        pa = arg.split("|")[0]
+        pi = arg.split("|")[1]
         pon = await getBuffer(`https://api.lolhuman.xyz/api/ephoto2/${command}?apikey=${LolKey}&text1=${pa}&text2=${pi}`)
         fznadmn.sendMessage(from, pon, image, {quoted: mek})
       }catch(e){
