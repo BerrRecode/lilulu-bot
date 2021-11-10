@@ -1,1 +1,1 @@
-worker : npm i delay && npm i @adiwajshing/baileys@latest && npm start
+worker : npm i delay && npm start
