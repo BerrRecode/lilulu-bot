@@ -213,7 +213,7 @@ module.exports = fznadmn = async (fznadmn, mek) => {
 				stick: 'bukan sticker itu:v',
 				Iv: 'Linknya error:v',
 				api: 'REST API ERROR',
-				eror: 'Yah Error:('
+				eror: 'Yah Error:(, coba lagi gih :)'
 			},
 			only: {
 				group: 'Khususs grup ngab',
@@ -907,6 +907,15 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}cecan 
 ๏ ${prefix}wallnime
 ๏ ${prefix}animefanart
+๏ ${prefix}art
+๏ ${prefix}bts
+๏ ${prefix}exo
+๏ ${prefix}elf
+๏ ${prefix}shota
+๏ ${prefix}husbu
+๏ ${prefix}sagiri
+๏ ${prefix}shinobu
+๏ ${prefix}megumin
 
 ❒ ASUPAN MENU ❐
 ๏ ${prefix}asupan
@@ -919,60 +928,19 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}asupanrikagusriani
 ๏ ${prefix}asupanghea
 
-❒ MAKER ❐
+❒ MAKER MENU ❐
 ๏ ${prefix}sticker
 ๏ ${prefix}swm
 ๏ ${prefix}take
 ๏ ${prefix}fdeface
-๏ ${prefix}emoji
+๏ ${prefix}emoji 
+๏ ${prefix}attp 
+๏ ${prefix}ttp
+๏ ${prefix}ttp2
+๏ ${prefix}ttp3
+๏ ${prefix}ttp4
 
 ❒ EPHOTO MAKER ❐
-๏ ${prefix}neondevil
-๏ ${prefix}3dshiny
-๏ ${prefix}zombie3d
-๏ ${prefix}cloud
-๏ ${prefix}metal
-๏ ${prefix}neon
-๏ ${prefix}graffiticolor
-๏ ${prefix}lightgalaxy
-๏ ${prefix}hotmetalic
-๏ ${prefix}snake
-๏ ${prefix}graffiti5
-๏ ${prefix}graffiti3
-๏ ${prefix}graffiti2
-๏ ${prefix}graffiti
-๏ ${prefix}neon2
-๏ ${prefix}thunder
-๏ ${prefix}startsnight
-๏ ${prefix}cake
-๏ ${prefix}writingchalk
-๏ ${prefix}birthdaycake
-๏ ${prefix}3dhologram
-๏ ${prefix}galaxystyle
-๏ ${prefix}lighteffects
-๏ ${prefix}greenbrush
-๏ ${prefix}cakes
-๏ ${prefix}startsnight2
-๏ ${prefix}glowing
-๏ ${prefix}wetglass
-๏ ${prefix}blackpinkneon
-๏ ${prefix}3dcrack
-๏ ${prefix}3dunderwater
-๏ ${prefix}blackpink
-๏ ${prefix}bearlogo
-๏ ${prefix}watercolor
-๏ ${prefix}clouds
-๏ ${prefix}pubgmascot
-๏ ${prefix}summerbeach
-๏ ${prefix}summerbeach2
-๏ ${prefix}neonlight
-๏ ${prefix}1917
-๏ ${prefix}glow
-๏ ${prefix}wooden3d
-๏ ${prefix}galaxy
-๏ ${prefix}galaxybat
-๏ ${prefix}brokenglass
-๏ ${prefix}artpapercut
 ๏ ${prefix}cartoongravity
 ๏ ${prefix}freefire
 ๏ ${prefix}goldplaybutton
@@ -987,6 +955,15 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}codwarzone
 ๏ ${prefix}cutegravity
 ๏ ${prefix}realvintage
+๏ ${prefix}wetglass
+๏ ${prefix}multicolor3d
+๏ ${prefix}watercolor
+๏ ${prefix}luxurygold
+๏ ${prefix}galaxywallpaper
+๏ ${prefix}lighttext
+๏ ${prefix}beautifulflower
+๏ ${prefix}royaltext
+๏ ${prefix}heartshaped
 
 ❒ CONVERT ❐
 ๏ ${prefix}toimg
@@ -1138,14 +1115,12 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
                fznadmn.relayWAMessage(prep)
                break
                
- case 'owner':
             case 'developer':
             case 'author':
               if (!isUser) return reply(mess.noregis)
               if (isBanned) return reply(mess.banned)
                 fznadmn.sendMessage(from, {displayname: "Owner Lilulu", vcard: vcard}, MessageType.contact, { quoted: ftoko})
                     .then((res) => fznadmn.sendMessage(from, '*Tuh Kontak ownerku, jangan di spam ya!*', text, {quoted: res}))
-                    
                 break
    case 'shutdown':
      if (!isOwner) return reply(mess.only.ownerb)
@@ -1337,7 +1312,7 @@ case 'welcome':
 				fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
 				reply(`[❗] Berhasil menonaktifkan fitur ${command} pada group ini`)
 				} else if (!q){
-			kom ='Silahkan pilih salah satu dibawah ini\nOn : untuk mengaktifkan\nOff : untuk menonaktifkan'
+			kom ='*WELCOME BUTTON*\n\nSilahkan pilih salah satu dibawah ini\nOn : untuk mengaktifkan\nOff : untuk menonaktifkan'
 				butwel = [{buttonId: `${prefix}welcome 1`, buttonText: {displayText: 'ON ✔'}, type: 1}, {buttonId: `${prefix}welcome 0`, buttonText: {displayText: 'OFF ✖'}, type: 1}]
 				
 				welbut = {
@@ -1368,7 +1343,7 @@ Grup ini sudah di pasang antilink. Jika ingin chare link grup silahkan izin terl
 						fs.writeFileSync('./database/antilink.json', JSON.stringify(antilink))
 						reply('Sukses menonaktifkan fitur antilink')
 					} else if (!q){
- anu =`Silahkan pilih salah satu\n\non: untuk mengaktifkan\noff: untuk menonaktifkan`
+ anu =`*ANTILINK BUTTON*\n\nSilahkan pilih salah satu\non: untuk mengaktifkan\noff: untuk menonaktifkan`
 punten = [{buttonId: `${prefix}antilink off`, buttonText: {displayText: 'OFF ✖'}, type: 1},{buttonId: `${prefix}antilink on`, buttonText: {displayText: 'ON ✔'}, type: 1}]
 const btnasu = {
     contentText: `${anu}`,
@@ -1668,9 +1643,8 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
     case 'nsfw':
         if (isBanned) return reply(mess.banned)
 				if (!isGroup) return reply(mess.group)
-				if (!isGroupAdmins) return reply('Hanya admin grup yang bisa aktifkan mode nsfw')
+				if (!isGroupAdmins && !mek.key.fromMe) return reply('Hanya admin grup yang bisa aktifkan mode nsfw')
 				if (!isUser) return reply(mess.noregis)
-				if (args.length < 1) return reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
 				if (Number(args[0]) === 1) {
 				if (isNsfw) return reply(`Fitur ${command} sudah aktif !!!`)
 				nsfw.push(from)
@@ -1680,9 +1654,18 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
 				nsfw.splice(from, 1)
 				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
 				reply(`Berhasil menonaktifkan fitur ${command} pada group ini !!!`)
-				} else {
-				reply('Tambahkan parameter 1 untuk mengaktifkan dan 0 untuk menonaktifkan !!!')
+				} else if (!q){
+			ngw ='*NSFW BUTTON*\n\nSilahkan pilih salah satu dibawah ini\nOn : untuk mengaktifkan\nOff : untuk menonaktifkan'
+				butngw = [{buttonId: `${prefix}nsfw 1`, buttonText: {displayText: 'ON ✔'}, type: 1}, {buttonId: `${prefix}nsfw 0`, buttonText: {displayText: 'OFF ✖'}, type: 1}]
+				
+				ngowe = {
+				  contentText: `${ngw}`,
+				  footerText: `©lilulu-bot`,
+				  buttons: butngw,
+				  headerType: 1
 				}
+				fznadmn.sendMessage(from, ngowe, MessageType.buttonsMessage, {quoted: fkontak})
+			}
 				break
  case 'listonline':
           if (!isUser) return reply(mess.noregis)
@@ -2312,7 +2295,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             fs.unlinkSync(ran)
             })
             break
-//======================RANDOM IMAGE=====================°=====//
+//======================RANDOM IMG=====================°=====//
     case 'anime':
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
@@ -2335,6 +2318,7 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             });
             break
       case 'wallpaper2':
+        try{
         if (!isUser) return reply(mess.noregis)
             if (isBanned) return reply(mess.banned)
             if (args.length == 0) return reply(`Example: ${prefix + command} loli kawaii`)
@@ -2344,8 +2328,14 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
              restwall = wall.result
              wallp = await getBuffer(restwall)
              await fznadmn.sendMessage(from, wallp, image, {quoted: mek, caption: 'nih wallpapernya'})
+        } catch (e){
+          console.log(`Error :`, color(e,'red'))
+          reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+        }
                     break
     case 'pinterest':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       if (args.length == 0) return reply('gambar apa yang mau di cari?')
@@ -2354,8 +2344,14 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       penteres = await fetchJson(`https://api.lolhuman.xyz/api/pinterest?apikey=${LolKey}&query=${poto}`)
       gam = await getBuffer(penteres.result)
       await fznadmn.sendMessage(from, gam, image, {quoted: mek, caption: 'nih ngab'})
+      } catch (e){
+        console.log(`Error :`, color(e,'red'))
+        reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+      }
       break
     case 'image':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`gambar apa yang mau di cari?\ncontoh: ${prefix + command} loli kawaii`)
@@ -2363,32 +2359,62 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       reply(mess.wait)
       gamb = await getBuffer(`https://api.lolhuman.xyz/api/gimage?apikey=${LolKey}&query=${srcp}`)
       await fznadmn.sendMessage(from, gamb, image, {quoted: mek, caption: 'nih ngab'})
+      } catch (e){
+        console.log(`Error :`, color(e,'red'))
+        reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+      }
       break
     case 'cogan':
     case 'cecan':
     case 'wallnime':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       reply(mess.wait)
       ranmek = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey=${LolKey}`)
       await fznadmn.sendMessage(from, ranmek, image, {quoted: mek, caption: 'nih ngab'})
+      } catch (e){
+        console.log(`Error :`, color(e,'red'))
+        reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+      }
       break
     case 'animefanart':
+      try {
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       reply(mess.wait)
       animfan = await getBuffer(`https://api.lolhuman.xyz/api/random/art?apikey=${LolKey}`)
       await fznadmn.sendMessage(from, animfan, image, {quoted: mek, caption: 'wibu awokwok'})
+      } catch (e){
+        console.log(`Error :`, color(e,'red'))
+        reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+      }
       break
-      /*
-    case 'kemonomimi':
-    case 'wallpaper':
-      if (isBanned) return reply(mess.banned)
-      reply(mess.wait)
-      randm2 = await getBuffer(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${LolKey}`)
-      await fznadmn.sendMessage(from, randm2, image, {quoted: mek})
-      break
-      */
+   case 'art':
+   case 'bts':
+   case 'exo':
+   case 'elf':
+   case 'shota':
+   case 'husbu':
+   case 'sagiri':
+   case 'shinobu':
+   case 'megumin':
+     try {
+     if (!isUser) return reply(mess.noregis)
+     if (isBanned) return reply(mess.banned)
+     reply(mess.wait)
+    gem = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey=${LolKey}`)
+    await fznadmn.sendMessage(from, gem, image, { quoted: mek, caption: 'nih gengs'})
+                    
+     } catch (e){
+       console.log(`Error :`, color(e,'red'))
+       reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+     }
+                    break
 //===============================================================//
     case 'kontak':
       if (!isUser) return reply(mess.noregis)
@@ -2417,6 +2443,65 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             require('./lib/fetcher.js').createExif(satu, dua)
 			require('./lib/fetcher.js').modStick(media, fznadmn, mek, from)
 			break
+//==========================MAKER MENU=========================//
+case 'sticker': 
+    case 'stiker':
+    case 'sg':
+    case 's':
+      if (!isUser) return reply(mess.noregis)
+          if (isBanned) return reply(mess.banned)
+            if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+            const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+            const media = await fznadmn.downloadAndSaveMediaMessage(encmedia)
+                ran = '666.webp'
+                await ffmpeg(`./${media}`)
+                .input(media)
+                .on('start', function (cmd) {
+                     console.log(`Started : ${cmd}`)
+                })
+                .on('error', function (err) {
+                 console.log(`Error : ${err}`)
+                fs.unlinkSync(media)
+                reply('error')
+                })
+                .on('end', function () {
+                console.log('Finish')
+                fznadmn.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+                 fs.unlinkSync(media)
+                fs.unlinkSync(ran)
+                })
+                .addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+                .toFormat('webp')
+                .save(ran)
+                } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
+                const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+                const media = await fznadmn.downloadAndSaveMediaMessage(encmedia)
+            ran = '999.webp'
+            reply(mess.wait)
+            await ffmpeg(`./${media}`)
+            .inputFormat(media.split('.')[1])
+            .on('start', function (cmd) {
+            console.log(`Started : ${cmd}`)
+            })
+            .on('error', function (err) {
+            console.log(`Error : ${err}`)
+            fs.unlinkSync(media)
+            tipe = media.endsWith('.mp4') ? 'video' : 'gif'
+            reply(`Gagal, pada saat mengkonversi ${tipe} ke stiker`)
+            })
+            .on('end', function () {
+            console.log('Finish')
+            fznadmn.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
+            fs.unlinkSync(media)
+            fs.unlinkSync(ran)
+                })
+                .addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+                .toFormat('webp')
+                .save(ran)
+            } else {
+                reply(`Kirim gambar dengan caption ${prefix}sticker\nDurasi Sticker Video 1-9 Detik`)
+            }
+            break           
 	case 'stikerwm':
 	case 'stickerwm':
     case 'swm':
@@ -2480,6 +2565,16 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
             reply(`Kirim gambar dengan caption ${prefix}swm teks|teks atau tag gambar yang sudah dikirim`)
             }
             break
+    case 'ttp':
+    case 'ttp2':
+    case 'ttp3':
+    case 'ttp4':
+     case 'attp':
+      if (args.length == 0) return reply(`Example: ${prefix + command} lilulu`)
+      ini_txt = args.join(" ")
+      ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/${command}?apikey=${LolKey}&text=${ini_txt}`)
+      await fznadmn.sendMessage(from, ini_buffer, sticker, { quoted: mek })
+              break
 //========================OWNER MENU=========================//
 case 'leave':
   if (!isUser) return reply(mess.noregis)
@@ -3008,6 +3103,7 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
   
   fznadmn.sendMessage(from, batcot, MessageType.buttonsMessage, {quoted: fkontak, contextInfo: {mentionedJid: [sender]}})
                 break
+    case 'owner':
     case 'infoowner':
 		        case 'infodeveloper':
 		        case 'infopengembang':
@@ -3016,8 +3112,8 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
 		           //case ⌈❗」 by  Fauzan
  infownr = `◪ Hallo my name is Fauzan
 ├ From: Situbondo, East Java, Indonesia
-├ was born: Situbondo, 19 june 2003
-├ Age: 18 years old
+├ I'm a student
+├ and my hobby is coding
 └─┤My Social Media├─⊳⊳
   ├─ ❏ WhatsApp
   ├─ ❏ 085156724122
@@ -3032,7 +3128,7 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
   
     buttonsMessage = {
       contentText: `${infownr}`,
-      footerText: '©copyright FznAdmn', imageMessage: imgMsg,
+      footerText: 'life is never flat', imageMessage: imgMsg,
       buttons: buttons,
       headerType: 4
     }
@@ -3123,64 +3219,7 @@ more info: ${b.link}\n\n`
     reply(beasis)
     break
 //===============BATAS NI=====================//
-    case 'sticker': 
-    case 'stiker':
-    case 'sg':
-    case 's':
-      if (!isUser) return reply(mess.noregis)
-          if (isBanned) return reply(mess.banned)
-            if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
-            const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            const media = await fznadmn.downloadAndSaveMediaMessage(encmedia)
-                ran = '666.webp'
-                await ffmpeg(`./${media}`)
-                .input(media)
-                .on('start', function (cmd) {
-                     console.log(`Started : ${cmd}`)
-                })
-                .on('error', function (err) {
-                 console.log(`Error : ${err}`)
-                fs.unlinkSync(media)
-                reply('error')
-                })
-                .on('end', function () {
-                console.log('Finish')
-                fznadmn.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
-                 fs.unlinkSync(media)
-                fs.unlinkSync(ran)
-                })
-                .addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
-                .toFormat('webp')
-                .save(ran)
-                } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
-                const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                const media = await fznadmn.downloadAndSaveMediaMessage(encmedia)
-            ran = '999.webp'
-            reply(mess.wait)
-            await ffmpeg(`./${media}`)
-            .inputFormat(media.split('.')[1])
-            .on('start', function (cmd) {
-            console.log(`Started : ${cmd}`)
-            })
-            .on('error', function (err) {
-            console.log(`Error : ${err}`)
-            fs.unlinkSync(media)
-            tipe = media.endsWith('.mp4') ? 'video' : 'gif'
-            reply(`Gagal, pada saat mengkonversi ${tipe} ke stiker`)
-            })
-            .on('end', function () {
-            console.log('Finish')
-            fznadmn.sendMessage(from, fs.readFileSync(ran), sticker, {quoted: mek})
-            fs.unlinkSync(media)
-            fs.unlinkSync(ran)
-                })
-                .addOutputOptions([`-vcodec`, `libwebp`, `-vf`, `scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
-                .toFormat('webp')
-                .save(ran)
-            } else {
-                reply(`Kirim gambar dengan caption ${prefix}sticker\nDurasi Sticker Video 1-9 Detik`)
-            }
-            break               
+        
     case 'toimg':
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
@@ -3770,6 +3809,7 @@ fznadmn.relayWAMessage(prep)
             });
 	    break
 	  case 'igdl':
+	    try{
 	    if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`link mana broh?\ncontoh : ${prefix + command} https://www.instagram.com/p/CGOivksJleVPwIQfDBplW8nDrQmOX3aVCkzUO80/`)
@@ -3790,6 +3830,11 @@ buttonsMessage = {contentText: teks,footerText: 'silahkan pilih sesuai jenis fil
 
 prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
 fznadmn.relayWAMessage(prep)
+} catch(m){
+  console.log(color(m, `red`))
+  reply(`${m}`)
+  reply('link error. pastikan link tersebut adalah link ig')
+}
               break
     
     case 'igvidioboss':
@@ -4250,12 +4295,18 @@ break
                 case 'hololewd':
                 case 'futanari':
                 case 'hololewd':
+                  try{
 				if (!isNsfw) return reply(mess.nsfwOff)
 				if (!isUser) return reply('Daftar terlebih dahulu untuk menggunakan fitur ini. cara daftar ketik *!verify*')
 				if (isBanned) return reply(mess.banned)
 				reply(mess.wait)
 				efweh = await getBuffer(`https://api.lolhuman.xyz/api/random2/${command}?apikey=${LolKey}`)
 				await fznadmn.sendMessage(from, efweh, image, {quoted: mek, caption: 'jangan 💦 yah'})
+                  } catch (e){
+                    console.log(`Error :`, color(e,'red'))
+                  reply(`${e}`)
+                  reply('Yahh error:(. coba lagi gih :)')
+                  }
 				break
 				case 'hentai4everyone':
 				case 'animebellybutton':
@@ -4277,74 +4328,21 @@ break
 				case 'loli':
 				case 'waifu':
 				case 'neko':
+				  try{
 				if (!isNsfw) return reply(mess.nsfwOff)
 				if (!isUser) return reply('Daftar terlebih dahulu untuk menggunakan fitur ini. cara daftar ketik *!verify*')
 				if (isBanned) return reply(mess.banned)
 				reply(mess.wait)
 				lapan = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/${command}?apikey=${LolKey}`)
 				await fznadmn.sendMessage(from, lapan, image, {quoted: mek, caption: 'Jangan 💦 yahh'})
+				  } catch (e){
+				    console.log(`Error :`, color(e,'red'))
+				reply(`${e}`)
+       reply('Yahh error:(. coba lagi gih :)')
+				  }
 				break
 //=====================================================================================================//
 //========================EPHOTO MAKER=========================//
-    case 'neondevil':
-    case '3dshiny':
-    case 'zombie3d':
-    case 'cloud':
-    case 'metal':
-    case 'neon':
-    case 'graffiticolor':
-    case 'lightgalaxy':
-    case 'hotmetalic': 
-    case 'snake':
-    case 'graffiti5':
-    case 'graffiti3':
-    case 'graffiti2':
-    case 'graffiti':
-    case 'neon2':
-    case 'thunder':
-    case 'startsnight':
-    case 'cake':
-    case 'writingchalk':
-    case 'birthdaycake':
-    case '3dhologram':
-    case 'galaxystyle':
-    case 'lighteffects':
-    case 'greenbrush':
-    case 'cakes':
-    case 'startsnight2':
-    case 'glowing':
-    case 'wetglass':
-    case 'blackpinkneon':
-    case '3dcrack':
-    case '3dunderwater':
-    case 'blackpink':
-    case 'bearlogo':
-    case 'watercolor':
-    case 'clouds':
-    case 'pubgmascot':
-    case 'summerbeach':
-    case 'summerbeach2':
-    case 'neonlight':
-    case '1917':
-    case 'glow':
-    case 'wooden3d':
-    case 'galaxy':
-    case 'galaxybat':
-    case 'brokenglass':
-    case 'artpapercut':
-      try {
-      if (isBanned) return reply(mess.banned)
-      if (!isUser) return reply(mess.noregis)
-      if (args.length == 0) return reply(`Contoh: ${prefix + command} lilulubot`)
-        reply(mess.wait)
-        quer = args.join(' ')
-      baper = await getBuffer(`https://api.dapuhy.ga/api/ephoto/${command}?text=${quer}&apikey=${DapKey}`)
-      fznadmn.sendMessage(from, baper, image, {quoted: fkontak})
-      } catch (e) {
-        console.log(`Error:`, color(e, `red`))
-        reply(mess.error.eror)
-      }
-    break
     case 'cartoongravity':
     case 'freefire':
     case 'goldplaybutton':
@@ -4356,6 +4354,15 @@ break
     case 'fpslogo':
     case 'lolbanner':
     case 'avatardota':
+    case 'wetglass':
+    case 'multicolor3d':
+    case 'watercolor':
+    case 'luxurygold': 
+    case 'galaxywallpaper': 
+    case 'lighttext':
+    case 'beautifulflower':
+    case 'royaltext':
+    case 'heartshaped':
       try {
       if (isBanned) return reply(mess.banned)
       if (!isUser) return reply(mess.noregis)
@@ -4363,9 +4370,10 @@ break
         kon = args.join(' ')
         reply(mess.wait)
         lolbe = await getBuffer(`https://api.lolhuman.xyz/api/ephoto1/${command}?apikey=${LolKey}&text=${kon}`)
-        fznadmn.sendMessage(from, lolbe, image, {quoted: fkontak})
+      await fznadmn.sendMessage(from, lolbe, image, {quoted: fkontak})
       } catch (e) {
         console.log(`Error :`, color(e,'red'))
+        reply(`${e}`)
         reply(mess.error.eror)
       }
       break
@@ -4380,9 +4388,10 @@ break
         pa = koh.split("|")[0]
         pi = koh.split("|")[1]
         pon = await getBuffer(`https://api.lolhuman.xyz/api/ephoto2/${command}?apikey=${LolKey}&text1=${pa}&text2=${pi}`)
-        fznadmn.sendMessage(from, pon, image, {quoted: fkontak})
+       await fznadmn.sendMessage(from, pon, image, {quoted: fkontak})
       } catch (e) {
         console.log(`Error:`, color(e, `red`))
+        reply(`${e}`)
         reply(mess.error.eror)
       }
       break
@@ -4547,6 +4556,15 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
       shsult = short.result
       fznadmn.sendMessage(from, shsult, text, {quoted: mek})
       break
+    case 'shortlink':
+      case 'shortlink2':
+      case 'shortlink3':
+      case 'shortlink4':
+        if (args.length == 0) return reply(`Example: ${prefix + command} https://api.lolhuman.xyz`)
+          ini_link = args[0]
+          ini_buffer = await fetchJson(`https://api.lolhuman.xyz/api/${command}?apikey=${LolKey}&url=${ini_link}`)
+               reply(ini_buffer.result)
+               break
 //=============================================================//
 //========================MENU LIST CMD========================//
   //case 'asupan':
