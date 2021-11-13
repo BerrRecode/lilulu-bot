@@ -1,10 +1,18 @@
-// SC NYA JANGAN DI JUAL YA
+// DILARANG KERAS MENJUAL SC INI!
 // Recode Vall Popaye
-//Thanks Buat Babang Vall Popaye + MhankBarBar + MRHRTZ + KIZAKIXD + FAUZAN + DENZ + ARIFI RAZZAQ
-//Tqtq Jan Diapus Ya Sayang
-//Gua cuman remake + nambahin fitur + fix bug
-const
-	{
+/*TQTO
+Vall Popaye
+MhankBarBar 
+MRHRTZ 
+KIZAKIXD 
+BrCode
+DENZ 
+ARIFI RAZZAQ
+FA DEV
+*/
+//Tqtq Jan Diapus Yak
+//Gua cuman recode, fix bug, dan nambahin fitur aja gak lebih dari itu kok
+const	{
 		WAConnection,
 		MessageType,
 		Presence,
@@ -73,6 +81,7 @@ let _scommand = JSON.parse(fs.readFileSync('./database/scommand.json'))
 const _update = JSON.parse(fs.readFileSync('./database/bot/update.json'))
 const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/antilink.json'))
+const samah = JSON.parse(fs.readFileSync('./database/simi.json'))
 //============APIKEY DISNI===========//
 LolKey = 'BismillahBarokah' //BELI DI https://lolhuman.xys
 ZeksKey = 'YOUR APIKEY' //DAFTAR DI http://zeks.me/
@@ -82,6 +91,16 @@ ApiPikwy = '52c9dc3040a0682b76bc7e272503facc6e467dbe748c7548' //API SSWEB https:
 SsMcn = '0d5999' //https://www.screenshotmachine.com
 //=================CMD================//
 cmddhit =[]
+//=================simih=============//
+const simih = async (text) => {
+	try {
+		const sami = await fetch(`https://api.lolhuman.xyz/api/simi?apikey=${LolKey}&text=${text}`, {method: 'GET'})
+		const res = await sami.json()
+		return res.result
+	} catch {
+		return 'simi bingung mau jawab apa :v'
+	}
+}
 
 //======setting disini ngab=======//
 baterai = {
@@ -90,11 +109,12 @@ isCharge: "" || "false"
 }
 banChats = true
 offline = false
-namabot = 'LILULU-BOT'
+namabot = 'Lilulu-Bot'
 ownerNumber = ["6285156724122@s.whatsapp.net"]
 targetpc = '62838505090133'
-namaowner = 'FznAdmn'
+namaowner = 'BrCode'
 owner = '6285156724122@s.whatsapp.net'
+botnom = '6289688543712@s.whatsapp.net'
 fake = '𝙷𝚎𝚕𝚕𝚘\n𝙸𝚖 𝚕𝚒𝚕𝚞𝚕𝚞𝚋𝚘𝚝'
 numbernye = '0'
 waktu = '-'
@@ -147,6 +167,17 @@ module.exports = fznadmn = async (fznadmn, mek) => {
 		const timeWit= moment().tz('Asia/Makassar').format('DD/MM HH:mm:ss') //WIT
         const timeWita = moment().tz('Asia/Jayapura').format('DD/MM HH:mm:ss') //WITA
     const date = new Date().toLocaleDateString()
+    const jom = moment.tz('Asia/Jakarta').format('HH:mm:ss')
+				let d = new Date
+				let locale = 'id'
+				let gmt = new Date(0).getTime() - new Date('1 Januari 2021').getTime()
+				const weton = ['Pahing', 'Pon','Wage','Kliwon','Legi'][Math.floor(((d * 1) + gmt) / 84600000) % 5]
+				const week = d.toLocaleDateString(locale, { weekday: 'long' })
+				const calender = d.toLocaleDateString(locale, {
+				day: 'numeric',
+				month: 'long',
+				year: 'numeric'
+		       })
         //=======
   const type = Object.keys(mek.message)[0]  
   const cmd = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : ''.slice(1).trim().split(/ +/).shift().toLowerCase()
@@ -196,6 +227,7 @@ module.exports = fznadmn = async (fznadmn, mek) => {
         const isWelkom = isGroup ? welkom.includes(from) : false
         const isAntiLink = isGroup ? antilink.includes(from) : false
         const isNsfw = isGroup ? nsfw.includes(from) : false
+        const isSimi = isGroup ? samah.includes(from) : false
         const conts = mek.key.fromMe ? fznadmn.user.jid : fznadmn.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         if (isCmd) cmdadd()
         const pushname = mek.key.fromMe ? fznadmn.user.name : conts.notify || conts.vname || conts.name || '-'
@@ -731,6 +763,7 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 			    fznadmn.groupRemove(from, [kic]).catch((e) => {mek.reply(from, mess.Badmin)})
 			}
 			}
+			thumbbot = await fs.readFileSync('./lib/lilulu.jpeg')
 //===============INI BATAS YA BRO=================//
         if (!mek.key.fromMe && banChats === true) return
 switch (command) {
@@ -764,22 +797,10 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 	  if (!isUser) return reply(mess.noregis)
 	  if (isBanned) return reply(mess.banned) 
 	  mension = `@${sender.split('@')[0]}`
-        txtt =`Hai Kak ${mension}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}lmenu`
-
-               buttons = [{buttonId:`${prefix}pe`, 
-               buttonText:{displayText:'📑SHOW MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 OWNER'},type:1}, {buttonId:`${prefix}officialgc`,buttonText:{displayText:'🎭 GROUP LILULU-BOT'},type:1}]
-
-               imageMsg = (await fznadmn.prepareMessageMedia(fs.readFileSync(`./lib/lilulu.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./lib/lilulu.jpeg`)})).imageMessage
-
-               buttonsMessage = {
-               contentText: `${txtt}`,
-               footerText: '©FznAdmn', imageMessage: imageMsg,
-               buttons: buttons,
-               headerType: 4
-      }
-
-               prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: {mentionedJid: [sender]}, quoted: ftoko})
-               fznadmn.relayWAMessage(prep)
+        txtt =`Hai Kak ${mension}, ${ucapanWaktu}\nPilih Opsi Dibawah Ini Ya..\n\nJika Button tidak muncul, silahkan ketik ${prefix}cmnd`
+        
+        sendButLocation(from, txtt, 'Powered by: BrCode', {jpegThumbnail:thumbbot}, [{buttonId:`${prefix}cmnd`, 
+               buttonText:{displayText:'📑SHOW LIST MENU'},type:1}, {buttonId:`${prefix}owner`,buttonText:{displayText:'👤 INFO OWNER'},type:1}, {buttonId:`${prefix}officialgc`,buttonText:{displayText:'🎭 GROUP LILULU-BOT'},type:1}], {contextInfo: { mentionedJid: [sender]}})
                break
                
     case 'pe':
@@ -845,6 +866,9 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}setfakeimg
 ๏ ${prefix}setreply
 ๏ ${prefix}settarget
+๏ ${prefix}upswteks
+๏ ${prefix}upswimage
+๏ ${prefix}upswvideo
 
 ❒ GROUP MENU ❐
 ๏ ${prefix}welcome
@@ -917,17 +941,6 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}shinobu
 ๏ ${prefix}megumin
 
-❒ ASUPAN MENU ❐
-๏ ${prefix}asupan
-๏ ${prefix}asupan2
-๏ ${prefix}asupan3
-๏ ${prefix}asupanchika 
-๏ ${prefix}asupansantuy 
-๏ ${prefix}asupanbocil
-๏ ${prefix}asupanukhty 
-๏ ${prefix}asupanrikagusriani
-๏ ${prefix}asupanghea
-
 ❒ MAKER MENU ❐
 ๏ ${prefix}sticker
 ๏ ${prefix}swm
@@ -974,12 +987,8 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}reverse
 ๏ ${prefix}tourl
 
-❒ UP SW ❐
-๏ ${prefix}upswteks
-๏ ${prefix}upswimage
-๏ ${prefix}upswvideo
-
-❒ FUN ❐
+❒ FUN MENU❐
+๏ ${prefix}asupan
 ๏ ${prefix}fitnah
 ๏ ${prefix}fitnahpc
 ๏ ${prefix}teruskan
@@ -1011,7 +1020,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}totag
 
 ❒ INFO MENU ❐
-๏ ${prefix}infoowner
+๏ ${prefix}owner
 ๏ ${prefix}infosc
 ๏ ${prefix}cektokenlistrik
 ๏ ${prefix}wikipedia
@@ -1097,6 +1106,20 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ vote
 ๏ devote
 
+╭─❒ 「 TQTO 」 
+│ Allah SWT
+│ Vall Popaye
+│ MhankBarBar
+│ MRHRTZ
+│ KIZAKIXD
+│ BrCode (Me)
+│ DENZ
+│ ARIFI RAZZAQ
+│ FA DEV 
+│ ALL API
+│ AND OTHER BOT BUILDERS
+└──────────────────❍
+
 ╭─❒ 「 PESAN 」 
 │Thank you very much for using this bot.
 │And sorry if there are still many errors.
@@ -1106,7 +1129,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
       
         buttonsMessage = {
                contentText: `${pe}`,
-               footerText: '_*© 𝙲𝚁𝙴𝙰𝚃𝙴𝙳 𝙱𝚈 𝙵𝚣𝚗𝙰𝚍𝚖𝚗*_', imageMessage: wew,
+               footerText: '_*© 𝙲𝚁𝙴𝙰𝚃𝙴𝙳 𝙱𝚈 𝙱𝚛𝙲𝚘𝚍𝚎*_', imageMessage: wew,
                buttons: buttons,
                headerType: 1
 }
@@ -1114,6 +1137,587 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
           prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: {mentionedJid: [sender, owner]}, quoted: ftoko})
                fznadmn.relayWAMessage(prep)
                break
+    case 'islammenu':
+      hijrah = `❒ ISLAM MENU ❐
+๏ ${prefix}listsurah
+๏ ${prefix}quran
+๏ ${prefix}ayat
+๏ ${prefix}audiosurah
+๏ ${prefix}audioayat
+๏ ${prefix}jadwalsholat
+๏ ${prefix}niatsholat
+๏ ${prefix}asmaulhusna
+๏ ${prefix}kisahnabi`
+    buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+      
+        buttonsMessage = {
+               contentText: `${hijrah}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+      break
+  case 'ownermenu':
+    owen = `❒ OWNER MENU ❐
+๏ ${prefix}mode
+๏ ${prefix}bc
+๏ ${prefix}bc2
+๏ ${prefix}bcgc
+๏ ${prefix}ban
+๏ ${prefix}unban
+๏ ${prefix}setcmd
+๏ ${prefix}delcmd
+๏ ${prefix}listcmd
+๏ ${prefix}shutdown
+๏ ${prefix}status
+๏ ${prefix}leave
+๏ ${prefix}oleave 
+๏ ${prefix}addupdate
+๏ ${prefix}infoupdate
+๏ ${prefix}resetupdate
+๏ ${prefix}leaveall
+๏ ${prefix}setpp
+๏ ${prefix}setthumb
+๏ ${prefix}setfakeimg
+๏ ${prefix}setreply
+๏ ${prefix}settarget
+๏ ${prefix}upswteks
+๏ ${prefix}upswimage
+๏ ${prefix}upswvideo`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+      
+        buttonsMessage = {
+               contentText: `${owen}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'groupmenu':
+    gp =`❒ GROUP MENU ❐
+๏ ${prefix}welcome
+๏ ${prefix}antilink
+๏ ${prefix}add
+๏ ${prefix}kick
+๏ ${prefix}promote
+๏ ${prefix}demote
+๏ ${prefix}group 
+๏ ${prefix}nsfw
+๏ ${prefix}afk 
+๏ ${prefix}delete
+๏ ${prefix}linkgc
+๏ ${prefix}setnamegc
+๏ ${prefix}setdeskgc
+๏ ${prefix}creategrup
+๏ ${prefix}voting
+๏ ${prefix}delvote
+๏ ${prefix}listadmin
+๏ ${prefix}sider 
+๏ ${prefix}user`
+
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+      
+        buttonsMessage = {
+               contentText: `${gp}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'downloadmenu':
+    dlmenu = `❒ DOWNLOAD MENU ❐
+๏ ${prefix}ytsearch
+๏ ${prefix}play
+๏ ${prefix}play2
+๏ ${prefix}video2 
+๏ ${prefix}ytdl
+๏ ${prefix}ytmp3
+๏ ${prefix}ytmp4
+๏ ${prefix}ytshort
+๏ ${prefix}igdl 
+๏ ${prefix}fb
+๏ ${prefix}twitterimg 
+๏ ${prefix}twittervideo
+๏ ${prefix}twnowm
+๏ ${prefix}tiktokaudio
+๏ ${prefix}spotify 
+๏ ${prefix}jooxplay
+๏ ${prefix}telestick
+๏ ${prefix}brainly
+๏ ${prefix}komiku
+๏ ${prefix}chara
+๏ ${prefix}playstore
+๏ ${prefix}otaku `
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${dlmenu}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'stalkmenu':
+    stlk = `❒ STALKER ❐
+๏ ${prefix}tiktokstalk
+๏ ${prefix}igstalk
+๏ ${prefix}githubstalk
+๏ ${prefix}pptiktok`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${stlk}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'randomimg':
+    rndmg = `❒ RANDOM IMG ❐
+๏ ${prefix}pinterest
+๏ ${prefix}wallpaper2
+๏ ${prefix}wallpaper
+๏ ${prefix}anime 
+๏ ${prefix}image 
+๏ ${prefix}cogan
+๏ ${prefix}cecan 
+๏ ${prefix}wallnime
+๏ ${prefix}animefanart
+๏ ${prefix}art
+๏ ${prefix}bts
+๏ ${prefix}exo
+๏ ${prefix}elf
+๏ ${prefix}shota
+๏ ${prefix}husbu
+๏ ${prefix}sagiri
+๏ ${prefix}shinobu
+๏ ${prefix}megumin`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${rndmg}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'makermenu':
+    makek = `❒ MAKER MENU ❐
+๏ ${prefix}sticker
+๏ ${prefix}swm
+๏ ${prefix}take
+๏ ${prefix}fdeface
+๏ ${prefix}emoji 
+๏ ${prefix}attp 
+๏ ${prefix}ttp
+๏ ${prefix}ttp2
+๏ ${prefix}ttp3
+๏ ${prefix}ttp4`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${makek}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'ephotomaker':
+    emaker = `❒ EPHOTO MAKER ❐
+๏ ${prefix}cartoongravity
+๏ ${prefix}freefire
+๏ ${prefix}goldplaybutton
+๏ ${prefix}silverplaybutton
+๏ ${prefix}anonymhacker
+๏ ${prefix}mlwall
+๏ ${prefix}aovwall
+๏ ${prefix}logogaming
+๏ ${prefix}fpslogo
+๏ ${prefix}lolbanner
+๏ ${prefix}avatardota
+๏ ${prefix}codwarzone
+๏ ${prefix}cutegravity
+๏ ${prefix}realvintage
+๏ ${prefix}wetglass
+๏ ${prefix}multicolor3d
+๏ ${prefix}watercolor
+๏ ${prefix}luxurygold
+๏ ${prefix}galaxywallpaper
+๏ ${prefix}lighttext
+๏ ${prefix}beautifulflower
+๏ ${prefix}royaltext
+๏ ${prefix}heartshaped`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${emaker}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+    break
+  case 'convertmenu':
+  cnvrt =`❒ CONVERT ❐
+๏ ${prefix}toimg
+๏ ${prefix}tomp3
+๏ ${prefix}tomp4
+๏ ${prefix}slow
+๏ ${prefix}fast
+๏ ${prefix}reverse
+๏ ${prefix}tourl`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${cnvrt}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'funmenu':
+fnmn = `❒ FUN MENU❐
+๏ ${prefix}asupan
+๏ ${prefix}fitnah
+๏ ${prefix}fitnahpc
+๏ ${prefix}teruskan
+๏ ${prefix}kontak
+๏ ${prefix}memerandom
+๏ ${prefix}memeindo
+๏ ${prefix}darkjoke`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${fnmn}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'primbonmenu':
+pmbn = `❒ PRIMBON ❐
+๏ ${prefix}artinama
+๏ ${prefix}zodiak
+๏ ${prefix}jodoh
+๏ ${prefix}weton
+๏ ${prefix}tgljadian`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${pmbn}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'randomtext':
+randomtek = `❒ RANDOM TEXT ❐
+๏ ${prefix}quotes
+๏ ${prefix}quotesdilan
+๏ ${prefix}quotesislami
+๏ ${prefix}katabijak
+๏ ${prefix}quotesanime
+๏ ${prefix}bucin`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${randomtek}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'tagmenu':
+tgmn = `❒ TAG ❐
+๏ ${prefix}hidetag
+๏ ${prefix}tagall
+๏ ${prefix}kontag
+๏ ${prefix}sticktag
+๏ ${prefix}totag`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${tgmn}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'infomenu':
+menuinpo = `❒ INFO MENU ❐
+๏ ${prefix}owner
+๏ ${prefix}infosc
+๏ ${prefix}cektokenlistrik
+๏ ${prefix}wikipedia
+๏ ${prefix}covidindo
+๏ ${prefix}covidglobal
+๏ ${prefix}lolcek
+๏ ${prefix}chord
+๏ ${prefix}lirik
+๏ ${prefix}jadwaltv
+๏ ${prefix}jadwaltvnow
+๏ ${prefix}cekresijnt
+๏ ${prefix}jaraktempuh
+๏ ${prefix}indbeasiswa`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${menuinpo}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'nsfwmenu':
+menunsfw = `❒ NSFW MENU ❐
+๏ ${prefix}lewdk
+๏ ${prefix}erok
+๏ ${prefix}tits
+๏ ${prefix}keta
+๏ ${prefix}solo
+๏ ${prefix}eron
+๏ ${prefix}lewd
+๏ ${prefix}trap
+๏ ${prefix}yuri
+๏ ${prefix}ero
+๏ ${prefix}holoero
+๏ ${prefix}erofeet
+๏ ${prefix}blowjob
+๏ ${prefix}cum_jpg
+๏ ${prefix}eroyuri
+๏ ${prefix}hentai
+๏ ${prefix}femdom
+๏ ${prefix}nsfw_avatar
+๏ ${prefix}kemonomimi
+๏ ${prefix}pussy_jpg
+๏ ${prefix}lewdkemo
+๏ ${prefix}hololewd
+๏ ${prefix}futanari
+๏ ${prefix}hololewd
+๏ ${prefix}hentai4everyone
+๏ ${prefix}animebellybutton
+๏ ${prefix}biganimetiddies
+๏ ${prefix}lewdanimegirls
+๏ ${prefix}hentaifemdom
+๏ ${prefix}animearmpits
+๏ ${prefix}hentaiparadise
+๏ ${prefix}animethighss
+๏ ${prefix}animebooty
+๏ ${prefix}animefeets
+๏ ${prefix}sideoppai
+๏ ${prefix}hololewd
+๏ ${prefix}ahegao
+๏ ${prefix}ecchi
+๏ ${prefix}yaoi
+๏ ${prefix}trap
+๏ ${prefix}chiisaihentai
+๏ ${prefix}loli
+๏ ${prefix}waifu
+๏ ${prefix}neko`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${menunsfw}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'othermenu':
+othel = `❒ OTHER MENU ❐
+๏ ${prefix}ping
+๏ ${prefix}speed
+๏ ${prefix}inspect
+๏ ${prefix}caripesan
+๏ ${prefix}linkwa query
+๏ ${prefix}ssweb 
+๏ ${prefix}ssweb2
+๏ ${prefix}ssweb3
+๏ ${prefix}spamsms
+๏ ${prefix}spamchat
+๏ ${prefix}get
+๏ ${prefix}jadibot
+๏ ${prefix}listjadibot
+๏ ${prefix}get
+๏ ${prefix}readmore
+๏ ${prefix}resoomer
+๏ ${prefix}tinyurl
+๏ ${prefix}cuttly
+๏ ${prefix}isgd
+๏ ${prefix}term<code>
+๏ x
+๏ vote
+๏ devote`
+buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},type:1},{buttonId: `${prefix}donasi`,buttonText:{displayText: '☕ DONASI'},type:1},{buttonId: `${prefix}menu`,buttonText:{displayText: '🔙 TO MENU'},type:1}]
+
+        buttonsMessage = {
+               contentText: `${othel}`,
+               footerText: 'Powered by: BrCode',
+               buttons: buttons,
+               headerType: 1
+}
+
+          prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: fkontak})
+               fznadmn.relayWAMessage(prep)
+break
+case 'cmnd':
+  boi = await fznadmn.getStatus(`${human.split('@')[0]}@s.whatsapp.net`, MessageType.text)
+  ownbi = await fznadmn.getStatus(`${owner.split('@')[0]}@s.whatsapp.net`, MessageType.text)
+  if (isBanned) return reply(mess.banned)
+  if (!isUser) return reply(mess.noregis)
+  tognya = `@${sender.split('@')[0]}`
+ listMsg = {
+ buttonText: 'CLICK HERE',
+ footerText: 'Please click the button below to see the menu list\n\n*Powered by: BrCode*',
+ description: `╭─❒ 「 BOT INFO 」
+│➪ BOT NAME : ${namabot}
+│➪ BOT NUMBER : wa.me/${botnom.split('@')[0]}
+│➪ BATTERY : ${baterai.battery}
+│➪ PREFIX :「 MULTI PREFIX 」
+│➪ TOTAL USER:  ${user.length} 
+│➪ TOTAL HIT : ${cmddhit.length} Today
+│➪ BOT MODE : ${banChats ? "SELF-MODE" : "PUBLIC-MODE"}
+└──────────────────❒
+
+╭─❒ 「 INFO OWNER 」
+│➪ OWNER NAME : ${namaowner}
+│➪ TAG OWNER : @${owner.split('@')[0]}
+│➪ NOMOR OWNER : wa.me/${owner.split('@')[0]}
+│➪ BIO OWNER : ${ownbi.status}
+└──────────────────❒
+
+╭─❒ 「 USER & TIME 」
+│➪ ${ucapanWaktu} ${tognya}
+│➪ NAME  : ${pushname}
+│➪ NOMOR : wa.me/${human.split('@')[0]}
+│➪ BIO INFO: ${boi.status}
+│➪ ADMIN : ${isGroupAdmins ? 'Yes' : 'No'}
+│➪ WIB   : ${timeWib}
+│➪ WIT   : ${timeWit}
+│➪ WITA  : ${timeWita}
+└──────────────────❒`,
+ sections: [
+                     {
+                      "title": `List Menu Lilulu-Bot`,
+ rows: [
+                          {
+                              "title": "ALL MENU",
+                              "rowId": `${prefix}pe`
+                           },
+                           {
+                              "title": "ISLAM MENU",
+                              "rowId": `${prefix}islammenu`
+                           },
+                           {
+                              "title": "OWNER MENU",
+                              "rowId": `${prefix}ownermenu`
+                           },
+                           {
+                              "title": "GROUP MENU",
+                              "rowId": `${prefix}groupmenu`
+                           },
+                           {
+                              "title": "DOWNLOAD MENU",
+                              "rowId": `${prefix}downloadmenu`
+                           },
+                           {
+                              "title": "STALKER MENU",
+                              "rowId": `${prefix}stalkmenu`
+                           },
+                           {
+                              "title": "RANDOM IMAGE",
+                              "rowId": `${prefix}randomimg`
+                           },
+                           {
+                              "title": "MAKER MENU",
+                              "rowId": `${prefix}makermenu`
+                           },
+                           {
+                              "title": "EPHOTO MAKER",
+                              "rowId": `${prefix}ephotomaker`
+                           },
+                           {
+                              "title": "CONVERT MENU",
+                              "rowId": `${prefix}convertmenu`
+                           },
+                           {
+                              "title": "FUN MENU",
+                              "rowId": `${prefix}funmenu`
+                           },
+                           {
+                              "title": "PRIMBON MENU",
+                              "rowId": `${prefix}primbonmenu`
+                           },
+                           {
+                              "title": "RANDOM TEXT",
+                              "rowId": `${prefix}rndmtek`
+                           },
+                           {
+                              "title": "TAG MENU",
+                              "rowId": `${prefix}tagmenu`
+                           },
+                           {
+                              "title": "INFO MENU",
+                              "rowId": `${prefix}infomenu`
+                           },
+                           {
+                              "title": "NSFW MENU",
+                              "rowId": `${prefix}nsfwmenu`
+                           },
+                           {
+                              "title": "OTHER MENU",
+                              "rowId": `${prefix}othermenu`
+                           }
+                        ]
+                     }],
+ listType: 1
+}
+fznadmn.sendMessage(from, listMsg, MessageType.listMessage, {contextInfo: { mentionedJid: [sender, owner]},quoted:ftoko})
+break
                
             case 'developer':
             case 'author':
@@ -1665,6 +2269,33 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
 				  headerType: 1
 				}
 				fznadmn.sendMessage(from, ngowe, MessageType.buttonsMessage, {quoted: fkontak})
+			}
+				break
+		case 'simih':
+        if (isBanned) return reply(mess.banned)
+				if (!isGroup) return reply(mess.group)
+				if (!isGroupAdmins && !mek.key.fromMe) return reply('Hanya admin grup yang bisa aktifkan mode nsfw')
+				if (!isUser) return reply(mess.noregis)
+				if (Number(args[0]) === 1) {
+				if (isSimi) return reply(`Fitur ${command} sudah aktif !!!`)
+				samah.push(from)
+				fs.writeFileSync('./database/simi.json', JSON.stringify(samah))
+				reply(`Berhasil mengaktifkan fitur ${command} pada group ini !!!`)
+				} else if (Number(args[0]) === 0) {
+				samah.splice(from, 1)
+				fs.writeFileSync('./database/simi.json', JSON.stringify(samah))
+				reply(`Berhasil menonaktifkan fitur ${command} pada group ini !!!`)
+				} else if (!q){
+			sim ='*NSFW BUTTON*\n\nSilahkan pilih salah satu dibawah ini\nOn : untuk mengaktifkan\nOff : untuk menonaktifkan'
+				simsim = [{buttonId: `${prefix}simih 1`, buttonText: {displayText: 'ON ✔'}, type: 1}, {buttonId: `${prefix}simih 0`, buttonText: {displayText: 'OFF ✖'}, type: 1}]
+				
+				samasimi = {
+				  contentText: `${sim}`,
+				  footerText: 'Powered by: BrCode',
+				  buttons: simsim,
+				  headerType: 1
+				}
+				fznadmn.sendMessage(from, samasimi, MessageType.buttonsMessage, {quoted: fkontak})
 			}
 				break
  case 'listonline':
@@ -2230,6 +2861,49 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
     prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
                fznadmn.relayWAMessage(prep)
                break
+  case 'rndmtek':
+    if (isBanned) return reply(mess.banned)
+    if (!isUser) return reply(mess.noregis)
+    //rnmess = '*RANDOM TEXT MENU*\n\n'
+    listMsg = {
+      buttonText: 'CLICK HERE',
+      footerText: 'Powered by: BrCode',
+      description: '*RANDOM TEXT MENU*\nKlik button untuk melihat listnya\n\n',
+      sections: [
+              {
+                   "title": "List Random Text",
+        rows: [
+                {
+                  "title": "QUOTES",
+                  "rowId": `${prefix}quotes`
+                },
+                {
+                  "title": "QUOTES DILAN",
+                  "rowId": `${prefix}quotesdilan`
+                },
+                {
+                  "title": "QUOTES ISLAMI",
+                  "rowId": `${prefix}quotesislami`
+                },
+                {
+                  "title": "QUOTES ANIME",
+                  "rowId": `${prefix}quotesanime`
+                },
+                {
+                  "title": "KATA BIJAK",
+                  "rowId": `${prefix}katabijak`
+                },
+                {
+                  "title": "KATA BUCIN",
+                  "rowId": `${prefix}bucin`
+                }
+          ]
+             
+      }],
+    listType: 1
+    }
+    fznadmn.sendMessage(from, listMsg, MessageType.listMessage, {quoted: fkontak})
+    break
       
 //=====================BATAS===========================//
     case 'tomp3':
@@ -3109,8 +3783,10 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
 		        case 'infopengembang':
 		          if (!isUser) return reply(mess.noregis)
 		         if (isBanned) return reply(mess.banned)
-		           //case ⌈❗」 by  Fauzan
- infownr = `◪ Hallo my name is Fauzan
+		           //case ⌈❗」 by  fauzan
+		        fotoMe = fs.readFileSync('./src/me.jpeg')
+ infownr = `◪ Hallo @${sender.split('@')[0]}
+├ my name is Fauzan
 ├ From: Situbondo, East Java, Indonesia
 ├ I'm a student
 ├ and my hobby is coding
@@ -3121,20 +3797,12 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
   ├─ ❏ https://github.com/BerrRecode
   ├─ ❏ Instagram
   └─ ❏ https://www.instagram.com/efzyn_`
-				buttons = [{buttonId:`${prefix}menu`,buttonText:{displayText:'BACK TO MENU'},type:1},
-				{buttonId:`${prefix}infosc`,buttonText:{displayText:'🤖INFO SCRIPT'},type:1}]
-      
-      imgMsg = (await fznadmn.prepareMessageMedia(fs.readFileSync(`./src/me.jpeg`), 'imageMessage', {thumbnail: fs.readFileSync(`./src/me.jpeg`)})).imageMessage
   
-    buttonsMessage = {
-      contentText: `${infownr}`,
-      footerText: 'life is never flat', imageMessage: imgMsg,
-      buttons: buttons,
-      headerType: 4
-    }
-    
-    prep = await fznadmn.prepareMessageFromContent(from,{buttonsMessage},{quoted: ftoko, thumbnail: fs.readFileSync('./src/me.jpeg')})
-      fznadmn.relayWAMessage(prep)
+  sendButLocation(from, infownr, 'Powered by: BrCode', {jpegThumbnail:fotoMe},
+  [{buttonId:`${prefix}developer`,buttonText:{displayText:'NOMOR OWNER'},type:1},
+{buttonId:`${prefix}infosc`,buttonText:{displayText:'🤖 INFO SCRIPT'},type:1},
+{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, type: 1}],
+{contextInfo: { mentionedJid: [sender]}})
 			break
 		case 'cekresijnt':
 		  if (!isUser) return reply(mess.noregis)
@@ -3320,7 +3988,15 @@ fznadmn.updatePresence(from, Presence.composing)
 
 						for (let _ of anu) {
 
-							sendMess(_.jid, `${body.slice(4)}`)
+buttons = [{buttonId: `${prefix}menu`, buttonText: {displayText: 'MENU'}, type: 1},
+          {buttonId: `${prefix}owner`, buttonText: {displayText: 'OWNER'}, type: 1}]
+            const btnbc = {
+              contentText: `${body.slice(4)}`,
+              footerText: '*_BROADCAST LILULU-BOT_*',
+              buttons: buttons,
+              headerType: 1
+            }
+await fznadmn.sendMessage(_.jid, btnbc, MessageType.buttonsMessage, {quoted: ftoko})
 
 						}
 
@@ -3330,6 +4006,67 @@ fznadmn.updatePresence(from, Presence.composing)
 
 					break
 		case 'bc2':
+		  if (isBanned) return reply(mess.banned)
+fznadmn.updatePresence(from, Presence.composing)
+
+					if (!isOwner && !mek.key.fromMe) return reply(mess.only)
+
+					if (args.length < 1) return reply('Teksnya?')
+
+					anu = await fznadmn.chats.all()
+
+					if (isMedia && !mek.message.videoMessage || isQuotedImage) {
+
+						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+						buff = await fznadmn.downloadMediaMessage(encmedia)
+
+						for (let _ of anu) {
+
+							fznadmn.sendMessage(_.jid, buff, image, { quoted: { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})}, message: { orderMessage: { itemCount: 0000000000, status: 200, thumbnail: fs.readFileSync('./stik/thumb.jpeg'), surface: 200, message: `Broadcast`, orderTitle: `Broadcast`, sellerJid: '0@s.whatsapp.net'}}}, contextInfo: { forwardingScore: 508, isForwarded: true}, caption: `*BROADCAST BOT*\n\n${body.slice(4)}` })
+
+						}
+
+						reply(`Sukses mengirim Broadcast ${body.slice(4)}`)
+
+						} else if (isMedia && !mek.message.videoMessage || isQuotedVideo) {
+
+						const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+						buff = await fznadmn.downloadMediaMessage(encmedia)
+
+						for (let _ of anu) {
+
+							fznadmn.sendMessage(_.jid, buff, video, { quoted: { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})}, message: { orderMessage: { itemCount: 0000000000, status: 200, thumbnail: fs.readFileSync('./stik/thumb.jpeg'), surface: 200, message: `Broadcast`, orderTitle: `Broadcast`, sellerJid: '0@s.whatsapp.net'}}}, contextInfo: { forwardingScore: 508, isForwarded: true}, caption: `*BROADCAST BOT*\n\n${body.slice(4)}` })
+
+						}
+
+						reply(`Sukses mengirim Broadcast ${body.slice(4)}`)
+
+						} else if (isMedia && !mek.message.videoMessage || isQuotedVideo) {
+
+						const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
+						buff = await fznadmn.downloadMediaMessage(encmedia)
+
+						for (let _ of anu) {
+
+							fznadmn.sendMessage(_.jid, buff, video, { mimetype: Mimetype.gif, quoted: { key: { fromMe: false, participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "status@broadcast" } : {})}, message: { orderMessage: { itemCount: 0000000000, status: 200, thumbnail: fs.readFileSync('./stik/thumb.jpeg'), surface: 200, message: `Broadcast`, orderTitle: `Broadcast`, sellerJid: '0@s.whatsapp.net'}}}, contextInfo: { forwardingScore: 508, isForwarded: true}, caption: `*BROADCAST BOT*\n\n${body.slice(4)}` })
+
+						}
+
+						reply(`Sukses mengirim Broadcast ${body.slice(4)}`)
+
+					} else {
+
+						for (let _ of anu) {
+              
+              sendMess(_.jid, `${body.slice(4)}`)
+
+						}
+
+						reply(`Sukses mengirim Broadcast:\n${body.slice(4)}`)
+
+					}
+		  break
+		case 'bc3':
              if (!isOwner) return reply(mess.only.ownerb)
              if (isBanned) return reply(mess.banned)
 				if (args.length < 1) return reply('pesannya mana?')
@@ -3453,44 +4190,99 @@ fznadmn.cmd.on('asupan', async (data) => {
         break
         */
 //=======================ASUPAN MENU===========================//
-    case 'asupan':
     case 'asupansantuy':
     case 'asupanbocil':
     case 'asupanukhty':
     case 'asupanrikagusriani':
     case 'asupanghea':
-      if (!isUser) return reply(mess.noregis)
-      if (isBanned) return reply(mess.banned)
+        try{
       reply(mess.wait)
       asukon = await getBuffer(`https://api.dapuhy.ga/api/asupan/${command}?apikey=${DapKey}`)
-      comlai = 'mantep gak tuh?'
-      fznadmn.sendMessage(from, asukon, video, {quoted: mek, caption: comlai})
+      mnbt = `Klik next untuk melihat ${command} selanjutnya`
+      sendButVideo(from, mnbt, 'Powered by: BerrRecode', asukon, [{buttonId: `${prefix + command}`, buttonText: {displayText: `NEXT`}, type: 1},
+      {buttonId: `${prefix}asupan`, buttonText: {displayText: 'ASUPAN MENU'}, type: 1},
+      {buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, type: 1}]); 
+      
+        } catch (e){
+          console.log(color(e, `red`))
+          reply(`${e}`)
+        }
       break
-    case 'asupanchika':
-      if (!isUser) return reply(mess.noregis)
-      if (isBanned) return reply(mess.banned)
-     /* reply(mess.wait)
-      chikaa = await getBuffer(`https://pencarikode.xyz/api/chika?apikey=APIKEY`)
-      cika = 'pacar gue nih:)'
-      fznadmn.sendMessage(from, chikaa, video, {quoted: mek, caption: cika}) */
-      reply('API ERROR')
+    case 'aspnrndm':
+        try{
+      reply(mess.wait)
+      mankon = await getBuffer(`https://api.dapuhy.ga/api/asupan/asupan?apikey=${DapKey}`)
+      bst = `Klik next untuk melihat asupan random selanjutnya`
+      sendButVideo(from, bst, 'Powered by: BerrRecode', mankon, [{buttonId: `${prefix + command}`, buttonText: {displayText: `NEXT`}, type: 1},
+      {buttonId: `${prefix}asupan`, buttonText: {displayText: 'ASUPAN MENU'}, type: 1},
+      {buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, type: 1}]); 
+        } catch (e){
+          console.log(color(e, `red`))
+          reply(`${e}`)
+        }
       break
-    case 'asupan2':
+    case 'aspnrndm2':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       reply(mess.wait)
       asupn = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${LolKey}`)
-      asu = await getBuffer(asupn.result)
-      fznadmn.sendMessage(from, asu, video, {quoted: mek, caption: 'mantep gak tuh?'})
+      asupnN = await getBuffer(asupn.result)
+      jeha = `Klik next untuk melihat asupan random 2 selanjutnya`
+      sendButVideo(from, jeha, 'Powered by: BerrRecode', asupnN, [{buttonId: `${prefix + command}`, buttonText: {displayText: `NEXT`}, type: 1},
+      {buttonId: `${prefix}asupan`, buttonText: {displayText: 'ASUPAN MENU'}, type: 1},
+      {buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, type: 1}]); 
+      
+          } catch (e){
+          console.log(color(e, `red`))
+          reply(`${e}`)
+        }
       break
-    case 'asupan3':
-      if (!isUser) return reply(mess.noregis)
-      if (isBanned) return reply(mess.banned)
-    /*  reply(mess.wait)
-      asupen = await getBuffer(`https://pencarikode.xyz/api/asupan?apikey=APIKEY`)
-      caas = 'sueegerrrr'
-      fznadmn.sendMessage(from, asupen, video, {quoted: mek, caption: caas}) */
-      reply('API ERROR')
+      
+   case 'asupan':
+     if (isBanned) return reply(mess.banned)
+     if (!isUser) return reply(mess.noregis)
+        listMsg = {
+ buttonText: 'CLICK HERE',
+ footerText: '*LILULU-BOT*',
+ description: `Hai kak @${sender.split('@')[0]}, ${ucapanWaktu} dan selamat datang di ASUPAN MENU!.\nSilahkan pilih Asupan dibawah ini dengan cara klik tombolnya ya!`,
+ sections: [
+                     {
+                      "title": `List Asupan`,
+ rows: [
+                          {
+                              "title": "Asupan Random",
+                              "rowId": `${prefix}aspnrndm`
+                           },
+                           {
+                              "title": "Asupan Random 2",
+                              "rowId": `${prefix}aspnrndm2`
+                           },
+                           {
+                              "title": "Asupan Santuy",
+                              "rowId": `${prefix}asupansantuy`
+                           },
+                           {
+                              "title": "Asupan Bocil",
+                              "rowId": `${prefix}asupanbocil`
+                           },
+                           {
+                              "title": "Asupan Ukhty",
+                              "rowId": `${prefix}asupanukhty`
+                           },
+                           {
+                              "title": "Asupan Rikagusriani",
+                              "rowId": `${prefix}asupanrikagusriani`
+                           },
+                           {
+                              "title": "Asupan Ghea",
+                              "rowId": `${prefix}asupanghea`
+                           },
+                        ]
+                     }],
+                listType: "SINGLE_SELECT"
+          }
+fznadmn.sendMessage(from, listMsg, MessageType.listMessage, {contextInfo: { mentionedJid: [sender]},quoted:ftoko})
       break
 //=============================================================//
 	case 'setthumb':
@@ -4596,6 +5388,15 @@ reply(stdout)
 }
 })
 }
+
+if (isGroup && isSimi && budy != undefined && body.startsWith('')) {
+				console.log(budy)
+				muehe = await simih(budy)
+				console.log(muehe)
+				reply(muehe)
+				} else {
+				console.log(color('[ERROR]','red'), 'Unregistered Command from', color(sender.split('@')[0]))
+					}
 
 	}
 if (isGroup && budy != undefined) {

@@ -15,7 +15,7 @@
 ```
 
 ## Installation bot 
-Before installing bots. please delete LiluluBot.json first so that the QR code can appear
+Before installing bots. please delete [`LiluluBot.json`](https://github.com/BerrRecode/lilulu-bot/blob/ac5ad9ae89d3dcc050b24779df4574afe7f84be0/LiluluBot.json) first so that the QR code can appear
 
 ```bash
 > cd lilulu-bot
@@ -23,7 +23,7 @@ Before installing bots. please delete LiluluBot.json first so that the QR code c
 ```
 
 ## Settings
-
+Set your name, bot name, and anymore [`in here`](https://github.com/BerrRecode/lilulu-bot/blob/ac5ad9ae89d3dcc050b24779df4574afe7f84be0/index.js#L93)
 ```nodejs
 {
   namabot = 'LILULU-BOT'
@@ -34,7 +34,7 @@ Before installing bots. please delete LiluluBot.json first so that the QR code c
 }
 ```
 ## Setting APIkey
-
+Setting your API KEY [`in here`](https://github.com/BerrRecode/lilulu-bot/blob/ac5ad9ae89d3dcc050b24779df4574afe7f84be0/index.js#L76)
 ```nodejs
 {
   LolKey = 'YOUR APIKEY HERE' 
@@ -43,20 +43,24 @@ Before installing bots. please delete LiluluBot.json first so that the QR code c
 }
 ```
 
-## Deploy to Heroku
-if you want to deploy this project, don't forget to add buildpack heroku. buildpack link below:
-
-```nodejs
-nodejs = "https://github.com/heroku/heroku-buildpack-nodejs#latest"
-ffmpeg = "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
-imagemagick = "https://github.com/DuckyTeam/heroku-buildpack-imagemagick"
-neofetch = "https://github.com/sasukeuchiha912/heroku-buildpack-neofetch"
-```
-
+## Deploy to Heroku 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/BerrRecode/lilulu-bot/)
 
+if you want to deploy this project, don't forget to add buildpack heroku. buildpack link below:
+
+*nodejs [`CLICK HERE`](https://github.com/heroku/heroku-buildpack-nodejs#latest)
+
+*ffmpeg [`CLICK HERE`](https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest)
+
+*imagemagick [`CLICK HERE`](https://github.com/DuckyTeam/heroku-buildpack-imagemagick)
+
+*neofetch [`CLICK HERE`](https://github.com/sasukeuchiha912/heroku-buildpack-neofetch)
+
+
 ## Deploy to railway.app 
-if you want to deploy this project to railway, please delete the command below in the Procfile
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/BerrRecode/lilulu-bot/)
+
+if you want to deploy this project to railway, please delete the command below in the [`Procfile in here`](https://github.com/BerrRecode/lilulu-bot/blob/ac5ad9ae89d3dcc050b24779df4574afe7f84be0/Procfile)
 
 ```bash
 > && npm i delay
