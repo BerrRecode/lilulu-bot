@@ -2272,6 +2272,7 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
 			}
 				break
 		case 'simih':
+		  /*
         if (isBanned) return reply(mess.banned)
 				if (!isGroup) return reply(mess.group)
 				if (!isGroupAdmins && !mek.key.fromMe) return reply('Hanya admin grup yang bisa aktifkan mode nsfw')
@@ -2297,6 +2298,8 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
 				}
 				fznadmn.sendMessage(from, samasimi, MessageType.buttonsMessage, {quoted: fkontak})
 			}
+			*/
+			reply('maaf fitur ini dimatikan karena bot jadi sering off sendiri dan sering eror')
 				break
  case 'listonline':
           if (!isUser) return reply(mess.noregis)
@@ -5389,6 +5392,7 @@ reply(stdout)
 })
 }
 
+/* matikan fitur ini jika bot sering mati
 if (isGroup && isSimi && budy != undefined && body.startsWith('')) {
 				console.log(budy)
 				muehe = await simih(budy)
@@ -5397,7 +5401,7 @@ if (isGroup && isSimi && budy != undefined && body.startsWith('')) {
 				} else {
 				console.log(color('[ERROR]','red'), 'Unregistered Command from', color(sender.split('@')[0]))
 					}
-
+*/
 	}
 if (isGroup && budy != undefined) {
 	} else {
