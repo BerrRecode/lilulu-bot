@@ -67,6 +67,7 @@ const { sleep, isAfk2, cekafk2, addafk2 } = require('./lib/offline')
 const { addVote, delVote } = require('./lib/vote')
 const { y2mateA, y2mateV } = require('./lib/y2mate')
 const { jadibot, stopjadibot, listjadibot } = require('./lib/jadibot')
+const { bahasa } = require('./lib/bahasa')
 const petik = ('```')
 const pdua = ('"')
 
@@ -145,6 +146,31 @@ var ucapanWaktu = 'Selamat pagi 🌈'
                                          }
 if(time2 < "06:00:00"){
 var ucapanWaktu = 'Selamat pagi 🌈'                                       }
+
+
+// Silahkan anda atur tanggal anda
+var countDownDate = new Date("June 19, 2022 04:00:00").getTime();
+// Hitungan Mundur Waktu Dilakukan Setiap Satu Detik
+var x = setInterval(function() {
+  // Mendapatkan Tanggal dan waktu Pada Hari ini
+  var now = new Date().getTime();
+  //Jarak Waktu Antara Hitungan Mundur
+  var distance = countDownDate - now;
+  // Perhitungan waktu hari, jam, menit dan detik
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  ultahown = days + "h " + hours + "j "
+  + minutes + "m " + seconds + "d ";
+  // Jika hitungan mundur selesai,
+  if (distance < 0) {
+    clearInterval(x);
+    console.log("EXPIRED")
+    kadal = reply("EXPIRED")
+  }
+}, 1000);
+
 //=================================================//
 // Sticker Cmd
 // Function Stick Cmd , Sorry Bang saya Encrypt hehe:)
@@ -764,6 +790,7 @@ fznadmn.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 			}
 			}
 			thumbbot = await fs.readFileSync('./lib/lilulu.jpeg')
+			fotome = await fs.readFileSync('./lib/me.jpg')
 //===============INI BATAS YA BRO=================//
         if (!mek.key.fromMe && banChats === true) return
 switch (command) {
@@ -988,6 +1015,7 @@ fznadmn.sendMessage(from, `${body.slice(9)}`, MessageType.text, {contextInfo: { 
 ๏ ${prefix}tourl
 
 ❒ FUN MENU❐
+๏ ${prefix}tts
 ๏ ${prefix}asupan
 ๏ ${prefix}fitnah
 ๏ ${prefix}fitnahpc
@@ -1403,6 +1431,7 @@ buttons = [{buttonId: `${prefix}owner`,buttonText:{displayText: '👤 OWNER'},ty
 break
 case 'funmenu':
 fnmn = `❒ FUN MENU❐
+๏ ${prefix}tts
 ๏ ${prefix}asupan
 ๏ ${prefix}fitnah
 ๏ ${prefix}fitnahpc
@@ -1628,6 +1657,7 @@ case 'cmnd':
 │➪ TAG OWNER : @${owner.split('@')[0]}
 │➪ NOMOR OWNER : wa.me/${owner.split('@')[0]}
 │➪ BIO OWNER : ${ownbi.status}
+│➪ ULTAH OWNER : ${ultahown} lagi
 └──────────────────❒
 
 ╭─❒ 「 USER & TIME 」
@@ -1981,7 +2011,7 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
                     break */
     case 'add':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
+					if (!isOwner && !mek.key.fromMe) return reply('Maaf fitur ini tidak dibuka lagi untuk public dikarenakan bot jadi mudah dibanned oleh WhatsApp. Dan sekarang fitur ini hanya untuk owmer bot saja')
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (args.length < 1) return reply('Yang mau di add jin ya?')
 					if (args[0].startsWith('08')) return reply('Gunakan kode negara bro!')
@@ -1995,7 +2025,7 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
 					break
 				case 'kick':
 					if (!isGroup) return reply(mess.only.group)
-					if (!isGroupAdmins && !mek.key.fromMe) return reply(mess.only.admin)
+					if (!isOwner && !mek.key.fromMe) return reply('Maaf fitur ini tidak dibuka lagi untuk public dikarenakan bot jadi mudah dibanned oleh WhatsApp. Dan sekarang fitur ini hanya untuk owmer bot saja')
 					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
 					if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return reply('Tag target yang ingin di kick!')
 					mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
@@ -2013,11 +2043,12 @@ await fznadmn.sendMessage(from, btnasu, MessageType.buttonsMessage, {quoted: fto
 					break
     case 'okick':
              if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-          if (!isGroupAdmins) return reply(mess.only.adming)
+          if (!isOwner && !mek.key.fromMe) return reply('Maaf fitur ini tidak dibuka lagi untuk public dikarenakan bot jadi mudah dibanned oleh WhatsApp. Dan sekarang fitur ini hanya untuk owmer bot saja')
              if (!isGroup) return reply(mess.only.group)
              kick(from, mentionUser)
              break
       case 'oadd':
+        if (!isOwner && !mek.key.fromMe) return reply('Maaf fitur ini tidak dibuka lagi untuk public dikarenakan bot jadi mudah dibanned oleh WhatsApp. Dan sekarang fitur ini hanya untuk owmer bot saja')
              if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
              entah = arg.split("|")[0]
              entah = entah.replace(new RegExp("[()+-/ +/]", "gi"), "")
@@ -2665,6 +2696,26 @@ ${anime.desc}\n\n*Link Batch* : ${anime.batch}\n*Link Download SD* : ${anime.bat
       memernd = await getBuffer(`https://api.lolhuman.xyz/api/random/meme?apikey=${LolKey}`)
       await fznadmn.sendMessage(from, memernd, image, {quoted: mek})
       break
+      case 'tts':
+        try{
+                if (!isUser) return reply(mess.noregis)
+				if (isBanned) return reply(mess.baned)
+				if (args.length < 1) return fznadmn.sendMessage(from, `Diperlukan kode bahasa!!, ketik ${prefix}bahasa\ncontoh: ${prefix + command} id|halo bro`, text, {quoted: mek})
+				pien = args.join(' ')
+				bohoso = arg.split('|')[0]
+				nv = arg.split('|')[1]
+				baper = await getBuffer(`https://api.lolhuman.xyz/api/gtts/${bohoso}?apikey=${LolKey}&text=${nv}`)
+				fznadmn.sendMessage(from, baper, MessageType.audio, {quoted: mek, mimetype: "audio/mp4", ptt: true})
+        } catch (e){
+          console.log(color(e, `red`))
+          reply(`${e}`)
+        }
+				break
+			case 'bahasa':
+                if (!isUser) return reply(mess.noregis)
+                if (isBanned) return reply(mess.baned)
+				fznadmn.sendMessage(from, bahasa(), text, {quoted: fkontak})
+				break
 //=============================================================//
 //========================PRIMBON==============================//
     case 'artinama':
@@ -3787,7 +3838,6 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
 		          if (!isUser) return reply(mess.noregis)
 		         if (isBanned) return reply(mess.banned)
 		           //case ⌈❗」 by  fauzan
-		        fotoMe = fs.readFileSync('./src/me.jpeg')
  infownr = `◪ Hallo @${sender.split('@')[0]}
 ├ my name is Fauzan
 ├ From: Situbondo, East Java, Indonesia
@@ -3801,11 +3851,8 @@ lokt =  [{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, 
   ├─ ❏ Instagram
   └─ ❏ https://www.instagram.com/efzyn_`
   
-  sendButLocation(from, infownr, 'Powered by: BrCode', {jpegThumbnail:fotoMe},
-  [{buttonId:`${prefix}developer`,buttonText:{displayText:'NOMOR OWNER'},type:1},
-{buttonId:`${prefix}infosc`,buttonText:{displayText:'🤖 INFO SCRIPT'},type:1},
-{buttonId: `${prefix}menu`, buttonText: {displayText: 'BACK TO MENU'}, type: 1}],
-{contextInfo: { mentionedJid: [sender]}})
+  sendButLocation(from, infownr, 'Powered by: BrCode', {jpegThumbnail:fotome}, [{buttonId:`${prefix}developer`, 
+               buttonText:{displayText:'💬 NOMOR OWNER'},type:1}, {buttonId:`${prefix}infosc`,buttonText:{displayText:'🤖 INFO SCRIPT BOT'},type:1}, {buttonId:`${prefix}menu`,buttonText:{displayText:'🔙 BACK TO MENU'},type:1}], {contextInfo: { mentionedJid: [sender]}})
 			break
 		case 'cekresijnt':
 		  if (!isUser) return reply(mess.noregis)
