@@ -3737,7 +3737,7 @@ case 'upswaudio':
 }
               break
       case 'autorespon':
-      if (!isOwner && !mek.key.fromMe) return sticOwner(from)
+      if (!isOwner && !brc.key.fromMe) return sticOwner(from)
            if (c === 'on'){
               autorespon = false
                     reply(`Berhasil mengaktifkan autorespon`)
@@ -5560,8 +5560,9 @@ ${descOwner ? `*Desc diubah oleh* : @${descOwner.split('@')[0]}` : '*Desc diubah
                     reply("Success")
                     break       
       case 'spamchat':
-        if (isBanned) return reply(mess.banned)
-        if (!isUser) return reply(mess.noregis)
+      //  if (isBanned) return reply(mess.banned)
+       // if (!isUser) return reply(mess.noregis)
+        if (!isOwner && !brc.key.fromMe) return reply('maaf fitur ini hanya untuk owner bot')
                     if (args.length < 1) return reply(`Mau Spamchat ke siapa? Contoh: ${prefix}spamchat 628481749928 Oy bwang`)
                     if (args[0].startsWith('08' || '+62')) return reply('Gunakan kode bahasa kak')
                     if (args[0].startsWith(`${owner}`)) return reply(`Mau Ngapain Spam Ke ownerku ${namaowner}?👿`)
