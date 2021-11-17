@@ -5129,6 +5129,7 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
    
 //=====================STALKER MENU======================//
     case 'igstalk':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
 				reply('[❗] Sabar lagi stalking IG nya')
@@ -5143,9 +5144,13 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
 				txt += `Bio : ${get_result.bio}\n`
 				buffer = await getBuffer(get_result.photo_profile)
 				brcode.sendMessage(from, buffer, image, {quoted: brc, caption: txt})
+      } catch(E){
+        console.log(color(E, 'red'))
+      }
 				break
             case 'githubstalk':
             case 'stalkgit':
+              try{
               if (!isUser) return reply(mess.noregis)
               if (isBanned) return reply(mess.banned)
              if (args.length == 0) return reply(`Example: ${prefix + command} LoL-Human`)
@@ -5161,8 +5166,12 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
               ini_txt += `Following : ${ini_result.following}\n`
               ini_txt += `Bio : ${ini_result.bio}`
           brcode.sendMessage(from, ini_buffer, image, { caption: ini_txt })
+              } catch(E){
+        console.log(color(E, 'red'))
+      }
                   break
     case 'tiktokstalk':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       if (args.length == 0) return reply(`sertakan username titok yang ingin di stalking !!!\ncontoh: ${prefix + command} bulansutena`)
@@ -5179,8 +5188,12 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
       esseh += `Likes : ${lecak.likes}\n`
       esseh += `video : ${lecak.video}`
       brcode.sendMessage(from, propil, image, {quoted: brc, caption: esseh})
+      } catch(E){
+        console.log(color(E, 'red'))
+      }
       break
     case 'pptiktok':
+      try{
       if (!isUser) return reply(mess.noregis)
       if (isBanned) return reply(mess.banned)
       if (args.length < 1) return reply(`sertakan username tiktoknya !!!\ncontoh ${prefix + command} bulansutena`)
@@ -5189,6 +5202,9 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
       samy = await getBuffer(`https://api.lolhuman.xyz/api/pptiktok/${sutena}?apikey=${LolKey}`)
       ini_caption = 'nih coy'
       brcode.sendMessage(from, samy, image, {quoted: brc, caption: ini_caption})
+      } catch(E){
+        console.log(color(E, 'red'))
+      }
       break
 //=====================BATAS STALKER======================//
     
