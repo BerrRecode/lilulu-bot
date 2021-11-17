@@ -5146,6 +5146,7 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
 				brcode.sendMessage(from, buffer, image, {quoted: brc, caption: txt})
       } catch(E){
         console.log(color(E, 'red'))
+        reply(`${E}`)
       }
 				break
             case 'githubstalk':
@@ -5168,6 +5169,7 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
           brcode.sendMessage(from, ini_buffer, image, { caption: ini_txt })
               } catch(E){
         console.log(color(E, 'red'))
+        reply(`${E}`)
       }
                   break
     case 'tiktokstalk':
@@ -5190,6 +5192,7 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
       brcode.sendMessage(from, propil, image, {quoted: brc, caption: esseh})
       } catch(E){
         console.log(color(E, 'red'))
+        reply(`${E}`)
       }
       break
     case 'pptiktok':
@@ -5204,6 +5207,7 @@ brcode.sendMessage(from, spoau, MessageType.audio, {mimetype: "audio/mp4", quote
       brcode.sendMessage(from, samy, image, {quoted: brc, caption: ini_caption})
       } catch(E){
         console.log(color(E, 'red'))
+        reply(`${E}`)
       }
       break
 //=====================BATAS STALKER======================//
